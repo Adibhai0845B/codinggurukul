@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Codeshala – DSA & CP Practice Platform"
+version = "1.0.0"
+id = "artifacts/codeshala"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24499
+
+[services.development]
+run = "pnpm --filter @workspace/codeshala run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/codeshala", "run", "build" ]
+publicDir = "artifacts/codeshala/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24499"
+BASE_PATH = "/"
