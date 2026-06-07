@@ -1,13 +1,23 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { cpQuestions } from "@/data/cpQuestions";
 import { useProgress } from "@/hooks/useProgress";
 import FilterBar from "@/components/FilterBar";
 import CPRatingAccordion from "@/components/CPRatingAccordion";
 import { Accordion } from "@/components/ui/accordion";
 import ProgressBar from "@/components/ProgressBar";
+import useAuth from "@/hooks/useAuth";
+import { useLocation } from "wouter";
 
 export default function CPSheet() {
   const { completedIds, bookmarkedIds } = useProgress();
+  const isLoggedIn = useAuth((s) => s.isLoggedIn);
+  const [location, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (!isLoggedIn && location !== "/login") {
+      setLocation("/login");
+    }
+  }, [isLoggedIn, location, setLocation]);
   
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("All"); // Maps to rating logic but we might ignore it or adapt it
