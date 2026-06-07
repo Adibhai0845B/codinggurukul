@@ -1,18 +1,22 @@
 import { Link, useLocation } from "wouter";
-import { Terminal, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import useAuth from "@/hooks/useAuth";
 
 export default function Navbar() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
 
-  const links = [
+  const links =[
     { href: "/", label: "Home" },
     { href: "/dsa", label: "DSA Sheet" },
     { href: "/cp", label: "CP Sheet" },
     { href: "/contests", label: "Contests" },
     { href: "/progress", label: "Progress" },
   ];
+
+  const isLoggedIn = useAuth((s) => s.isLoggedIn);
+  const logout = useAuth((s) => s.logout);
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -36,6 +40,19 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <button
+              onClick={() => {
+                if (isLoggedIn) {
+                  logout();
+                  setLocation('/');
+                } else {
+                  setLocation('/login');
+                }
+              }}
+              className="text-sm ml-2 text-foreground/80"
+            >
+              {isLoggedIn ? 'Logout' : 'Login'}
+            </button>
           </nav>
         </div>
         <Sheet>

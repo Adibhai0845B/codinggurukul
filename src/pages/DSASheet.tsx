@@ -1,13 +1,24 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { useProgress } from "@/hooks/useProgress";
 import FilterBar from "@/components/FilterBar";
 import TopicAccordion from "@/components/TopicAccordion";
 import { Accordion } from "@/components/ui/accordion";
 import ProgressBar from "@/components/ProgressBar";
+import useAuth from "@/hooks/useAuth";
+import { useLocation } from "wouter";
 
 export default function DSASheet() {
   const { completedIds, bookmarkedIds } = useProgress();
+  const isLoggedIn = useAuth((s) => s.isLoggedIn);
+  const [location, setLocation] = useLocation();
+
+  useEffect(() => {
+    // If not logged in, redirect to login page (unless already there)
+    if (!isLoggedIn && location !== "/login") {
+      setLocation("/login");
+    }
+  }, [isLoggedIn, location, setLocation]);
   
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("All");

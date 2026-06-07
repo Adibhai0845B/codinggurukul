@@ -6,6 +6,7 @@ import CPSheet from "@/pages/CPSheet";
 import Contests from "@/pages/Contests";
 import Progress from "@/pages/Progress";
 import NotFound from "@/pages/not-found";
+import Login from "@/pages/Login";
 
 function Router() {
   return (
@@ -13,6 +14,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/dsa" component={DSASheet} />
+        <Route path="/login" component={Login} />
         <Route path="/cp" component={CPSheet} />
         <Route path="/contests" component={Contests} />
         <Route path="/progress" component={Progress} />

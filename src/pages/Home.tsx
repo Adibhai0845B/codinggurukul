@@ -722,7 +722,7 @@ function PlanCard({
           className={`mt-4 text-sm leading-relaxed ${
             highlighted ? "text-slate-600" : "text-slate-300"
           }`}
-        >
+          >
           {desc}
         </p>
       </CardContent>

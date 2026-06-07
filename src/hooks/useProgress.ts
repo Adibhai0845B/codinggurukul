@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { dsaQuestions } from "@/data/dsaQuestions";
+import { useAuth } from "./useAuth";
 
 interface ProgressState {
   completedIds: string[];
@@ -18,11 +20,24 @@ export const useProgress = create<ProgressState>()(
       notes: {},
 
       toggleComplete: (id) =>
-        set((state) => ({
-          completedIds: state.completedIds.includes(id)
-            ? state.completedIds.filter((i) => i !== id)
-            : [...state.completedIds, id],
-        })),
+        set((state) => {
+          // If the id belongs to the DSA sheet, require a login
+          const isDsa = dsaQuestions.some((q) => q.id === id);
+          const auth = useAuth.getState();
+          if (isDsa && !auth.isLoggedIn) {
+            // Inform the user — UI can be improved later
+            if (typeof window !== "undefined") {
+              window.alert("Please login to mark DSA problems as completed.");
+            }
+            return state;
+          }
+
+          return {
+            completedIds: state.completedIds.includes(id)
+              ? state.completedIds.filter((i) => i !== id)
+              : [...state.completedIds, id],
+          } as Partial<ProgressState> as any;
+        }),
 
       toggleBookmark: (id) =>
         set((state) => ({
