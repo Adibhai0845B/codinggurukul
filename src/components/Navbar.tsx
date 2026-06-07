@@ -19,7 +19,7 @@ export default function Navbar() {
       <div className="container flex h-14 items-center px-4 md:px-8">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <Terminal className="h-6 w-6 text-primary" />
+            <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
             <span className="font-bold sm:inline-block">
               Coding Gurukul Sheet
             </span>
@@ -50,7 +50,7 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
             <Link href="/" className="flex items-center space-x-2 mb-8">
-              <Terminal className="h-6 w-6 text-primary" />
+              <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
               <span className="font-bold">Coding Gurukul Sheet</span>
             </Link>
             <div className="flex flex-col space-y-3">
@@ -70,7 +70,7 @@ export default function Navbar() {
         </Sheet>
         <div className="flex flex-1 items-center justify-end space-x-2 md:hidden">
           <Link href="/" className="flex items-center space-x-2">
-            <Terminal className="h-6 w-6 text-primary" />
+            <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
             <span className="font-bold">Coding Gurukul Sheet</span>
           </Link>
         </div>

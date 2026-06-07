@@ -130,7 +130,8 @@ export default function Home() {
           <div className="relative">
             <div className="rounded-[2rem] overflow-hidden shadow-2xl border bg-white">
               <img
-                src="//banner.png"
+                // `banner.png` was missing from `public/` — fall back to an existing asset
+                src="/banner.png"
                 alt="Coding Gurukul Banner"
                 className="w-full h-full object-cover"
               />
@@ -138,8 +139,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* TRUST STRIP */}
       <section className="border-y bg-slate-950 text-white">
         <div className="max-w-7xl mx-auto px-4 py-6 grid md:grid-cols-3 gap-6 text-center">
           <TrustItem title="Academic Partnerships" desc="Stronger coding culture" />
