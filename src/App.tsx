@@ -7,17 +7,18 @@ import Contests from "@/pages/Contests";
 import Progress from "@/pages/Progress";
 import NotFound from "@/pages/not-found";
 import Login from "@/pages/Login";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 function Router() {
   return (
     <Layout>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/dsa" component={DSASheet} />
+        <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} />} />
         <Route path="/login" component={Login} />
-        <Route path="/cp" component={CPSheet} />
-        <Route path="/contests" component={Contests} />
-        <Route path="/progress" component={Progress} />
+        <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} />} />
+        <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />
+        <Route path="/progress" component={() => <ProtectedRoute component={Progress} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

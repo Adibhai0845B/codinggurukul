@@ -9,18 +9,26 @@ import {
   GraduationCap,
   Layers,
   LineChart,
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
   Rocket,
   Target,
   Trophy,
   Users,
+  ExternalLink,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL } from "@/config";
+import React, { useState } from "react";
 import { useProgress } from "@/hooks/useProgress";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { cpQuestions } from "@/data/cpQuestions";
 import ProgressBar from "@/components/ProgressBar";
+import ContactModal from "@/components/ContactModal";
 
 export default function Home() {
   const { completedIds } = useProgress();
@@ -32,6 +40,22 @@ export default function Home() {
   const cpCompleted = cpQuestions.filter((q) =>
     completedIds.includes(q.id)
   ).length;
+
+  // ensure we have a string-form URL for the contact form
+  const formUrl: string = (CONTACT_FORM_URL ?? "") as string;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  function openContactModal() {
+    setShowSuccess(false);
+    setIsModalOpen(true);
+  }
+
+  function handleSuccess() {
+    setShowSuccess(true);
+    setTimeout(() => setIsModalOpen(false), 1600);
+  }
 
   const curriculum = [
     "Complexity & Problem Decomposition",
@@ -488,6 +512,72 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* CONTACT */}
+      <section className="max-w-7xl mx-auto px-4 py-20">
+        <SectionHeader
+          label="Contact"
+          title="We're here to help — get in touch"
+          desc="Reach out for batch enquiries, partnerships, or placement support. Fill the form or contact us directly."
+        />
+
+        <div className="mt-10 grid md:grid-cols-3 gap-6 items-start">
+          <Card className="rounded-2xl col-span-1">
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold">Contact Details</h3>
+              <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2">
+                <Mail className="h-4 w-4 text-primary" />
+                <a className="text-primary truncate" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+              </p>
+
+              <p className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
+                <Phone className="h-4 w-4 text-primary" />
+                <a className="text-primary" href={`tel:${CONTACT_PHONE}`}>{CONTACT_PHONE}</a>
+              </p>
+
+              <p className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span>Online / Remote Training • India</span>
+              </p>
+
+              <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2">
+                <Clock className="h-4 w-4 text-primary" />
+                <span>Mon — Sat, 10:00 — 18:00 (IST)</span>
+              </p>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <Button onClick={openContactModal} className="w-full sm:w-auto">
+                  Open Contact Form <ExternalLink className="ml-2 h-4 w-4 inline" />
+                </Button>
+
+                <Button variant="outline" asChild className="w-full sm:w-auto">
+                  <a href={`mailto:${CONTACT_EMAIL}`}>Email Us</a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="md:col-span-2">
+            <Card className="rounded-2xl">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-bold">Contact Form</h3>
+                <p className="mt-3 text-sm text-muted-foreground">Click <strong>Open Contact Form</strong> to send us a message. We collect responses in a connected Google Sheet.</p>
+
+                {showSuccess && (
+                  <div className="mt-4 rounded-md bg-green-50 border border-green-200 p-3 text-green-800">Thanks — we received your message.</div>
+                )}
+
+                {!formUrl && (
+                  <div className="mt-4 text-sm text-muted-foreground">No Google Form configured yet. To embed a form paste its share link into <code>src/config.ts</code>.</div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* mount contact modal so Open Contact Form works */}
+      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} formUrl={formUrl} onSuccess={handleSuccess} />
 
       {/* FINAL CTA */}
       <section className="px-4 pb-20">
