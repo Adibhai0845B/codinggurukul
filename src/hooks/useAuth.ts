@@ -4,28 +4,31 @@ import { persist } from "zustand/middleware";
 interface AuthState {
   isLoggedIn: boolean;
   username?: string;
-  login: (username: string, password: string) => boolean;
+  token?: string; // We need to store the JWT for future requests
+  login: (username: string, token: string) => void;
   logout: () => void;
 }
-const VALID_USERNAME = "dsa_user";
-const VALID_PASSWORD = "dsa_pass";
 
 export const useAuth = create<AuthState>()(
   persist(
     (set) => ({
       isLoggedIn: false,
       username: undefined,
-      login: (username: string, password: string) => {
-        if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-          set({ isLoggedIn: true, username });
-          return true;
-        }
-        return false;
+      token: undefined,
+      
+      // Called by Login.tsx after a successful backend API request
+      login: (username: string, token: string) => {
+        set({ isLoggedIn: true, username, token });
       },
-      logout: () => set({ isLoggedIn: false, username: undefined }),
+      
+      logout: () => {
+        set({ isLoggedIn: false, username: undefined, token: undefined });
+        // Clear progress from local storage so the next student doesn't see it!
+        localStorage.removeItem("coding-gurukul-progress-storage");
+      },
     }),
     {
-      name: "codeshala-auth",
+      name: "coding-gurukul-auth", // Updated to the new brand name
     }
   )
 );

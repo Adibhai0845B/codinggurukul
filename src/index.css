@@ -65,7 +65,12 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
-
+:root {
+  /* These colors define the red appearance */
+  --color-destructive: 0 84.2% 60.2%;
+  --color-destructive-foreground: 0 0% 98%;
+  --color-destructive-border: 0 72.2% 50.6%;
+}
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(255,255,255, .10);
@@ -131,6 +136,11 @@
   --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+}
+
+::selection {
+  background-color: #3b82f6; /* Tailwind blue-500 */
+  color: white;
 }
 
 .dark {

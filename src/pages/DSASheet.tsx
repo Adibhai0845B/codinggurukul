@@ -72,7 +72,7 @@ export default function DSASheet() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight">DSA Practice Sheet</h1>
-          <p className="text-muted-foreground mt-1">Master 150 standard algorithms and data structures.</p>
+          <p className="text-muted-foreground mt-1">Master 170 standard algorithms and data structures.</p>
         </div>
         <div className="w-full md:w-64 bg-card p-4 rounded-xl border border-border">
           <div className="text-sm font-medium mb-2">Overall Progress</div>

@@ -1,52 +1,74 @@
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useProgress } from "@/hooks/useProgress";
 import { useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import useAuth from "@/hooks/useAuth";
+import { useToast } from "@/hooks/use-toast";
 
-export default function Login() {
-  const [location, setLocation] = useLocation();
-  const login = useAuth((s) => s.login);
-  const logout = useAuth((s) => s.logout);
-  const isLoggedIn = useAuth((s) => s.isLoggedIn);
-
+const Login = () => {
+  // 1. Define the state variables that TypeScript couldn't find
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  
+  const [, setLocation] = useLocation();
+  const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    const ok = login(username.trim(), password);
-    if (ok) {
-      setLocation("/dsa");
-    } else {
-      setError("Invalid credentials. Use the provided  credentials to you.");
+    
+    try {
+      const authResponse = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }) 
+      });
+
+      const data = await authResponse.json();
+
+      if (!authResponse.ok) {
+        // Throw the specific message from the server
+        throw new Error(data.message || "Invalid credentials");
+      }
+
+      // Success path...
+      useAuth.getState().login(data.username, data.token);
+      // ... rest of your success logic
+
+    } catch (error: any) {
+      toast({
+        title: "Login Failed",
+        description: error.message, // This now shows "Username not found" or "Incorrect password"
+        variant: "destructive"
+      });
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-6 bg-card rounded-xl border border-border">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      {isLoggedIn ? (
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">You are already logged in.</p>
-          <Button onClick={() => { logout(); setLocation('/'); }}>Logout</Button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Input placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div>
-            <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          {error && <p className="text-sm text-red-400">{error}</p>}
-          <div className="flex items-center justify-between">
-            <Button type="submit">Login</Button>
-          </div>
-        </form>
-      )}
+    <div className="flex items-center justify-center min-h-[80vh]">
+      <form onSubmit={handleLogin} className="flex flex-col gap-4 p-8 border rounded shadow-md w-96">
+        <h2 className="text-2xl font-bold text-center">Login</h2>
+        
+        <input 
+          type="text" 
+          placeholder="Username" 
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="p-2 border border-gray-300 rounded text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        
+        <input 
+          type="password" 
+          placeholder="Password" 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="p-2 border border-gray-300 rounded text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        
+        <button type="submit" className="p-2 text-white bg-blue-600 rounded hover:bg-blue-700">
+          Sign In
+        </button>
+      </form>
     </div>
   );
-}
+};
+
+export default Login;

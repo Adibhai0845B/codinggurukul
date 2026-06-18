@@ -8,6 +8,7 @@ import Progress from "@/pages/Progress";
 import NotFound from "@/pages/not-found";
 import Login from "@/pages/Login";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { Toaster } from "@/components/ui/toaster"; // Adjust path as needed
 
 function Router() {
   return (
@@ -27,8 +28,8 @@ function Router() {
 
 function App() {
   return (
-    <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-      <Router />
+    <WouterRouter base={(import.meta as any).env.BASE_URL.replace(/\/$/, "")}>
+      <Router /><Toaster />
     </WouterRouter>
   );
 }

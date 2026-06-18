@@ -3,59 +3,98 @@ import { persist } from "zustand/middleware";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { useAuth } from "./useAuth";
 
+// Change this to your deployed backend URL later (e.g., Render or Heroku)
+const API_URL = "http://localhost:5000/api"; 
+
 interface ProgressState {
   completedIds: string[];
   bookmarkedIds: string[];
   notes: Record<string, string>;
-  toggleComplete: (id: string) => void;
-  toggleBookmark: (id: string) => void;
-  saveNote: (id: string, note: string) => void;
+  setInitialData: (data: Partial<ProgressState>) => void;
+  toggleComplete: (id: string) => Promise<void>;
+  toggleBookmark: (id: string) => Promise<void>;
+  saveNote: (id: string, note: string) => Promise<void>;
 }
+
+// Background sync function to push data to MongoDB
+const syncWithBackend = async (state: ProgressState) => {
+  const { token } = useAuth.getState();
+  if (!token) return; // Prevent syncing if not logged in
+
+  try {
+    await fetch(`${API_URL}/progress/sync`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Send the JWT token
+      },
+      body: JSON.stringify({
+        completedIds: state.completedIds,
+        bookmarkedIds: state.bookmarkedIds,
+        notes: state.notes,
+      }),
+    });
+  } catch (error) {
+    console.error("Failed to sync progress to database:", error);
+  }
+};
 
 export const useProgress = create<ProgressState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       completedIds: [],
       bookmarkedIds: [],
       notes: {},
 
-      toggleComplete: (id) =>
-        set((state) => {
-          // If the id belongs to the DSA sheet, require a login
-          const isDsa = dsaQuestions.some((q) => q.id === id);
-          const auth = useAuth.getState();
-          if (isDsa && !auth.isLoggedIn) {
-            // Inform the user — UI can be improved later
-            if (typeof window !== "undefined") {
-              window.alert("Please login to mark DSA problems as completed.");
-            }
-            return state;
+      // Used right after a successful login to load the student's history
+      setInitialData: (data) => set((state) => ({ ...state, ...data })),
+
+      toggleComplete: async (id) => {
+        const isDsa = dsaQuestions.some((q) => q.id === id);
+        const { isLoggedIn } = useAuth.getState();
+
+        if (isDsa && !isLoggedIn) {
+          if (typeof window !== "undefined") {
+            window.alert("Please login to Coding Gurukul to track your progress.");
           }
+          return;
+        }
 
-          return {
-            completedIds: state.completedIds.includes(id)
-              ? state.completedIds.filter((i) => i !== id)
-              : [...state.completedIds, id],
-          } as Partial<ProgressState> as any;
-        }),
+        set((state) => {
+          const newCompletedIds = state.completedIds.includes(id)
+            ? state.completedIds.filter((i) => i !== id)
+            : [...state.completedIds, id];
+          return { completedIds: newCompletedIds };
+        });
+        
+        // Fire and forget the sync to the backend
+        await syncWithBackend(get());
+      },
 
-      toggleBookmark: (id) =>
-        set((state) => ({
-          bookmarkedIds: state.bookmarkedIds.includes(id)
+      toggleBookmark: async (id) => {
+        set((state) => {
+          const newBookmarkedIds = state.bookmarkedIds.includes(id)
             ? state.bookmarkedIds.filter((i) => i !== id)
-            : [...state.bookmarkedIds, id],
-        })),
+            : [...state.bookmarkedIds, id];
+          return { bookmarkedIds: newBookmarkedIds };
+        });
+        
+        await syncWithBackend(get());
+      },
 
-      saveNote: (id, note) =>
+      saveNote: async (id, note) => {
         set((state) => ({
           notes: {
             ...state.notes,
             [id]: note,
           },
-        })),
+        }));
+        
+        await syncWithBackend(get());
+      },
     }),
     {
-      name: "codeshala-progress-storage",
+      name: "coding-gurukul-progress-storage",
     }
   )
 );
