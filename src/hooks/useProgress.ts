@@ -11,6 +11,7 @@ interface ProgressState {
   bookmarkedIds: string[];
   notes: Record<string, string>;
   setInitialData: (data: Partial<ProgressState>) => void;
+  resetProgress: () => void; // resetting the cache when user logs out
   toggleComplete: (id: string) => Promise<void>;
   toggleBookmark: (id: string) => Promise<void>;
   saveNote: (id: string, note: string) => Promise<void>;
@@ -45,7 +46,12 @@ export const useProgress = create<ProgressState>()(
       completedIds: [],
       bookmarkedIds: [],
       notes: {},
-
+      // Reset progress when the user logs out (so that the nxt stud doesn't see the prev data if same latop hai)
+      resetProgress: () => set({ 
+        completedIds: [], 
+        bookmarkedIds: [], 
+        notes: {} 
+      }),
       // Used right after a successful login to load the student's history
       setInitialData: (data) => set((state) => ({ ...state, ...data })),
 

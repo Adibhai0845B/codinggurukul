@@ -25,6 +25,7 @@ export const useAuth = create<AuthState>()(
         set({ isLoggedIn: false, username: undefined, token: undefined });
         // Clear progress from local storage so the next student doesn't see it!
         localStorage.removeItem("coding-gurukul-progress-storage");
+        localStorage.removeItem("coding-gurukul-auth");// Clear auth state from local storage
       },
     }),
     {

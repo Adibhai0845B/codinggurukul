@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import useAuth from "@/hooks/useAuth";
+import { useProgress } from "@/hooks/useProgress"; 
 
 export default function Navbar() {
   const [location, setLocation] = useLocation();
@@ -16,8 +17,8 @@ export default function Navbar() {
   ];
 
   const isLoggedIn = useAuth((s) => s.isLoggedIn);
-  const logout = useAuth((s) => s.logout);
-
+  const logout = useAuth((s) => s.logout)
+  const resetProgress = useProgress((s) => s.resetProgress);// reset the progress
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center px-4 md:px-8">
@@ -44,7 +45,9 @@ export default function Navbar() {
               onClick={() => {
                 if (isLoggedIn) {
                   logout();
+                  resetProgress();
                   setLocation('/');
+                  window.location.reload();// Reloading the page
                 } else {
                   setLocation('/login');
                 }
