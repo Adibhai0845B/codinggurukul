@@ -3,8 +3,8 @@ import { persist } from "zustand/middleware";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { useAuth } from "./useAuth";
 
-// Change this to your deployed backend URL later (e.g., Render or Heroku)
-const API_URL = "http://localhost:5000/api"; 
+// Added the render URL for the backend API(Sir GPT pro dilwa do pls :))
+const API_URL = "https://coding-gurukul-backend.onrender.com"; 
 
 interface ProgressState {
   completedIds: string[];

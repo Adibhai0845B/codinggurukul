@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     
     try {
-      const authResponse = await fetch("http://localhost:5000/api/auth/login", {
+      const authResponse = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }) 
