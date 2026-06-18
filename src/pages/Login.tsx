@@ -32,7 +32,11 @@ const Login = () => {
       // Success path...
       useAuth.getState().login(data.username, data.token);
       // ... rest of your success logic
-
+      setLocation("/");
+      toast({
+        title: "Login Successful",
+        description: "Welcome back!",
+      });
     } catch (error: any) {
       toast({
         title: "Login Failed",
