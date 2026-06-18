@@ -22,7 +22,7 @@ const syncWithBackend = async (state: ProgressState) => {
   if (!token) return; // Prevent syncing if not logged in
 
   try {
-    await fetch(`${API_URL}/progress/sync`, {
+    await fetch(`${API_URL}/api/progress/sync`, { // adjusted the endpoint (debug mai halat kharab hogaya)
       method: "POST",
       headers: {
         "Content-Type": "application/json",
