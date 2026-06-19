@@ -32,6 +32,7 @@ const Login = () => {
       // Success path...
       useAuth.getState().login(data.username, data.token);
       // ... rest of your success logic
+      await useProgress.getState().fetchProgress();// fetch the user progress (Maybe change karunga in future)
       setLocation("/");
       toast({
         title: "Login Successful",

@@ -9,16 +9,18 @@ import useAuth from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 
 export default function DSASheet() {
-  const { completedIds, bookmarkedIds } = useProgress();
+  const { completedIds, bookmarkedIds,fetchProgress } = useProgress();
   const isLoggedIn = useAuth((s) => s.isLoggedIn);
   const [location, setLocation] = useLocation();
 
   useEffect(() => {
     // If not logged in, redirect to login page (unless already there)
-    if (!isLoggedIn && location !== "/login") {
+    if (isLoggedIn) {
+      fetchProgress(); 
+    } else if (location !== "/login") {
       setLocation("/login");
     }
-  }, [isLoggedIn, location, setLocation]);
+  }, [isLoggedIn, location, setLocation, fetchProgress]);
   
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("All");

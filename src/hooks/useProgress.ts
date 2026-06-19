@@ -11,6 +11,7 @@ interface ProgressState {
   bookmarkedIds: string[];
   notes: Record<string, string>;
   setInitialData: (data: Partial<ProgressState>) => void;
+  fetchProgress: () => Promise<void>;// getting the progress info from
   resetProgress: () => void; // resetting the cache when user logs out
   toggleComplete: (id: string) => Promise<void>;
   toggleBookmark: (id: string) => Promise<void>;
@@ -54,7 +55,33 @@ export const useProgress = create<ProgressState>()(
       }),
       // Used right after a successful login to load the student's history
       setInitialData: (data) => set((state) => ({ ...state, ...data })),
+      // fecthing the progress frim backend when the user logs in 
+      fetchProgress: async () => {
+        const { token } = useAuth.getState();
+        if (!token) return;
 
+        try {
+          const response = await fetch(`${API_URL}/api/progress/sync`, {
+            method: "GET", 
+            headers: { 
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+            }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            // Data is now correctly set into the state
+            set({ 
+              completedIds: data.completedIds || [],
+              bookmarkedIds: data.bookmarkedIds || [],
+              notes: data.notes || {}
+            });
+          }
+        } catch (error) {
+          console.error("Failed to fetch progress:", error);
+        }
+      },
       toggleComplete: async (id) => {
         const isDsa = dsaQuestions.some((q) => q.id === id);
         const { isLoggedIn } = useAuth.getState();
