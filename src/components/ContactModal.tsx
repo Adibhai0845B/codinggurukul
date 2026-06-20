@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
   formUrl?: string;
   onSuccess?: () => void;
 }
-
 export default function ContactModal({ isOpen, onClose, formUrl, onSuccess }: ContactModalProps) {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [submitted, setSubmitted] = useState(false);

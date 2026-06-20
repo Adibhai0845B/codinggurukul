@@ -1,4 +1,4 @@
-# 🚀 Coding Gurukul
+#  Coding Gurukul
 
 Website: [Coding Gurukul](https://codinggurukul.vercel.app/)
 > A placement-focused technology training and career acceleration platform dedicated to bridging the gap between college education and industry requirements.
