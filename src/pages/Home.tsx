@@ -29,6 +29,7 @@ import { dsaQuestions } from "@/data/dsaQuestions";
 import { cpQuestions } from "@/data/cpQuestions";
 import ProgressBar from "@/components/ProgressBar";
 import ContactModal from "@/components/ContactModal";
+import TeamSection from "@/components/TeamSection";
 
 export default function Home() {
   const { completedIds } = useProgress();
@@ -415,6 +416,8 @@ export default function Home() {
 
       {/* PLANS */}
       <section className="bg-slate-950 text-white py-20">
+        {/* TEAM */}
+        <TeamSection />
         <div className="max-w-7xl mx-auto px-4">
           <SectionHeader
             label="Engagement Models"
