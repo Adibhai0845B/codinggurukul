@@ -8,7 +8,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/50 backdrop-blur-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90  backdrop-blur-md">
       <div className="flex flex-col items-center">
         {/* Logo image as a loading screen */}
         <img 
@@ -16,7 +16,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
           alt="Loading..." 
           className="w-32 h-32 animate-pulse" 
         />
-        <p className="mt-4 text-gray-600 font-medium">Authenticating...</p>
+        <p className="mt-4 text-white font-medium animate-pulse">Authenticating...</p>
       </div>
     </div>
   );
