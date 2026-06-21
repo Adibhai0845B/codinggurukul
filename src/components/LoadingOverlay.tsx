@@ -12,7 +12,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
       <div className="flex flex-col items-center">
         {/* Logo image as a loading screen */}
         <img 
-          src="/logo.png" 
+          src="/logo_transparent.png" 
           alt="Loading..." 
           className="w-20 h-20 animate-pulse" 
         />
