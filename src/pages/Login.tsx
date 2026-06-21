@@ -3,18 +3,20 @@ import { useAuth } from "@/hooks/useAuth";
 import { useProgress } from "@/hooks/useProgress";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
+import LoadingOverlay from '../components/LoadingOverlay';
 
 const Login = () => {
   // 1. Define the state variables that TypeScript couldn't find
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [loading, setLoading] = useState(false);
+
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setLoading(true); // Start loading jab login ho raha ho
     try {
       const authResponse = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/login", {
         method: "POST",
@@ -39,6 +41,7 @@ const Login = () => {
         description: "Welcome back!",
       });
     } catch (error: any) {
+      setLoading(false);// Stop loading jab error aaye
       toast({
         title: "Login Failed",
         description: error.message, // This now shows "Username not found" or "Incorrect password"
@@ -48,7 +51,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[80vh]">
+    <div className="relative flex items-center justify-center min-h-[80vh]">
+      <LoadingOverlay isLoading={loading} />
       <form onSubmit={handleLogin} className="flex flex-col gap-4 p-8 border rounded shadow-md w-96">
         <h2 className="text-2xl font-bold text-center">Login</h2>
         
