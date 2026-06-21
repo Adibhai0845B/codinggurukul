@@ -14,7 +14,7 @@ const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ isLoading }) => {
         <img 
           src="/logo_transparent.png" 
           alt="Loading..." 
-          className="w-20 h-20 animate-pulse" 
+          className="w-32 h-32 animate-pulse" 
         />
         <p className="mt-4 text-gray-600 font-medium">Authenticating...</p>
       </div>
