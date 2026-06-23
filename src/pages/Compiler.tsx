@@ -3,7 +3,7 @@ import Editor from '../Editor'; // Adjust path if needed
 
 export default function Compiler() {
   const [code, setCode] = useState("// Write your code here");
-
+  const [output, setOutput] = useState("");
   const handleRun = async () => {
     // 1. Show the user that something is happening
     console.log("Compiling...");
@@ -22,7 +22,7 @@ export default function Compiler() {
         });
 
         const result = await response.json();
-
+        setOutput(result.run.stdout || result.run.stderr || "No output generated");
         // 2. Log the output to check it works
         console.log("Execution Result:", result.run.stdout);
         
@@ -30,6 +30,7 @@ export default function Compiler() {
         // and display it in a box below your editor!
     } catch (error) {
         console.error("Error executing code:", error);
+        console.error(error);
     }
   };
 
@@ -46,6 +47,10 @@ export default function Compiler() {
       >
         Run Code
       </button>
+      <div className="mt-6 p-4 bg-gray-900 text-green-400 rounded border border-gray-700">
+        <h2 className="font-bold text-white mb-2">Output:</h2>
+        <pre className="whitespace-pre-wrap">{output}</pre>
+      </div>
     </div>
   );
 }
