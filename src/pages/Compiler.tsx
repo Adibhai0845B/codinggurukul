@@ -4,10 +4,12 @@ import Editor from '../Editor'; // Adjust path if needed
 export default function Compiler() {
   const [code, setCode] = useState("// Write your code here");
   const [output, setOutput] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Added loading state
   const handleRun = async () => {
     // 1. Show the user that something is happening
     console.log("Compiling...");
-
+     setIsLoading(true);
+    setOutput("Compiling and running...");
     try {
         const response = await fetch("https://emkc.org/api/v2/piston/execute", {
         method: "POST",
@@ -16,21 +18,29 @@ export default function Compiler() {
         },
         body: JSON.stringify({
             language: "cpp", // this will change baad mai
-            version: "*",
-            files: [{ content: code }],
+            version: "10.2.0",
+            files: [{ name : "main.cpp",content: code }],
         }),
         });
 
         const result = await response.json();
-        setOutput(result.run.stdout || result.run.stderr || "No output generated");
-        // 2. Log the output to check it works
-        console.log("Execution Result:", result.run.stdout);
+        if (result.message) {
+        setOutput(`API Error: ${result.message}`);
+        return;
+      }
+
+      // Combine stderr (compile/runtime errors) and stdout so the user sees everything
+      const runResult = result.run;
+      const combinedOutput = runResult.output || (runResult.stderr + runResult.stdout) || "Code executed successfully with no output.";
+      
+      setOutput(combinedOutput);
+      console.log("Execution Result:", runResult);
         
-        // Once you have the output, you can create a new 'output' state
-        // and display it in a box below your editor!
     } catch (error) {
-        console.error("Error executing code:", error);
-        console.error(error);
+      console.error("Error executing code:", error);
+      setOutput("Failed to connect to the compilation server.");
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
