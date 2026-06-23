@@ -74,6 +74,8 @@
     "zod": "latest"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "monaco-editor": "^0.53.0",
     "react-router-dom": "^7.15.1",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^5.0.13"

@@ -14,6 +14,7 @@ export default function Navbar() {
     { href: "/cp", label: "CP Sheet" },
     { href: "/contests", label: "Contests" },
     { href: "/progress", label: "Progress" },
+    { href: "/compiler", label: "Compiler" },
   ];
 
   const isLoggedIn = useAuth((s) => s.isLoggedIn);
