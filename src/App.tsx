@@ -1,6 +1,7 @@
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import Layout from "@/components/Layout";
 import Home from "@/pages/Home";
+import Courses from "@/pages/Courses";
 import DSASheet from "@/pages/DSASheet";
 import CPSheet from "@/pages/CPSheet";
 import Contests from "@/pages/Contests";
@@ -18,6 +19,7 @@ function Router() {
     <Layout>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/courses" component={Courses} />
         <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} />} />
         <Route path="/login" component={Login} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} />} />

@@ -18,19 +18,34 @@ import {
   Trophy,
   Users,
   ExternalLink,
+  ShoppingCart,
+  CreditCard,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL } from "@/config";
 import React, { useState } from "react";
 import { useProgress } from "@/hooks/useProgress";
+import { useCourseCart } from "@/hooks/useCourseCart";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { cpQuestions } from "@/data/cpQuestions";
 import ProgressBar from "@/components/ProgressBar";
 import ContactModal from "@/components/ContactModal";
 import TeamSection from "@/components/TeamSection";
+import CourseCard from "@/components/CourseCard";
 import { AnimatedCodeBlock } from "@/components/ui/animated-code-block";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
+import { courses, type Course } from "@/data/courses";
+import { openRazorpayCheckout } from "@/lib/razorpay";
 
 export default function Home() {
   const { completedIds } = useProgress();
@@ -48,10 +63,54 @@ export default function Home() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isCoursePopupOpen, setIsCoursePopupOpen] = useState(true);
+  const cartItems = useCourseCart((state) => state.items);
+  const addCourse = useCourseCart((state) => state.addCourse);
 
   function openContactModal() {
     setShowSuccess(false);
     setIsModalOpen(true);
+  }
+
+  function addToCart(course: Course) {
+    if (addCourse(course)) {
+      toast({
+        title: "Added to cart",
+        description: `${course.title} has been added.`,
+      });
+      return;
+    }
+
+    toast({
+      title: "Already in cart",
+      description: `${course.title} is already added.`,
+    });
+  }
+
+  async function buyCourse(course: Course) {
+    addToCart(course);
+    setIsCoursePopupOpen(false);
+    await openRazorpayCheckout({
+      course,
+      onSuccess: (paymentId) => {
+        toast({
+          title: "Payment successful",
+          description: `Payment ID: ${paymentId}`,
+        });
+      },
+      onMissingKey: () => {
+        toast({
+          title: "Razorpay key missing",
+          description: "Add VITE_RAZORPAY_KEY_ID to your environment.",
+        });
+      },
+      onScriptError: () => {
+        toast({
+          title: "Razorpay unavailable",
+          description: "Please check your internet connection and try again.",
+        });
+      },
+    });
   }
 
   function handleSuccess() {
@@ -105,6 +164,57 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-background">
+      <Dialog open={isCoursePopupOpen} onOpenChange={setIsCoursePopupOpen}>
+        <DialogContent className="max-w-5xl overflow-hidden p-0">
+          <div className="grid lg:grid-cols-[1.45fr_0.9fr]">
+            <div className="relative min-h-56 bg-white p-4 flex items-center justify-center">
+              <img
+                src={courses[0].image}
+                alt={courses[0].title}
+                className="h-full max-h-[420px] w-full object-contain rounded-xl"
+              />
+            </div>
+            <div className="p-6 md:p-8">
+              <DialogHeader>
+                <Badge className="w-fit bg-orange-100 text-orange-700 hover:bg-orange-100">
+                  {courses[0].tag}
+                </Badge>
+                <DialogTitle className="text-2xl md:text-3xl leading-tight">
+                  Join our {courses[0].title}
+                </DialogTitle>
+                <DialogDescription className="text-base leading-relaxed">
+                  {courses[0].desc}
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="mt-5 flex flex-wrap gap-3 text-sm">
+                <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700">
+                  {courses[0].duration}
+                </span>
+                <span className="rounded-full bg-orange-50 px-3 py-1 font-semibold text-orange-700">
+                  {courses[0].price}
+                </span>
+              </div>
+
+              <div className="mt-7 grid sm:grid-cols-2 gap-3">
+                <Button onClick={() => buyCourse(courses[0])} className="h-11">
+                  <CreditCard className="mr-2 h-4 w-4" />
+                  Buy Now
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => addToCart(courses[0])}
+                  className="h-11"
+                >
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  Add to Cart
+                </Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-slate-950 dark:via-background dark:to-slate-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(249,115,22,0.14),transparent_35%)]" />
@@ -187,6 +297,54 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* COURSES */}
+      <section className="max-w-7xl mx-auto px-4 py-20">
+        <SectionHeader
+          label="Featured Courses"
+          title="Placement Accelerator Courses"
+          desc="Choose from Pro Batch, Foundation Batch, or the Dedicated DSA & CP Sheet."
+        />
+
+        <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-2xl border bg-slate-50 p-4 dark:bg-card">
+          <div className="flex items-center gap-3">
+            <div className="h-11 w-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
+              <ShoppingCart className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="font-bold">Cart</p>
+              <p className="text-sm text-muted-foreground">
+                {cartItems.length
+                  ? `${cartItems.length} course${cartItems.length > 1 ? "s" : ""} selected`
+                  : "No courses added yet"}
+              </p>
+            </div>
+          </div>
+          {cartItems.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {cartItems.map((item) => (
+                <Badge key={item.id} variant="secondary">
+                  {item.title}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-8 grid md:grid-cols-3 gap-6">
+          {courses.map((course) => (
+            <CourseCard
+              key={course.id}
+              course={course}
+              isAdded={cartItems.some((item) => item.id === course.id)}
+              onAddToCart={addToCart}
+              onBuy={buyCourse}
+              compact
+            />
+          ))}
+        </div>
+      </section>
+
       <section className="border-y bg-slate-950 text-white">
         <div className="max-w-7xl mx-auto px-4 py-6 grid md:grid-cols-3 gap-6 text-center">
           <TrustItem title="Academic Partnerships" desc="Stronger coding culture" />
