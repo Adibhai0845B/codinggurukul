@@ -30,6 +30,7 @@ import { cpQuestions } from "@/data/cpQuestions";
 import ProgressBar from "@/components/ProgressBar";
 import ContactModal from "@/components/ContactModal";
 import TeamSection from "@/components/TeamSection";
+import { AnimatedCodeBlock } from "@/components/ui/animated-code-block";
 
 export default function Home() {
   const { completedIds } = useProgress();
@@ -143,7 +144,7 @@ export default function Home() {
                 <Link href="/cp">Explore CP Sheet</Link>
               </Button>
             </div>
-
+            
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
               <Stat value="60K+" label="Student Reach" />
               <Stat value="50+" label="Workshops" />
@@ -153,6 +154,28 @@ export default function Home() {
           </div>
 
           <div className="relative">
+            <div className="mt-8 mb-6">
+              <AnimatedCodeBlock 
+                code={`class Solution {
+  solve(head) {
+    if (!head) return null;
+    let slow = head;
+    let fast = head;
+    while (fast && fast.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow === fast) return true;
+    }
+    return false;
+  }
+}`} 
+                theme="dark" 
+                typingSpeed={25} 
+                showLineNumbers={true} 
+                autoPlay={true} 
+                title="Coding Gurukul"
+              />
+            </div>
             <div className="rounded-[2rem] overflow-hidden shadow-2xl border bg-white">
               <img
                 // `banner.png` was missing from `public/` — fall back to an existing asset
