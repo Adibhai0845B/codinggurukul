@@ -19,7 +19,7 @@ export const cpQuestions: CPQuestion[] = [
   { id: "cp-007", title: "George and Accommodation", rating: 800, topic: "Implementation", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/270/A", note: "Count rooms with >= 2 free" },
   { id: "cp-008", title: "Next Round", rating: 800, topic: "Implementation", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/158/A", note: "Count score >= k-th score (if positive)" },
   { id: "cp-009", title: "Domino Piling", rating: 800, topic: "Maths", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/50/A", note: "Floor(m*n/2)" },
-  { id: "cp-010", title: "Petya and Strings", rating: 800, topic: "Strings", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/579/A", note: "Compare char by char with case ignore" },
+  { id: "cp-010", title: "Petya and Strings", rating: 800, topic: "Strings", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/112/A", note: "Compare char by char with case ignore" },
   { id: "cp-011", title: "Helpful Maths", rating: 800, topic: "Sorting", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/339/A", note: "Extract digits, sort, rejoin" },
   { id: "cp-012", title: "Codehorses with Drinks", rating: 800, topic: "Implementation", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/828/A", note: "Check if B appears in A" },
   { id: "cp-013", title: "Dubstep", rating: 800, topic: "Strings", tags: [], codeforcesLink: "https://codeforces.com/problemset/problem/588/A", note: "Remove WUB, trim, collapse spaces" },
