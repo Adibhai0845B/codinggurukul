@@ -11,6 +11,7 @@ export default function Navbar() {
   const links =[
     { href: "/", label: "Home" },
     { href: "/courses", label: "Courses" },
+    { href: "/roadmap", label: "Roadmap" },
     { href: "/dsa", label: "DSA Sheet" },
     { href: "/cp", label: "CP Sheet" },
     { href: "/contests", label: "Contests" },

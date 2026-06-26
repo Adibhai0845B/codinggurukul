@@ -10,6 +10,7 @@ import NotFound from "@/pages/not-found";
 import Login from "@/pages/Login";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster"; // Adjust path as needed
+import RoadmapPage from "@/pages/RoadmapPage";
 
 
 import Compiler from "@/pages/Compiler"; // compiler ke liye
@@ -23,6 +24,8 @@ function Router() {
         <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} />} />
         <Route path="/login" component={Login} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} />} />
+        <Route path="/" component={Home} />
+        <Route path="/roadmap" component={RoadmapPage} />
         <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />
         <Route path="/progress" component={() => <ProtectedRoute component={Progress} />} />
         <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} />} />
