@@ -79,6 +79,7 @@
     "motion": "^12.41.0",
     "prismjs": "^1.30.0",
     "react-router-dom": "^7.15.1",
+    "reactflow": "^11.11.4",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^5.0.13"
   }
