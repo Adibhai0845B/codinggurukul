@@ -25,7 +25,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL } from "@/config";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL, PURCHASE_FORM_URL } from "@/config";
 import React, { useState } from "react";
 import { useProgress } from "@/hooks/useProgress";
 import { useCourseCart } from "@/hooks/useCourseCart";
@@ -45,7 +45,6 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import { courses, type Course } from "@/data/courses";
-import { openRazorpayCheckout } from "@/lib/razorpay";
 
 export default function Home() {
   const { completedIds } = useProgress();
@@ -87,30 +86,9 @@ export default function Home() {
     });
   }
 
-  async function buyCourse(course: Course) {
-    addToCart(course);
+  function buyCourse(_course: Course) {
     setIsCoursePopupOpen(false);
-    await openRazorpayCheckout({
-      course,
-      onSuccess: (paymentId) => {
-        toast({
-          title: "Payment successful",
-          description: `Payment ID: ${paymentId}`,
-        });
-      },
-      onMissingKey: () => {
-        toast({
-          title: "Razorpay key missing",
-          description: "Add VITE_RAZORPAY_KEY_ID to your environment.",
-        });
-      },
-      onScriptError: () => {
-        toast({
-          title: "Razorpay unavailable",
-          description: "Please check your internet connection and try again.",
-        });
-      },
-    });
+    window.open(PURCHASE_FORM_URL, "_blank", "noopener,noreferrer");
   }
 
   function handleSuccess() {

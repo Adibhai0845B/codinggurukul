@@ -15,7 +15,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { useCourseCart } from "@/hooks/useCourseCart";
 import { courses, type Course } from "@/data/courses";
-import { openRazorpayCheckout } from "@/lib/razorpay";
+import { PURCHASE_FORM_URL } from "@/config";
 
 export default function Courses() {
   const cartItems = useCourseCart((state) => state.items);
@@ -36,29 +36,8 @@ export default function Courses() {
     });
   }
 
-  async function buyCourse(course: Course) {
-    addToCart(course);
-    await openRazorpayCheckout({
-      course,
-      onSuccess: (paymentId) => {
-        toast({
-          title: "Payment successful",
-          description: `Payment ID: ${paymentId}`,
-        });
-      },
-      onMissingKey: () => {
-        toast({
-          title: "Razorpay key missing",
-          description: "Add VITE_RAZORPAY_KEY_ID to your environment.",
-        });
-      },
-      onScriptError: () => {
-        toast({
-          title: "Razorpay unavailable",
-          description: "Please check your internet connection and try again.",
-        });
-      },
-    });
+  function buyCourse(_course: Course) {
+    window.open(PURCHASE_FORM_URL, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -112,7 +91,7 @@ export default function Courses() {
           <TrustPoint icon={<Clock />} title="Live + Structured" />
           <TrustPoint icon={<Award />} title="Certificate Included" />
           <TrustPoint icon={<ShieldCheck />} title="Interview Focused" />
-          <TrustPoint icon={<CheckCircle2 />} title="Razorpay Checkout" />
+          <TrustPoint icon={<CheckCircle2 />} title="Form Registration" />
         </div>
       </section>
 
