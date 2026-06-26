@@ -43,4 +43,5 @@ export const roadmapEdges = [
   { id: "e4", source: "Strings", target: "BinarySearch" },
   { id: "e5", source: "Hashing", target: "Recursion" },
   { id: "e6", source: "Hashing", target: "LinkedList" },
+  { id: "e7", source: "LinkedList", target: "Tree" },
 ];
