@@ -44,4 +44,7 @@ export const roadmapEdges = [
   { id: "e5", source: "Hashing", target: "Recursion" },
   { id: "e6", source: "Hashing", target: "LinkedList" },
   { id: "e7", source: "LinkedList", target: "Tree" },
+  { id: "e8", source: "Recursion", target: "Tree" },
+  { id: "e9", source: "Tree", target: "DP" },
+  
 ];
