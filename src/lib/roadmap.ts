@@ -65,7 +65,6 @@ export const roadmapEdges = [
   // Level 5: Final topics
   { id: "e17", source: "Heap", target: "Trie" ,style: { strokeWidth: 3, stroke: '#FFFFFF' }, markerEnd: { type: MarkerType.ArrowClosed, color: '#FFFFFF' }},
   { id: "e18", source: "Graph", target: "Trie" ,style: { strokeWidth: 3, stroke: '#FFFFFF' }, markerEnd: { type: MarkerType.ArrowClosed, color: '#FFFFFF' }},
-  { id: "e19", source: "DP", target: "Advanced" ,style: { strokeWidth: 3, stroke: '#FFFFFF' }, markerEnd: { type: MarkerType.ArrowClosed, color: '#FFFFFF' }},
-  { id: "e20", source: "Greedy", target: "Advanced",style: { strokeWidth: 3, stroke: '#FFFFFF' }, markerEnd: { type: MarkerType.ArrowClosed, color: '#FFFFFF' } }
+  { id: "e19", source: "DP", target: "Advanced" ,style: { strokeWidth: 3, stroke: '#FFFFFF' }, markerEnd: { type: MarkerType.ArrowClosed, color: '#FFFFFF' }}
   
 ];
