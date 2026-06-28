@@ -37,14 +37,34 @@ export const getRoadmapGraphData = (completedIds: string[]) => {
 };
 
 export const roadmapEdges = [
+  // Level 1: Root
   { id: "e1", source: "Arrays", target: "Strings" },
   { id: "e2", source: "Arrays", target: "Hashing" },
+
+  // Level 2: Branching from Strings/Hashing
   { id: "e3", source: "Strings", target: "Searching" },
   { id: "e4", source: "Strings", target: "BinarySearch" },
   { id: "e5", source: "Hashing", target: "Recursion" },
   { id: "e6", source: "Hashing", target: "LinkedList" },
-  { id: "e7", source: "LinkedList", target: "Tree" },
-  { id: "e8", source: "Recursion", target: "Tree" },
-  { id: "e9", source: "Tree", target: "DP" },
+
+  // Level 3: Connecting to core data structures
+  { id: "e7", source: "Searching", target: "Stack" },
+  { id: "e8", source: "BinarySearch", target: "Stack" },
+  { id: "e9", source: "Recursion", target: "SlidingWindow" },
+  { id: "e10", source: "Recursion", target: "Tree" },
+  { id: "e11", source: "LinkedList", target: "Tree" },
+
+  // Level 4: Advanced structures
+  { id: "e12", source: "Stack", target: "Heap" },
+  { id: "e13", source: "Stack", target: "Graph" },
+  { id: "e14", source: "SlidingWindow", target: "Graph" },
+  { id: "e15", source: "Tree", target: "DP" },
+  { id: "e16", source: "Tree", target: "Greedy" },
+
+  // Level 5: Final topics
+  { id: "e17", source: "Heap", target: "Trie" },
+  { id: "e18", source: "Graph", target: "Trie" },
+  { id: "e19", source: "DP", target: "Advanced" },
+  { id: "e20", source: "Greedy", target: "Advanced" }
   
 ];
