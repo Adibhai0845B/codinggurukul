@@ -219,7 +219,7 @@
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="h-12 px-7 rounded-xl" asChild>
                   <Link href="/dsa">
-                    Start DSA Practice <ArrowRight className="ml-2 h-4 w-4" />
+                    Explore Resources <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
 

@@ -29,7 +29,7 @@ export default function Navbar() {
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
             <span className="font-bold sm:inline-block">
-              Coding Gurukul Sheet
+              Coding Gurukul
             </span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
