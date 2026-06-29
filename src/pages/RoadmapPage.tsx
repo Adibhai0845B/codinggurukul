@@ -3,14 +3,9 @@ import { Roadmap } from "@/components/Roadmap";
 
 export default function RoadmapPage() {
   return (
-    <div className="min-h-screen bg-background py-16 px-4">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl font-extrabold mb-2">DSA Learning Roadmap</h1>
-        <p className="text-muted-foreground mb-12">
-          Track your progress and follow the recommended path.
-        </p>
-        <Roadmap />
-      </div>
+    // assuming it is roughl (h-14) tall
+    <div className="h-[calc(100vh-56px)] w-full bg-[#1e1e1e] overflow-hidden m-0 p-0">
+      <Roadmap />
     </div>
   );
 }
