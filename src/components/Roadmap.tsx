@@ -98,7 +98,7 @@ export const Roadmap = () => {
   const { nodes, edges } = useMemo(() => generateGraphData(completedIds), [completedIds]);
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: any) => {
-    setLocation('/dsa'); 
+    setLocation(`/dsa?topic=${encodeURIComponent(node.id)}`); // sp that it goes to the specific dsa sheet topic 
   }, [setLocation]);
 
   return (
@@ -113,7 +113,7 @@ export const Roadmap = () => {
         maxZoom={1.5}
         style={{ backgroundColor: THEME.bg }}
         proOptions={{ hideAttribution: true }}//jus removing watermarkk
-        
+
       >
         <Background gap={24} size={1} color="#333" />
         {/* 3. Render CustomControls inside ReactFlow instead of the default Controls */}

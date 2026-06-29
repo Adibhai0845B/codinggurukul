@@ -8,25 +8,57 @@ import ProgressBar from "@/components/ProgressBar";
 import useAuth from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 
+// Dictionary to map roadmap node short IDs to dataset topic names
+const TOPIC_MAPPING: Record<string, string> = {
+  "Arrays": "Arrays & Two Pointer",
+  "Strings": "Strings",
+  "Hashing": "Hashing",
+  "Searching": "Searching & Sorting",
+  "BinarySearch": "Binary Search",
+  "Recursion": "Recursion & Backtracking",
+  "LinkedList": "Linked List",
+  "Stack": "Stack & Queue",
+  "SlidingWindow": "Sliding Window & Two Pointer",
+  "Tree": "Tree & BST",
+  "Heap": "Heap & Priority Queue",
+  "Graph": "Graph",
+  "DP": "Dynamic Programming",
+  "Greedy": "Greedy",
+  "Trie": "Trie & Bit Manipulation",
+  "Advanced": "Segment Tree / Advanced"
+};
+
 export default function DSASheet() {
-  const { completedIds, bookmarkedIds,fetchProgress } = useProgress();
+  const { completedIds, bookmarkedIds, fetchProgress } = useProgress();
   const isLoggedIn = useAuth((s) => s.isLoggedIn);
   const [location, setLocation] = useLocation();
 
+  // Unified filter states
+  const [search, setSearch] = useState("");
+  const [difficulty, setDifficulty] = useState("All");
+  const [company, setCompany] = useState("All");
+  const [status, setStatus] = useState("All");
+  const [topicFilter, setTopicFilter] = useState("All");
+
+  // Authentication Effect
   useEffect(() => {
-    // If not logged in, redirect to login page (unless already there)
     if (isLoggedIn) {
       fetchProgress(); 
     } else if (location !== "/login") {
       setLocation("/login");
     }
   }, [isLoggedIn, location, setLocation, fetchProgress]);
-  
-  const [search, setSearch] = useState("");
-  const [difficulty, setDifficulty] = useState("All");
-  const [company, setCompany] = useState("All");
-  const [status, setStatus] = useState("All");
-  const [topicFilter, setTopicFilter] = useState("All");
+
+  // URL Parameter Syncing Effect
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const targetTopicId = searchParams.get("topic");
+
+    if (targetTopicId && TOPIC_MAPPING[targetTopicId]) {
+      // Automatically update the main filter state to match the clicked node
+      setTopicFilter(TOPIC_MAPPING[targetTopicId]);
+    }
+  }, []);
 
   const companies = useMemo(() => {
     const all = new Set<string>();
