@@ -112,6 +112,8 @@ export const Roadmap = () => {
         minZoom={0.2}
         maxZoom={1.5}
         style={{ backgroundColor: THEME.bg }}
+        proOptions={{ hideAttribution: true }}//jus removing watermarkk
+        
       >
         <Background gap={24} size={1} color="#333" />
         {/* 3. Render CustomControls inside ReactFlow instead of the default Controls */}
