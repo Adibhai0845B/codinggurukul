@@ -240,7 +240,7 @@
               <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <Stat value="60K+" label="Student Reach" />
                 <Stat value="50+" label="Workshops" />
-                <Stat value="150+" label="Problems" />
+                <Stat value="170+" label="Problems" />
                 <Stat value="5+" label="Domains" />
               </div>
             </div>
