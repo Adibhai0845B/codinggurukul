@@ -25,7 +25,7 @@ const members: Member[] = Array.from({ length: 12 }).map((_, i) => ({
   role: [
     "Managing Director",
     "Founder",
-    "Co-Founder, CFO",
+    "Advisor",
     "CMO",
     "HR Manager",
     "Company Advisor",
