@@ -644,7 +644,7 @@ export const dsaQuestions: DSAQuestion[] = [
     difficulty: "Medium",
     companies: ["Amazon", "Flipkart", "Swiggy"],
     leetcodeLink: "",
-    gfgLink: "https://www.geeksforgeeks.org/aggressive-cows-problem-binary-search/",
+    gfgLink: "https://www.geeksforgeeks.org/problems/aggressive-cows/1",
     youtubeLink: "",
     note: "Binary search on minimum distance"
   },
