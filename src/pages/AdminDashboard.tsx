@@ -9,7 +9,7 @@ import { UserPlus } from "lucide-react"; // Import the icon
 interface User {
   _id: string;
   username: string;
-  name: string;
+  collegeName: string;
   completedIds: string[];
   createdAt: string;
 }
@@ -77,7 +77,7 @@ export default function AdminDashboard() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${adminToken}` 
         },
-        body: JSON.stringify({ username: newUsername, password: newPassword, name: newName })
+        body: JSON.stringify({ username: newUsername, password: newPassword, collegeName: newName })
       });
 
       const data = await res.json();
@@ -224,7 +224,7 @@ export default function AdminDashboard() {
                   {users.map((user) => (
                     <tr key={user._id} className="hover:bg-zinc-800/30">
                       <td className="px-4 py-3 font-medium text-white">{user.username}</td>
-                      <td className="px-4 py-3 text-zinc-300">{user.name || "-"}</td>
+                      <td className="px-4 py-3 text-zinc-300">{user.collegeName || "-"}</td>
                       <td className="px-4 py-3 text-zinc-400">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
