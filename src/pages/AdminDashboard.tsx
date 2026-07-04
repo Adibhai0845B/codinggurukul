@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { UserPlus } from "lucide-react"; // Import the icon
 
 interface User {
   _id: string;
@@ -17,17 +19,23 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({ totalUsers: 0, totalProblemsSolved: 0 });
   const [loading, setLoading] = useState(true);
   
+  // Add User Form States
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newName, setNewName] = useState("");
+  const [formError, setFormError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const { isAdminLoggedIn, adminToken, logoutAdmin } = useAdminAuth();
   const [, setLocation] = useLocation();
 
-  // 1. Kick out unauthorized visitors
   useEffect(() => {
     if (!isAdminLoggedIn) {
       setLocation("/admin/login");
     }
   }, [isAdminLoggedIn, setLocation]);
 
-  // 2. Fetch the Data from your backend
   useEffect(() => {
     if (!adminToken) return;
 
@@ -56,7 +64,43 @@ export default function AdminDashboard() {
     fetchData();
   }, [adminToken]);
 
-  // 3. Delete User Function
+  // NEW: Handle adding a user
+  const handleAddUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError("");
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("https://coding-gurukul-backend.onrender.com/api/admin/users", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${adminToken}` 
+        },
+        body: JSON.stringify({ username: newUsername, password: newPassword, name: newName })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "Failed to create user");
+
+      // Success! Add user to the top of the table
+      setUsers([data.user, ...users]);
+      setStats(prev => ({ ...prev, totalUsers: prev.totalUsers + 1 }));
+      
+      // Reset and close form
+      setNewUsername("");
+      setNewPassword("");
+      setNewName("");
+      setShowAddForm(false);
+      
+    } catch (err: any) {
+      setFormError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleDeleteUser = async (userId: string) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -92,7 +136,6 @@ export default function AdminDashboard() {
       </div>
 
       <div className="max-w-6xl mx-auto space-y-8">
-        {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="bg-zinc-900 border-zinc-800">
             <CardHeader><CardTitle className="text-zinc-400">Total Registered Users</CardTitle></CardHeader>
@@ -104,7 +147,64 @@ export default function AdminDashboard() {
           </Card>
         </div>
 
-        {/* Users Table */}
+        {/* Action Bar */}
+        <div className="flex justify-end">
+          <Button 
+            onClick={() => setShowAddForm(!showAddForm)} 
+            className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2"
+          >
+            <UserPlus size={18} />
+            {showAddForm ? "Cancel Registration" : "Add New Student"}
+          </Button>
+        </div>
+
+        {/* Add User Form - Slides in when button is clicked */}
+        {showAddForm && (
+          <Card className="bg-zinc-900 border-blue-500/50">
+            <CardHeader>
+              <CardTitle className="text-blue-400">Register New Student</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleAddUser} className="flex flex-col md:flex-row gap-4 items-start md:items-end">
+                <div className="space-y-2 flex-1 w-full">
+                  <label className="text-sm text-zinc-400">Full Name (Optional)</label>
+                  <Input 
+                    placeholder="e.g. John Doe" 
+                    value={newName} 
+                    onChange={e => setNewName(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700 text-white"
+                  />
+                </div>
+                <div className="space-y-2 flex-1 w-full">
+                  <label className="text-sm text-zinc-400">Username *</label>
+                  <Input 
+                    placeholder="e.g. johndoe123" 
+                    required 
+                    value={newUsername} 
+                    onChange={e => setNewUsername(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700 text-white"
+                  />
+                </div>
+                <div className="space-y-2 flex-1 w-full">
+                  <label className="text-sm text-zinc-400">Password *</label>
+                  <Input 
+                    type="password"
+                    placeholder="Temporary password" 
+                    required 
+                    value={newPassword} 
+                    onChange={e => setNewPassword(e.target.value)}
+                    className="bg-zinc-800 border-zinc-700 text-white"
+                  />
+                </div>
+                <Button type="submit" disabled={isSubmitting} className="bg-green-600 hover:bg-green-700 text-white md:w-auto w-full">
+                  {isSubmitting ? "Creating..." : "Save User"}
+                </Button>
+              </form>
+              {formError && <p className="text-red-500 mt-4 text-sm font-medium">{formError}</p>}
+            </CardContent>
+          </Card>
+        )}
+
         <Card className="bg-zinc-900 border-zinc-800">
           <CardHeader><CardTitle>User Management</CardTitle></CardHeader>
           <CardContent>
@@ -128,7 +228,6 @@ export default function AdminDashboard() {
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-3">
-                        {/* Defensive check just in case completedIds is missing */}
                         <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-xs font-bold">
                           {(user.completedIds || []).length}
                         </span>
