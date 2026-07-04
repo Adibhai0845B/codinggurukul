@@ -15,6 +15,8 @@ import RoadmapPage from "@/pages/RoadmapPage";
 
 import Compiler from "@/pages/Compiler"; // compiler ke liye
 
+import AdminLogin from "@/pages/AdminLogin";// Admin login page
+
 function Router() {
   return (
     <Layout>
@@ -29,6 +31,7 @@ function Router() {
         <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />
         <Route path="/progress" component={() => <ProtectedRoute component={Progress} />} />
         <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} />} />
+        <Route path="/admin/login" component={AdminLogin} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
