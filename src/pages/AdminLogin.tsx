@@ -21,7 +21,7 @@ export default function AdminLogin() {
 
     try {
       // Make sure this URL matches your backend port (adjust if necessary)
-      const response = await fetch("http://localhost:5000/api/admin/auth/login", {
+      const response = await fetch("https://coding-gurukul-backend.onrender.com/api/admin/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
