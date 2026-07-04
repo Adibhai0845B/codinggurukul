@@ -167,18 +167,19 @@ export default function AdminDashboard() {
             <CardContent>
               <form onSubmit={handleAddUser} className="flex flex-col md:flex-row gap-4 items-start md:items-end">
                 <div className="space-y-2 flex-1 w-full">
-                  <label className="text-sm text-zinc-400">Full Name (Optional)</label>
-                  <Input 
-                    placeholder="e.g. John Doe" 
-                    value={newName} 
-                    onChange={e => setNewName(e.target.value)}
-                    className="bg-zinc-800 border-zinc-700 text-white"
-                  />
+                    <label className="text-sm text-zinc-400">College Name *</label>
+                    <Input 
+                        placeholder="e.g. IIIT Vadodara" 
+                        required // Make it required since the Schema demands it!
+                        value={newName} 
+                        onChange={e => setNewName(e.target.value)}
+                        className="bg-zinc-800 border-zinc-700 text-white"
+                    />
                 </div>
                 <div className="space-y-2 flex-1 w-full">
                   <label className="text-sm text-zinc-400">Username *</label>
                   <Input 
-                    placeholder="e.g. johndoe123" 
+                    placeholder="e.g. Abhishek_Pandey" 
                     required 
                     value={newUsername} 
                     onChange={e => setNewUsername(e.target.value)}
@@ -189,7 +190,7 @@ export default function AdminDashboard() {
                   <label className="text-sm text-zinc-400">Password *</label>
                   <Input 
                     type="password"
-                    placeholder="Temporary password" 
+                    placeholder="e.g. kaisa_laga_ye_sir/maam?" 
                     required 
                     value={newPassword} 
                     onChange={e => setNewPassword(e.target.value)}
