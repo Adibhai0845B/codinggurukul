@@ -18,6 +18,7 @@ import Compiler from "@/pages/Compiler"; // compiler ke liye
 import AdminLogin from "@/pages/AdminLogin";// Admin login page
 
 import AdminDashboard from "@/pages/AdminDashboard";
+import Register from "./pages/Register";
 
 function Router() {
   return (
@@ -25,16 +26,21 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/courses" component={Courses} />
-        <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} />} />
-        <Route path="/login" component={Login} />
-        <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} />} />
-        <Route path="/" component={Home} />
         <Route path="/roadmap" component={RoadmapPage} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} /> {/* Add your new Register page here */}
+        
+        {/* These are your Premium/Enrolled-only pages */}
+        <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} requireEnrolled={true} />} />
+        <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} requireEnrolled={true} />} />
+        <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} requireEnrolled={true} />} />
+        
+        {/* These are standard protected pages (available to both registered and enrolled) */}
         <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />
         <Route path="/progress" component={() => <ProtectedRoute component={Progress} />} />
-        <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} />} />
+        
         <Route path="/admin/login" component={AdminLogin} />
-        <Route path="/admin/dashboard" component={AdminDashboard} />
+        <Route path="/admin/dashboard" component={() => <ProtectedRoute component={AdminDashboard} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

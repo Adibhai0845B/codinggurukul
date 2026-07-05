@@ -32,7 +32,7 @@ const Login = () => {
       }
 
       // Success path...
-      useAuth.getState().login(data.username, data.token);
+      useAuth.getState().login(data.username, data.token,data.role);
       // ... rest of your success logic
       await useProgress.getState().fetchProgress();// fetch the user progress (Maybe change karunga in future)
       setLocation("/");
@@ -75,6 +75,16 @@ const Login = () => {
         <button type="submit" className="p-2 text-white bg-blue-600 rounded hover:bg-blue-700">
           Sign In
         </button>
+        <div className="mt-4 text-center text-sm text-zinc-600">
+          New here?{" "}
+          <button 
+            type="button" 
+            onClick={() => setLocation("/register")} 
+            className="text-blue-600 font-bold hover:underline"
+          >
+            Create an account
+          </button>
+        </div>
       </form>
     </div>
   );

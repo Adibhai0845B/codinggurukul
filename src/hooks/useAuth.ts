@@ -4,8 +4,9 @@ import { persist } from "zustand/middleware";
 interface AuthState {
   isLoggedIn: boolean;
   username?: string;
-  token?: string; // We need to store the JWT for future requests
-  login: (username: string, token: string) => void;
+  token?: string; 
+  userRole?: 'registered' | 'enrolled'; // Add this
+  login: (username: string, token: string, role: 'registered' | 'enrolled') => void; // Update this
   logout: () => void;
 }
 
@@ -15,23 +16,22 @@ export const useAuth = create<AuthState>()(
       isLoggedIn: false,
       username: undefined,
       token: undefined,
+      userRole: undefined, // Add this
       
-      // Called by Login.tsx after a successful backend API request
-      login: (username: string, token: string) => {
-        set({ isLoggedIn: true, username, token });
+      login: (username: string, token: string, role: 'registered' | 'enrolled') => {
+        set({ isLoggedIn: true, username, token, userRole: role });
       },
       
       logout: () => {
-        set({ isLoggedIn: false, username: undefined, token: undefined });
-        // Clear progress from local storage so the next student doesn't see it!
+        set({ isLoggedIn: false, username: undefined, token: undefined, userRole: undefined });
         localStorage.removeItem("coding-gurukul-progress-storage");
-        localStorage.removeItem("coding-gurukul-auth");// Clear auth state from local storage
+        localStorage.removeItem("coding-gurukul-auth");
       },
     }),
     {
-      name: "coding-gurukul-auth", // Updated to the new brand name
+      name: "coding-gurukul-auth",
     }
   )
 );
 
-export default useAuth;
+export default useAuth; 
