@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2048" height="674" viewBox="0 0 2048 674" role="img" aria-labelledby="title desc">
   <title id="title">Dedicated DSA and CP Sheet</title>
-  <desc id="desc">Coding Gurukul Dedicated DSA and CP Sheet banner with launch price Rs. 299.</desc>
+  <desc id="desc">Coding Gurukul Dedicated DSA and CP Sheet banner with launch price Rs. 299 and launch date 20th July.</desc>
   <rect width="2048" height="674" rx="18" fill="#f9fcff"/>
   <path d="M0 0h330C200 100 90 130 0 146zM0 674h300C174 595 75 570 0 520z" fill="#0246a3"/>
   <path d="M0 86c115 22 205 4 328-86h70C258 116 132 158 0 132zM0 585c100-8 176 19 276 89h66C230 555 110 512 0 535z" fill="#ff6b00"/>
@@ -38,9 +38,10 @@
     <rect width="284" height="190" rx="16" fill="#fff7ed" stroke="#ff6500" stroke-width="2"/>
     <rect width="284" height="54" rx="16" fill="#ff6500"/>
     <text x="142" y="36" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="900" fill="#fff">Launch Price</text>
-    <text x="142" y="136" text-anchor="middle" font-family="Arial, sans-serif" font-size="78" font-weight="900" fill="#ff6500">Rs. 299</text>
+    <text x="142" y="126" text-anchor="middle" font-family="Arial, sans-serif" font-size="68" font-weight="900" fill="#ff6500">Rs. 299</text>
     <rect x="28" y="146" width="228" height="34" rx="10" fill="#0647a5"/>
     <text x="142" y="169" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="900" fill="#fff">Affordable Access</text>
+    <text x="142" y="188" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="900" fill="#06113a">Launch: 20th July</text>
   </g>
   <image href="/logo_transparent.png" x="1570" y="74" width="300" height="300" preserveAspectRatio="xMidYMid meet"/>
   <text x="1720" y="406" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#06113a">Code Your Future. Create Tomorrow.</text>

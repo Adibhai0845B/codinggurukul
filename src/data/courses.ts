@@ -7,6 +7,7 @@ export type Course = {
   originalPrice?: string;
   amountPaise: number;
   duration: string;
+  launchDate: string;
   image: string;
   tag: string;
   features: string[];
@@ -22,6 +23,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 15,000",
     amountPaise: 349900,
     duration: "45 Days",
+    launchDate: "20th July",
     image: "/courses/pro-batch.svg",
     tag: "New Launch",
     features: [
@@ -44,6 +46,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 10,000",
     amountPaise: 279900,
     duration: "2 Months",
+    launchDate: "20th July",
     image: "/courses/foundation-batch.svg",
     tag: "New Launch",
     features: [
@@ -65,6 +68,7 @@ export const courses: Course[] = [
     price: "Rs. 299",
     amountPaise: 29900,
     duration: "Lifetime Access",
+    launchDate: "20th July",
     image: "/courses/dsa-cp-sheet.svg",
     tag: "Affordable Access",
     features: [

@@ -18,6 +18,16 @@ const Login = () => {
     e.preventDefault();
     setLoading(true); // Start loading jab login ho raha ho
     try {
+      if (import.meta.env.DEV && username === "student" && password === "student123") {
+        useAuth.getState().login("student", "local-dev-token", "enrolled");
+        setLocation("/");
+        toast({
+          title: "Local Login Successful",
+          description: "Welcome to localhost testing!",
+        });
+        return;
+      }
+
       const authResponse = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

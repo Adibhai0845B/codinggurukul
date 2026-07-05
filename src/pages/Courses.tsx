@@ -1,8 +1,8 @@
 import {
   Award,
   CheckCircle2,
-  Clock,
   CreditCard,
+  CalendarDays,
   ShieldCheck,
   ShoppingCart,
   Sparkles,
@@ -56,7 +56,7 @@ export default function Courses() {
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
               Choose the right accelerator: foundation for basics, pro batch
               for advanced DSA and CP, or the dedicated sheet for focused
-              practice.
+              practice. All batches are launching on 20th July.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -72,7 +72,7 @@ export default function Courses() {
             <div className="mt-8 grid grid-cols-3 gap-3">
               <HeroStat value="3" label="Programs" />
               <HeroStat value="Rs. 299" label="Starting" />
-              <HeroStat value="45 Days" label="Pro Batch" />
+              <HeroStat value="20th July" label="Launch Date" />
             </div>
           </div>
 
@@ -88,7 +88,7 @@ export default function Courses() {
 
       <section className="border-b bg-slate-950 text-white">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 py-5 md:grid-cols-4">
-          <TrustPoint icon={<Clock />} title="Live + Structured" />
+          <TrustPoint icon={<CalendarDays />} title="Launching 20th July" />
           <TrustPoint icon={<Award />} title="Certificate Included" />
           <TrustPoint icon={<ShieldCheck />} title="Interview Focused" />
           <TrustPoint icon={<CheckCircle2 />} title="Form Registration" />

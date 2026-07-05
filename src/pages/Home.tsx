@@ -285,7 +285,7 @@
           <SectionHeader
             label="Featured Courses"
             title="Placement Accelerator Courses"
-            desc="Choose from Pro Batch, Foundation Batch, or the Dedicated DSA & CP Sheet."
+            desc="Choose from Pro Batch, Foundation Batch, or the Dedicated DSA & CP Sheet. All batches are launching on 20th July."
           />
 
           <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-2xl border bg-slate-50 p-4 dark:bg-card">

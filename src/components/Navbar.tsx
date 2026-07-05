@@ -12,6 +12,7 @@ export default function Navbar() {
     { href: "/", label: "Home" },
     { href: "/courses", label: "Courses" },
     { href: "/roadmap", label: "Roadmap" },
+    { href: "/start-100", label: "Start 150" },
     { href: "/dsa", label: "DSA Sheet" },
     { href: "/cp", label: "CP Sheet" },
     { href: "/contests", label: "Contests" },

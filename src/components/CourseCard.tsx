@@ -1,4 +1,4 @@
-import { CheckCircle2, CreditCard, ShoppingCart, Sparkles } from "lucide-react";
+import { CalendarDays, CheckCircle2, CreditCard, ShoppingCart, Sparkles } from "lucide-react";
 
 import type { Course } from "@/data/courses";
 import { Badge } from "@/components/ui/badge";
@@ -45,6 +45,10 @@ export default function CourseCard({
             </h3>
             <p className="mt-1 text-sm font-semibold text-slate-600">
               Duration: {course.duration}
+            </p>
+            <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-blue-700">
+              <CalendarDays className="h-3.5 w-3.5" />
+              Launching on {course.launchDate}
             </p>
           </div>
           <div className="shrink-0 rounded-xl border border-orange-100 bg-orange-50 px-4 py-3 text-left sm:text-right">

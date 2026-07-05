@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useProgress } from "@/hooks/useProgress";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { cpQuestions } from "@/data/cpQuestions";
+import { start100Questions } from "@/data/start100Questions";
 import ProgressCard from "@/components/ProgressCard";
 import ProgressBar from "@/components/ProgressBar";
 import { CheckCircle2, Bookmark, Target, TrendingUp, Trophy, Code2 } from "lucide-react";
@@ -17,8 +18,11 @@ export default function Progress() {
   const totalCp = cpQuestions.length;
   const cpCompletedCount = cpQuestions.filter(q => completedIds.includes(q.id)).length;
 
-  const totalCompleted = dsaCompletedCount + cpCompletedCount;
-  const totalQuestions = totalDsa + totalCp;
+  const totalStart100 = start100Questions.length;
+  const start100CompletedCount = start100Questions.filter(q => completedIds.includes(q.id)).length;
+
+  const totalCompleted = dsaCompletedCount + cpCompletedCount + start100CompletedCount;
+  const totalQuestions = totalDsa + totalCp + totalStart100;
   const overallPercentage = totalQuestions === 0 ? 0 : Math.round((totalCompleted / totalQuestions) * 100);
 
   const dsaTopics = useMemo(() => {
@@ -58,9 +62,10 @@ export default function Progress() {
     .slice(0, 3);
 
   const allQuestionsMap = useMemo(() => {
-    const map: Record<string, { title: string, type: 'DSA' | 'CP' }> = {};
+    const map: Record<string, { title: string, type: 'DSA' | 'CP' | 'Start 150' }> = {};
     dsaQuestions.forEach(q => map[q.id] = { title: q.title, type: 'DSA' });
     cpQuestions.forEach(q => map[q.id] = { title: q.title, type: 'CP' });
+    start100Questions.forEach(q => map[q.id] = { title: q.title, type: 'Start 150' });
     return map;
   }, []);
 
@@ -93,6 +98,12 @@ export default function Progress() {
           subText={`/ ${totalCp}`}
         />
         <ProgressCard 
+          icon={<Code2 className="h-6 w-6" />}
+          label="Start 150 Progress"
+          value={start100CompletedCount}
+          subText={`/ ${totalStart100}`}
+        />
+        <ProgressCard 
           icon={<Bookmark className="h-6 w-6" />}
           label="Bookmarked"
           value={bookmarkedIds.length}
@@ -106,6 +117,11 @@ export default function Progress() {
           icon={<TrendingUp className="h-6 w-6" />}
           label="Pending CP"
           value={totalCp - cpCompletedCount}
+        />
+        <ProgressCard 
+          icon={<CheckCircle2 className="h-6 w-6" />}
+          label="Pending Start 150"
+          value={totalStart100 - start100CompletedCount}
         />
       </div>
 

@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import Courses from "@/pages/Courses";
 import DSASheet from "@/pages/DSASheet";
 import CPSheet from "@/pages/CPSheet";
+import Start100Sheet from "@/pages/Start100Sheet";
 import Contests from "@/pages/Contests";
 import Progress from "@/pages/Progress";
 import NotFound from "@/pages/not-found";
@@ -37,6 +38,7 @@ function Router() {
         <Route path="/register" component={Register} /> {/* Add your new Register page here */}
         
         {/* These are your Premium/Enrolled-only pages */}
+        <Route path="/start-100" component={() => <ProtectedRoute component={Start100Sheet} requireEnrolled={true} />} />
         <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} requireEnrolled={true} />} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} requireEnrolled={true} />} />
         <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} requireEnrolled={true} />} />
