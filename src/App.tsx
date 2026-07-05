@@ -26,7 +26,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/courses" component={Courses} />
-        <Route path="/roadmap" component={RoadmapPage} />
+        <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} /> {/* Add your new Register page here */}
         
@@ -37,7 +37,7 @@ function Router() {
         
         {/* These are standard protected pages (available to both registered and enrolled) */}
         <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />
-        <Route path="/progress" component={() => <ProtectedRoute component={Progress} />} />
+        <Route path="/progress" component={() => <ProtectedRoute component={Progress} requireEnrolled={true} />} />
         
         <Route path="/admin/login" component={AdminLogin} />
         <Route path="/admin/dashboard" component={() => <ProtectedRoute component={AdminDashboard} />} />
