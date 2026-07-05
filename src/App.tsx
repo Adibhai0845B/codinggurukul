@@ -20,10 +20,16 @@ import AdminLogin from "@/pages/AdminLogin";// Admin login page
 import AdminDashboard from "@/pages/AdminDashboard";
 import Register from "./pages/Register";
 
+import AdminProtectedRoute from "@/components/AdminProtectedRoute";
+
 function Router() {
   return (
     <Layout>
       <Switch>
+        <Route 
+          path="/admin/dashboard" 
+          component={() => <AdminProtectedRoute component={AdminDashboard} />} 
+        />
         <Route path="/" component={Home} />
         <Route path="/courses" component={Courses} />
         <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
