@@ -12,22 +12,27 @@ export default function Register() {
   const { toast } = useToast();
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, username, password })
-      });
-      
-      if (!res.ok) throw new Error("Registration failed");
-      
-      toast({ title: "Success!", description: "Account created. Please login." });
-      setLocation("/login");
-    } catch (error) {
-      toast({ title: "Error", description: "Registration failed", variant: "destructive" });
+  e.preventDefault();
+  try {
+    const res = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, username, password })
+    });
+    
+    // Parse the data to see the server's message
+    const data = await res.json();
+    
+    // If not okay, throw the message we got from the server!
+    if (!res.ok) throw new Error(data.message || "Registration failed");
+    
+    toast({ title: "Success!", description: "Account created. Please login." });
+    setLocation("/login");
+    } catch (error: any) {
+        // This will now show "Email or Username already taken" instead of "Registration failed"
+        toast({ title: "Error", description: error.message, variant: "destructive" });
     }
-  };
+    };
 
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
