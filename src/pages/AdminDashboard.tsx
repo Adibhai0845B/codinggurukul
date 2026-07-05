@@ -9,9 +9,10 @@ import { UserPlus } from "lucide-react"; // Import the icon
 interface User {
   _id: string;
   username: string;
-  collegeName: string;
-  completedIds: string[];
+  collegeName?: string; // Optional because registered users don't have it yet
+  completedIds?: string[]; // Optional
   createdAt: string;
+  status: 'enrolled' | 'registered'; // The tag we added in the backend
 }
 
 export default function AdminDashboard() {
@@ -100,7 +101,24 @@ export default function AdminDashboard() {
       setIsSubmitting(false);
     }
   };
-
+  const handleUpgrade = async (username: string) => {
+  try {
+    const res = await fetch(`https://coding-gurukul-backend.onrender.com/api/admin/upgrade-user/${username}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${adminToken}` }
+    });
+    
+    if (res.ok) {
+      // Refresh the user list after upgrade
+      const updatedUsers = await fetch("https://coding-gurukul-backend.onrender.com/api/admin/users", { 
+        headers: { Authorization: `Bearer ${adminToken}` } 
+      }).then(r => r.json());
+      setUsers(updatedUsers);
+    }
+  } catch (err) {
+    console.error("Upgrade failed", err);
+  }
+};
   const handleDeleteUser = async (userId: string) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
@@ -221,30 +239,41 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-800">
-                  {users.map((user) => (
-                    <tr key={user._id} className="hover:bg-zinc-800/30">
-                      <td className="px-4 py-3 font-medium text-white">{user.username}</td>
-                      <td className="px-4 py-3 text-zinc-300">{user.collegeName || "-"}</td>
-                      <td className="px-4 py-3 text-zinc-400">
-                        {new Date(user.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-xs font-bold">
-                          {(user.completedIds || []).length}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <Button 
-                          variant="ghost" 
-                          className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
-                          onClick={() => handleDeleteUser(user._id)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                    {users.map((user) => (
+                        <tr key={user._id} className={user.status === 'registered' ? 'bg-yellow-900/10' : ''}>
+                        <td className="px-4 py-3 font-medium text-white">{user.username}</td>
+                        <td className="px-4 py-3 text-zinc-300">{user.collegeName || "N/A (Pending)"}</td>
+                        <td className="px-4 py-3 text-zinc-400">{new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td className="px-4 py-3">
+                            {user.status === 'enrolled' ? (
+                            <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full text-xs font-bold">
+                                {(user.completedIds || []).length}
+                            </span>
+                            ) : (
+                            <span className="text-yellow-600 text-xs font-bold">AWAITING UPGRADE</span>
+                            )}
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                            {user.status === 'registered' && (
+                            <Button 
+                                variant="outline" 
+                                className="text-green-400 border-green-400 hover:bg-green-400/10 mr-2"
+                                onClick={() => handleUpgrade(user.username)}
+                            >
+                                Upgrade
+                            </Button>
+                            )}
+                            <Button 
+                            variant="ghost" 
+                            className="text-red-400 hover:text-red-300"
+                            onClick={() => handleDeleteUser(user._id)}
+                            >
+                            Delete
+                            </Button>
+                        </td>
+                        </tr>
+                    ))}
+                    </tbody>
               </table>
             </div>
           </CardContent>
