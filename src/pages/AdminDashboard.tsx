@@ -232,7 +232,7 @@ export default function AdminDashboard() {
                 <thead className="text-xs text-zinc-400 uppercase bg-zinc-800/50">
                   <tr>
                     <th className="px-4 py-3">Username</th>
-                    <th className="px-4 py-3">Name</th>
+                    <th className="px-4 py-3">College Name</th>
                     <th className="px-4 py-3">Joined Date</th>
                     <th className="px-4 py-3">Problems Solved</th>
                     <th className="px-4 py-3 text-right">Actions</th>
