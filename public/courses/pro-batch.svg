@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1536" height="512" viewBox="0 0 1536 512" role="img" aria-labelledby="title desc">
-  <title id="title">Placement Accelerator Program Pro Batch</title>
-  <desc id="desc">Coding Gurukul Pro Batch course banner with launch price Rs. 3499 and launch date 20th July.</desc>
+  <title id="title">Advanced DSA and CP Pro Batch</title>
+  <desc id="desc">Coding Gurukul Pro Batch course banner for advanced DSA, competitive programming, problem solving, launch price Rs. 3499 and launch date 20th July.</desc>
   <rect width="1536" height="512" rx="18" fill="#f8fbff"/>
   <path d="M0 0h250C160 80 72 102 0 110zM0 512h250C150 455 60 425 0 380z" fill="#0246a3"/>
   <path d="M0 66c92 18 163 5 262-66h54C207 92 105 124 0 103zM0 445c80-5 143 18 220 67h51C184 426 92 391 0 410z" fill="#ff6b00"/>
@@ -15,22 +15,22 @@
     <text x="48" y="26" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="800" fill="#06113a">NEW</text>
     <text x="48" y="49" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#06113a">LAUNCH</text>
   </g>
-  <text x="172" y="108" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#073b91">PLACEMENT ACCELERATOR PROGRAM</text>
+  <text x="172" y="108" font-family="Arial, sans-serif" font-size="28" font-weight="800" fill="#073b91">ADVANCED DSA + COMPETITIVE PROGRAMMING</text>
   <text x="172" y="184" font-family="Arial, sans-serif" font-size="74" font-weight="900" fill="#ff6500">PRO BATCH</text>
   <rect x="172" y="198" width="264" height="34" rx="8" fill="#0647a5"/>
   <text x="304" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#fff">45 DAYS PROGRAM</text>
-  <text x="172" y="264" font-family="Arial, sans-serif" font-size="27" font-weight="800" fill="#06113a">Master <tspan fill="#ff6500">DSA.</tspan> Solve Better. Get <tspan fill="#ff6500">Placed.</tspan></text>
+  <text x="172" y="264" font-family="Arial, sans-serif" font-size="27" font-weight="800" fill="#06113a">Master <tspan fill="#ff6500">Advanced DSA.</tspan> Practice CP. Solve <tspan fill="#ff6500">More.</tspan></text>
   <g transform="translate(58 290)">
     <g fill="#fff" stroke="#d8e3f4">
       <rect width="114" height="86" rx="10"/><rect x="128" width="114" height="86" rx="10"/><rect x="256" width="114" height="86" rx="10"/><rect x="384" width="114" height="86" rx="10"/><rect x="512" width="114" height="86" rx="10"/><rect x="640" width="114" height="86" rx="10"/>
     </g>
     <g font-family="Arial, sans-serif" font-size="14" font-weight="800" fill="#06113a" text-anchor="middle">
-      <text x="57" y="44">Complete</text><text x="57" y="62">Roadmap</text>
-      <text x="185" y="44">Dedicated</text><text x="185" y="62">Questions</text>
-      <text x="313" y="39">Live Classes</text><text x="313" y="57">&amp; Doubt</text><text x="313" y="75">Support</text>
-      <text x="441" y="39">Resume &amp;</text><text x="441" y="57">Profile</text><text x="441" y="75">Building</text>
-      <text x="569" y="39">Intro to</text><text x="569" y="57">Frontend &amp;</text><text x="569" y="75">Backend</text>
-      <text x="697" y="39">Career</text><text x="697" y="57">Essentials</text>
+      <text x="57" y="39">Advanced</text><text x="57" y="57">DSA</text><text x="57" y="75">Patterns</text>
+      <text x="185" y="39">Competitive</text><text x="185" y="57">Programming</text><text x="185" y="75">Practice</text>
+      <text x="313" y="39">Daily</text><text x="313" y="57">Problem</text><text x="313" y="75">Solving</text>
+      <text x="441" y="39">Greedy</text><text x="441" y="57">DP Graph</text><text x="441" y="75">Mastery</text>
+      <text x="569" y="39">Timed</text><text x="569" y="57">Contests</text><text x="569" y="75">Mock OAs</text>
+      <text x="697" y="39">Codeforces</text><text x="697" y="57">CodeChef</text><text x="697" y="75">LeetCode</text>
     </g>
   </g>
   <g transform="translate(842 120)">
@@ -48,11 +48,11 @@
   <rect x="76" y="404" width="1115" height="38" rx="10" fill="#0647a5"/>
   <text x="112" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Advanced DSA</text>
   <text x="292" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">CP Practice</text>
-  <text x="472" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Mock Tests</text>
-  <text x="654" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Company Interview Prep</text>
-  <text x="950" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Certificate of Completion</text>
+  <text x="472" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Daily Problems</text>
+  <text x="654" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Contests + Mock OAs</text>
+  <text x="900" y="429" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#fff">Interview Explanations</text>
   <rect x="58" y="454" width="780" height="48" rx="10" fill="#fff3ca" stroke="#ffe08a"/>
   <rect x="858" y="454" width="226" height="48" rx="10" fill="#fff3ca" stroke="#ffe08a"/>
-  <text x="94" y="485" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#06113a">For students who know basics and want to master DSA, CP &amp; crack coding rounds.</text>
+  <text x="94" y="485" font-family="Arial, sans-serif" font-size="18" font-weight="800" fill="#06113a">For students ready for advanced DSA, CP, contests &amp; heavy problem solving.</text>
   <text x="971" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#06113a">Launch: 20th July</text>
 </svg>

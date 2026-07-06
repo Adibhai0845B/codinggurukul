@@ -42,7 +42,7 @@ const members: Member[] = Array.from({ length: 12 }).map((_, i) => ({
     "manisha.png",
     "Shalika.png",
     "aditya.png",
-    "shivamt.png",
+    "shivam.png",
     "anu.png",
     "apoorva.png",
     "sarika.png",
@@ -77,7 +77,7 @@ export default function TeamSection() {
                       img.onerror = null;
                       // try images subfolder, then fallback to placeholder
                       if (!img.src.includes("/team/images/")) {
-                        img.src = `/team/${m.avatar}`;
+                        img.src = `/team/images/${m.avatar}`;
                       } else {
                         img.src = `https://i.pravatar.cc/200?img=${(m.id % 70) + 1}`;
                       }
