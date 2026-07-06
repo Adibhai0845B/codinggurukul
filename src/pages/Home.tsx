@@ -25,6 +25,7 @@
   import { Button } from "@/components/ui/button";
   import { Card, CardContent } from "@/components/ui/card";
   import { Badge } from "@/components/ui/badge";
+  import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
   import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL, PURCHASE_FORM_URL } from "@/config";
   import React, { useState } from "react";
   import { useProgress } from "@/hooks/useProgress";
@@ -65,6 +66,18 @@
     const [isCoursePopupOpen, setIsCoursePopupOpen] = useState(true);
     const cartItems = useCourseCart((state) => state.items);
     const addCourse = useCourseCart((state) => state.addCourse);
+    const socialLinks = [
+      {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/company/codinggurukul/posts/?feedView=all",
+        icon: <FaLinkedinIn className="h-4 w-4" />,
+      },
+      {
+        label: "Instagram",
+        href: "https://www.instagram.com/codinggurukulofficial/",
+        icon: <FaInstagram className="h-4 w-4" />,
+      },
+    ];
 
     function openContactModal() {
       setShowSuccess(false);
@@ -194,32 +207,37 @@
         </Dialog>
 
         {/* HERO */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-slate-950 dark:via-background dark:to-slate-900">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(249,115,22,0.14),transparent_35%)]" />
+        <section className="relative overflow-hidden bg-[#f8fbff] dark:bg-background">
+          <div className="cg-grid-bg absolute inset-0 opacity-50" />
+          <div className="absolute left-0 top-0 h-1.5 w-full bg-[linear-gradient(90deg,#0a47a3,#ff6500,#0a47a3)]" />
 
-          <div className="relative max-w-7xl mx-auto px-4 py-16 md:py-24 grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-blue-100 text-blue-700 mb-6">
-                <GraduationCap className="h-4 w-4" />
-                Placement-Focused Tech Training Company
+          <div className="relative max-w-7xl mx-auto px-4 py-14 md:py-20 grid lg:grid-cols-[1fr_0.92fr] gap-10 items-center">
+            <div className="animate-in fade-in slide-in-from-left-4 duration-700">
+              <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-2 text-sm font-bold text-blue-800 shadow-sm">
+                <GraduationCap className="h-4 w-4 text-orange-500" />
+                New batches launching on 20th July
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-slate-950 dark:text-white">
-                Empowering Students with{" "}
-                <span className="text-orange-500">Industry-Ready</span>{" "}
-                <span className="text-blue-600">Tech Skills</span>
+              <h1 className="mt-6 max-w-3xl text-4xl md:text-6xl font-black leading-[1.04] tracking-tight text-slate-950 dark:text-white">
+                Coding Gurukul builds the daily habit behind{" "}
+                <span className="text-blue-700">placement-ready coding.</span>
               </h1>
 
-              <p className="mt-6 text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
-                Coding Gurukul helps students become placement-ready through
-                structured DSA, Competitive Programming, Full Stack, AI/ML,
-                Data Science and Aptitude training.
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+                Mentor-led DSA, CP, project and interview training for students
+                who need structure, practice, feedback and confidence before
+                coding rounds.
               </p>
 
+              <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                <HeroPoint title="Concept to code" desc="Live dry runs, implementation and review." />
+                <HeroPoint title="Timed practice" desc="Mock OAs, contests and sheet progress." />
+              </div>
+
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="h-12 px-7 rounded-xl" asChild>
-                  <Link href="/dsa">
-                    Explore Resources <ArrowRight className="ml-2 h-4 w-4" />
+                <Button size="lg" className="h-12 px-7 rounded-xl bg-blue-700 text-white hover:bg-blue-800" asChild>
+                  <Link href="/courses">
+                    View Batches <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
 
@@ -237,44 +255,65 @@
                 </Button>
               </div>
               
-              <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <Stat value="60K+" label="Student Reach" />
                 <Stat value="50+" label="Workshops" />
-                <Stat value="170+" label="Problems" />
-                <Stat value="5+" label="Domains" />
+                <Stat value="150" label="Starter Sheet" />
+                <Stat value="20 Jul" label="Next Launch" />
               </div>
             </div>
 
-            <div className="relative">
-              <div className="mt-8 mb-6">
-                <AnimatedCodeBlock 
-                  code={`class Solution {
-    solve(head) {
-      if (!head) return null;
-      let slow = head;
-      let fast = head;
-      while (fast && fast.next) {
-        slow = slow.next;
-        fast = fast.next.next;
-        if (slow === fast) return true;
-      }
-      return false;
+            <div className="relative animate-in fade-in slide-in-from-right-4 duration-700">
+              <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-2xl">
+                <div className="grid gap-0 md:grid-cols-[1fr_180px]">
+                  <div className="bg-slate-950 p-4">
+                    <div className="mb-3 flex items-center justify-between text-white">
+                      <div>
+                        <p className="text-xs font-bold uppercase text-orange-300">Live practice board</p>
+                        <p className="text-sm font-semibold">Linked list cycle detection</p>
+                      </div>
+                      <div className="rounded-full bg-green-400/15 px-2.5 py-1 text-xs font-bold text-green-300">
+                        Live
+                      </div>
+                    </div>
+                    <AnimatedCodeBlock 
+                      code={`class Solution {
+  solve(head) {
+    let slow = head;
+    let fast = head;
+    while (fast && fast.next) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow === fast) return true;
     }
-  }`} 
-                  theme="dark" 
-                  typingSpeed={25} 
-                  showLineNumbers={true} 
-                  autoPlay={true} 
-                  title="Coding Gurukul"
-                />
-              </div>
-              <div className="rounded-[2rem] overflow-hidden shadow-2xl border bg-white">
-                <img
-                  // `banner.png` was missing from `public/` — fall back to an existing asset
-                  src="/banner.png"
-                  alt="Coding Gurukul Banner"
-                  className="w-full h-full object-cover"
-                />
+    return false;
+  }
+}`} 
+                      theme="dark" 
+                      typingSpeed={25} 
+                      showLineNumbers={true} 
+                      autoPlay={true} 
+                      title="Coding Gurukul"
+                    />
+                  </div>
+                  <div className="border-l bg-blue-50 p-4">
+                    <img src="/logo.png" alt="Coding Gurukul" className="h-12 w-12 rounded-xl bg-white p-1 shadow-sm" />
+                    <p className="mt-4 text-xs font-bold uppercase tracking-wide text-blue-700">Class flow</p>
+                    <div className="mt-3 space-y-3 text-sm font-semibold text-slate-800">
+                      <div className="rounded-xl bg-white p-3 shadow-sm">1. Explain pattern</div>
+                      <div className="rounded-xl bg-white p-3 shadow-sm">2. Dry run edge cases</div>
+                      <div className="rounded-xl bg-white p-3 shadow-sm">3. Code with timer</div>
+                      <div className="rounded-xl bg-white p-3 shadow-sm">4. Review approach</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-t bg-white p-3">
+                  <img
+                    src="/banner.png"
+                    alt="Coding Gurukul Banner"
+                    className="aspect-[16/6] w-full rounded-xl object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -711,6 +750,20 @@
                   <span>Mon — Sat, 10:00 — 18:00 (IST)</span>
                 </p>
 
+                <div className="mt-6 border-t pt-5">
+                  <p className="text-sm font-bold text-foreground">Follow Coding Gurukul</p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {socialLinks.map((link) => (
+                      <Button key={link.label} variant="outline" asChild className="justify-start">
+                        <a href={link.href} target="_blank" rel="noreferrer">
+                          {link.icon}
+                          <span className="ml-2">{link.label}</span>
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <Button onClick={openContactModal} className="w-full sm:w-auto">
                     Open Contact Form <ExternalLink className="ml-2 h-4 w-4 inline" />
@@ -807,6 +860,20 @@
       <div className="rounded-2xl bg-white/80 dark:bg-card border p-4 shadow-sm">
         <div className="text-2xl font-extrabold text-blue-600">{value}</div>
         <div className="text-xs text-muted-foreground mt-1">{label}</div>
+      </div>
+    );
+  }
+
+  function HeroPoint({ title, desc }: { title: string; desc: string }) {
+    return (
+      <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm">
+        <div className="flex items-start gap-3">
+          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
+          <div>
+            <p className="font-bold text-slate-950">{title}</p>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600">{desc}</p>
+          </div>
+        </div>
       </div>
     );
   }

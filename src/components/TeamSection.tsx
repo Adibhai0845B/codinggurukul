@@ -19,8 +19,8 @@ const members: Member[] = Array.from({ length: 12 }).map((_, i) => ({
     "Shaan",
     "Tejas",
     "Abhishek",
-    "Pushkar",
-    "Archit"
+    "Shivam",
+    "Piyush"
   ][i],
   role: [
     "Managing Director",
@@ -33,7 +33,7 @@ const members: Member[] = Array.from({ length: 12 }).map((_, i) => ({
     "AI Mentor",
     "Technical Mentor",
     "SDE,DSA Mentor",
-    "DSA,CP Trainer,Mentor",
+    "DSA, CP Trainer, Mentor",
     "DSA Mentor",
   ][i],
   // avatar will be resolved to a local file at runtime (public/team/<slug>.jpg)
@@ -42,15 +42,15 @@ const members: Member[] = Array.from({ length: 12 }).map((_, i) => ({
     "manisha.png",
     "Shalika.png",
     "aditya.png",
-    "shivam.png",
+    "shivamt.png",
     "anu.png",
     "apoorva.png",
     "sarika.png",
     "shaan.png",
     "tejas.png",
     "abhishek.png",
-    "pushkar.png",
-    "archit.png",
+    "shivamt.png",
+    "piyush.png",
   ][i],
 }));
 
@@ -77,7 +77,7 @@ export default function TeamSection() {
                       img.onerror = null;
                       // try images subfolder, then fallback to placeholder
                       if (!img.src.includes("/team/images/")) {
-                        img.src = `/team/images/${m.avatar}`;
+                        img.src = `/team/${m.avatar}`;
                       } else {
                         img.src = `https://i.pravatar.cc/200?img=${(m.id % 70) + 1}`;
                       }

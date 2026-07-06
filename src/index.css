@@ -205,6 +205,15 @@
   }
 }
 
+.cg-grid-bg {
+  background-image:
+    linear-gradient(rgba(10, 71, 163, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 71, 163, 0.08) 1px, transparent 1px),
+    linear-gradient(120deg, rgba(255, 101, 0, 0.10), transparent 38%, rgba(10, 71, 163, 0.07));
+  background-size: 44px 44px, 44px 44px, 100% 100%;
+}
+
+
 /**
  * Using the elevate system.
  * Automatic contrast adjustment.
