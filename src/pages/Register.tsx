@@ -33,6 +33,12 @@ export default function Register() {
         toast({ title: "Error", description: error.message, variant: "destructive" });
     }
     };
+    // Changes to add --->
+    // ek loading screen
+    // name of cllg too
+    // name of the candidate
+    // a confirmation page after registration along with checking if gmail given is correctt
+    // phir email conform of new register on CG mail
 
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
