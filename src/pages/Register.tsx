@@ -39,6 +39,7 @@ export default function Register() {
     // name of the candidate
     // a confirmation page after registration along with checking if gmail given is correctt
     // phir email conform of new register on CG mail
+    // Removing users which have exceeded the premiuim limit
 
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
