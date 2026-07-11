@@ -55,7 +55,6 @@ export default function Register() {
         <Input type="email" placeholder="Gmail" value={email} onChange={e => setEmail(e.target.value)} required />
         <Input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} required />
         <Input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
-        // Sign up buttong ke func
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
