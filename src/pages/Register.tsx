@@ -4,15 +4,19 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+// Importing the Loader2 icon from lucide-react for the loading spinner
+import { Loader2 } from "lucide-react";
+
 export default function Register() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleRegister = async (e: React.FormEvent) => {
   e.preventDefault();
+  setIsSubmitting(true);
   try {
     const res = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/register", {
       method: "POST",
@@ -32,6 +36,9 @@ export default function Register() {
         // This will now show "Email or Username already taken" instead of "Registration failed"
         toast({ title: "Error", description: error.message, variant: "destructive" });
     }
+    finally {
+      setIsSubmitting(false); // turning off loadingg
+    }
     };
     // Changes to add --->
     // ek loading screen
@@ -48,7 +55,17 @@ export default function Register() {
         <Input type="email" placeholder="Gmail" value={email} onChange={e => setEmail(e.target.value)} required />
         <Input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} required />
         <Input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
-        <Button type="submit">Sign Up</Button>
+        // Sign up buttong ke func
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Creating Account...
+            </>
+          ) : (
+            "Sign Up"
+          )}
+        </Button>
       </form>
     </div>
   );
