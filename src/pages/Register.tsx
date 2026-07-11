@@ -36,10 +36,10 @@ export default function Register() {
     // Changes to add --->
     // ek loading screen
     // name of cllg too
-    // name of the candidate
-    // a confirmation page after registration along with checking if gmail given is correctt
-    // phir email conform of new register on CG mail
-    // Removing users which have exceeded the premiuim limit
+    // name of the candidate (COMPLETED  )
+    // a confirmation page after registration along with checking if gmail given is correctt (COMPLETED  )
+    // phir email conform of new register on CG mail  (COMPLETED  )
+    // Removing users which have exceeded the premiuim limit  
 
   return (
     <div className="flex items-center justify-center min-h-[80vh]">
