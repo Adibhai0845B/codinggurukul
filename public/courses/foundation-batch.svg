@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1536" height="512" viewBox="0 0 1536 512" role="img" aria-labelledby="title desc">
   <title id="title">Placement Accelerator Program Foundation Batch</title>
-  <desc id="desc">Coding Gurukul Foundation Batch course banner with launch price Rs. 2799 and launch date 20th July.</desc>
+  <desc id="desc">Coding Gurukul Foundation Batch course banner with launch price Rs. 2799 and launch date 25th July.</desc>
   <rect width="1536" height="512" rx="18" fill="#f8fbff"/>
   <path d="M0 0h250C160 80 72 102 0 110zM0 512h250C150 455 60 425 0 380z" fill="#0246a3"/>
   <path d="M0 66c92 18 163 5 262-66h54C207 92 105 124 0 103zM0 445c80-5 143 18 220 67h51C184 426 92 391 0 410z" fill="#ff6b00"/>
@@ -54,5 +54,5 @@
   <rect x="58" y="454" width="780" height="48" rx="10" fill="#fff3ca" stroke="#ffe08a"/>
   <rect x="858" y="454" width="226" height="48" rx="10" fill="#fff3ca" stroke="#ffe08a"/>
   <text x="94" y="485" font-family="Arial, sans-serif" font-size="17" font-weight="800" fill="#06113a">For beginners and students building strong programming &amp; DSA fundamentals.</text>
-  <text x="971" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#06113a">Launch: 20th July</text>
+  <text x="971" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#06113a">Launch: 25th July</text>
 </svg>

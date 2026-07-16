@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu } from "lucide-react";
+import { ArrowRight, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import useAuth from "@/hooks/useAuth";
@@ -8,13 +8,16 @@ import { useProgress } from "@/hooks/useProgress";
 export default function Navbar() {
   const [location, setLocation] = useLocation();
 
-  const links =[
+  const primaryLinks =[
     { href: "/", label: "Home" },
     { href: "/courses", label: "Courses" },
     { href: "/roadmap", label: "Roadmap" },
     { href: "/start-100", label: "Start 150" },
     { href: "/dsa", label: "DSA Sheet" },
     { href: "/cp", label: "CP Sheet" },
+  ];
+  const allLinks =[
+    ...primaryLinks,
     { href: "/contests", label: "Contests" },
     { href: "/progress", label: "Progress" },
     { href: "/compiler", label: "Compiler" },
@@ -24,27 +27,29 @@ export default function Navbar() {
   const logout = useAuth((s) => s.logout)
   const resetProgress = useProgress((s) => s.resetProgress);// reset the progress
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center px-4 md:px-8">
-        <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
-            <span className="font-bold sm:inline-block">
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 text-slate-900 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/90 dark:text-white">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center px-4 md:px-6">
+        <div className="hidden w-full items-center md:flex">
+          <Link href="/" className="mr-7 flex items-center space-x-3">
+            <img src="/logo.png" alt="Coding Gurukul" className="h-10 w-10 rounded-xl object-contain" />
+            <span className="text-lg font-black tracking-tight">
               Coding Gurukul
             </span>
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
-            {links.map((link) => (
+          <div className="flex items-center space-x-5 text-sm font-semibold">
+            {primaryLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`transition-colors hover:text-foreground/80 ${
-                  location === link.href ? "text-foreground font-semibold" : "text-foreground/60"
+                className={`transition-colors hover:text-blue-700 ${
+                  location === link.href ? "text-blue-700" : "text-slate-600 dark:text-slate-300"
                 }`}
               >
                 {link.label}
               </Link>
             ))}
+          </div>
+          <div className="ml-auto flex items-center gap-3">
             <button
               onClick={() => {
                 if (isLoggedIn) {
@@ -56,11 +61,14 @@ export default function Navbar() {
                   setLocation('/login');
                 }
               }}
-              className="text-sm ml-2 text-foreground/80"
+              className="px-3 text-sm font-semibold text-slate-600 hover:text-blue-700 dark:text-slate-300"
             >
               {isLoggedIn ? 'Logout' : 'Login'}
             </button>
-          </nav>
+            <Button asChild className="rounded-xl bg-blue-700 px-5 text-white hover:bg-blue-800">
+              <Link href="/courses">Explore courses <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+          </div>
         </div>
         <Sheet>
           <SheetTrigger asChild>
@@ -77,8 +85,8 @@ export default function Navbar() {
               <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
               <span className="font-bold">Coding Gurukul Sheet</span>
             </Link>
-            <div className="flex flex-col space-y-3">
-              {links.map((link) => (
+            <div className="flex flex-col space-y-4">
+              {allLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -94,8 +102,8 @@ export default function Navbar() {
         </Sheet>
         <div className="flex flex-1 items-center justify-end space-x-2 md:hidden">
           <Link href="/" className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
-            <span className="font-bold">Coding Gurukul Sheet</span>
+            <img src="/logo.png" alt="Coding Gurukul" className="h-9 w-9 rounded-lg object-contain" />
+            <span className="font-black">Coding Gurukul</span>
           </Link>
         </div>
       </div>

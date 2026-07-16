@@ -1,1054 +1,176 @@
-  import { Link } from "wouter";
-  import {
-    ArrowRight,
-    Award,
-    BarChart3,
-    BookOpen,
-    CheckCircle2,
-    Code2,
-    GraduationCap,
-    Layers,
-    LineChart,
-    Mail,
-    Phone,
-    MapPin,
-    Clock,
-    Rocket,
-    Target,
-    Trophy,
-    Users,
-    ExternalLink,
-    ShoppingCart,
-    CreditCard,
-  } from "lucide-react";
-
-  import { Button } from "@/components/ui/button";
-  import { Card, CardContent } from "@/components/ui/card";
-  import { Badge } from "@/components/ui/badge";
-  import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
-  import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL, PURCHASE_FORM_URL } from "@/config";
-  import React, { useState } from "react";
-  import { useProgress } from "@/hooks/useProgress";
-  import { useCourseCart } from "@/hooks/useCourseCart";
-  import { dsaQuestions } from "@/data/dsaQuestions";
-  import { cpQuestions } from "@/data/cpQuestions";
-  import ProgressBar from "@/components/ProgressBar";
-  import ContactModal from "@/components/ContactModal";
-  import TeamSection from "@/components/TeamSection";
-  import CourseCard from "@/components/CourseCard";
-  import { AnimatedCodeBlock } from "@/components/ui/animated-code-block";
-  import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-  } from "@/components/ui/dialog";
-  import { toast } from "@/hooks/use-toast";
-  import { courses, type Course } from "@/data/courses";
-
-  export default function Home() {
-    const { completedIds } = useProgress();
-
-    const dsaCompleted = dsaQuestions.filter((q) =>
-      completedIds.includes(q.id)
-    ).length;
-
-    const cpCompleted = cpQuestions.filter((q) =>
-      completedIds.includes(q.id)
-    ).length;
-
-    // ensure we have a string-form URL for the contact form
-    const formUrl: string = (CONTACT_FORM_URL ?? "") as string;
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [isCoursePopupOpen, setIsCoursePopupOpen] = useState(true);
-    const cartItems = useCourseCart((state) => state.items);
-    const addCourse = useCourseCart((state) => state.addCourse);
-    const socialLinks = [
-      {
-        label: "LinkedIn",
-        href: "https://www.linkedin.com/company/codinggurukul/posts/?feedView=all",
-        icon: <FaLinkedinIn className="h-4 w-4" />,
-      },
-      {
-        label: "Instagram",
-        href: "https://www.instagram.com/codinggurukulofficial/",
-        icon: <FaInstagram className="h-4 w-4" />,
-      },
-    ];
-
-    function openContactModal() {
-      setShowSuccess(false);
-      setIsModalOpen(true);
-    }
-
-    function addToCart(course: Course) {
-      if (addCourse(course)) {
-        toast({
-          title: "Added to cart",
-          description: `${course.title} has been added.`,
-        });
-        return;
-      }
-
-      toast({
-        title: "Already in cart",
-        description: `${course.title} is already added.`,
-      });
-    }
-
-    function buyCourse(_course: Course) {
-      setIsCoursePopupOpen(false);
-      window.open(PURCHASE_FORM_URL, "_blank", "noopener,noreferrer");
-    }
-
-    function handleSuccess() {
-      setShowSuccess(true);
-      setTimeout(() => setIsModalOpen(false), 1600);
-    }
-
-    const curriculum = [
-      "Complexity & Problem Decomposition",
-      "Arrays, Prefix Sum & Kadane",
-      "Sorting & Binary Search",
-      "Strings, Hashing & Sliding Window",
-      "Two Pointers & Recursion",
-      "Linked List, Stack & Queue",
-      "Trees, BST & Graphs",
-      "Mock Interviews & OA Simulation",
-    ];
-
-    const testimonials = [
-      {
-        name: "DSA Training Student",
-        role: "Placement Preparation Batch",
-        text: "Before joining, I was solving problems randomly. Coding Gurukul gave me a proper roadmap, daily practice discipline and confidence to explain my approach in interviews.",
-      },
-      {
-        name: "Competitive Programming Learner",
-        role: "Contest Preparation Batch",
-        text: "The mentors focused on thinking patterns, not just solutions. Timed contests, editorials and debugging sessions helped me improve my speed and accuracy.",
-      },
-      {
-        name: "Full Stack Project Student",
-        role: "Project-Based Learning Track",
-        text: "I learned how frontend, backend, APIs, database and deployment work together. The project sessions helped me build something useful for my resume.",
-      },
-      {
-        name:"AI/ML Workshop Student",
-        role:"Hands-on AI/ML Program",
-        text:"The sessions were beginner-friendly and practical. We learned Python, data handling, model building and how AI projects are actually structured.",
-      },
-      {
-        name: "Final Year Student",
-        role: "Mock Interview Program",
-        text: "Mock interviews helped me identify where I was weak. I improved my dry run explanation, complexity analysis and confidence while speaking.",
-      },
-      {
-        name: "College Training Participant",
-        role: "Placement Accelerator Program",
-        text: "The best part was the structure: concept, live coding, practice, contest and review. It made placement preparation much more organized.",
-      },
-    ];
-
-    return (
-      <div className="min-h-screen bg-white dark:bg-background">
-        <Dialog open={isCoursePopupOpen} onOpenChange={setIsCoursePopupOpen}>
-          <DialogContent className="max-w-5xl overflow-hidden p-0">
-            <div className="grid lg:grid-cols-[1.45fr_0.9fr]">
-              <div className="relative min-h-56 bg-white p-4 flex items-center justify-center">
-                <img
-                  src={courses[0].image}
-                  alt={courses[0].title}
-                  className="h-full max-h-[420px] w-full object-contain rounded-xl"
-                />
-              </div>
-              <div className="p-6 md:p-8">
-                <DialogHeader>
-                  <Badge className="w-fit bg-orange-100 text-orange-700 hover:bg-orange-100">
-                    {courses[0].tag}
-                  </Badge>
-                  <DialogTitle className="text-2xl md:text-3xl leading-tight">
-                    Join our {courses[0].title}
-                  </DialogTitle>
-                  <DialogDescription className="text-base leading-relaxed">
-                    {courses[0].desc}
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="mt-5 flex flex-wrap gap-3 text-sm">
-                  <span className="rounded-full bg-blue-50 px-3 py-1 font-semibold text-blue-700">
-                    {courses[0].duration}
-                  </span>
-                  <span className="rounded-full bg-orange-50 px-3 py-1 font-semibold text-orange-700">
-                    {courses[0].price}
-                  </span>
-                </div>
-
-                <div className="mt-7 grid sm:grid-cols-2 gap-3">
-                  <Button onClick={() => buyCourse(courses[0])} className="h-11">
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    Buy Now
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => addToCart(courses[0])}
-                    className="h-11"
-                  >
-                    <ShoppingCart className="mr-2 h-4 w-4" />
-                    Add to Cart
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-
-        {/* HERO */}
-        <section className="relative overflow-hidden bg-[#f8fbff] dark:bg-background">
-          <div className="cg-grid-bg absolute inset-0 opacity-50" />
-          <div className="absolute left-0 top-0 h-1.5 w-full bg-[linear-gradient(90deg,#0a47a3,#ff6500,#0a47a3)]" />
-
-          <div className="relative max-w-7xl mx-auto px-4 py-14 md:py-20 grid lg:grid-cols-[1fr_0.92fr] gap-10 items-center">
-            <div className="animate-in fade-in slide-in-from-left-4 duration-700">
-              <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-2 text-sm font-bold text-blue-800 shadow-sm">
-                <GraduationCap className="h-4 w-4 text-orange-500" />
-                New batches launching on 20th July
-              </div>
-
-              <h1 className="mt-6 max-w-3xl text-4xl md:text-6xl font-black leading-[1.04] tracking-tight text-slate-950 dark:text-white">
-                Coding Gurukul builds the daily habit behind{" "}
-                <span className="text-blue-700">placement-ready coding.</span>
-              </h1>
-
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-                Mentor-led DSA, CP, project and interview training for students
-                who need structure, practice, feedback and confidence before
-                coding rounds.
-              </p>
-
-              <div className="mt-7 grid gap-3 sm:grid-cols-2">
-                <HeroPoint title="Concept to code" desc="Live dry runs, implementation and review." />
-                <HeroPoint title="Timed practice" desc="Mock OAs, contests and sheet progress." />
-              </div>
-
-              <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="h-12 px-7 rounded-xl bg-blue-700 text-white hover:bg-blue-800" asChild>
-                  <Link href="/courses">
-                    View Batches <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-12 px-7 rounded-xl"
-                  onClick={() => {
-                    document.getElementById("contact-section")?.scrollIntoView({ 
-                      behavior: "smooth" 
-                    });
-                  }}
-                >
-                  Contact us
-                </Button>
-              </div>
-              
-              <div className="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <Stat value="60K+" label="Student Reach" />
-                <Stat value="50+" label="Workshops" />
-                <Stat value="150" label="Starter Sheet" />
-                <Stat value="20 Jul" label="Next Launch" />
-              </div>
-            </div>
-
-            <div className="relative animate-in fade-in slide-in-from-right-4 duration-700">
-              <div className="overflow-hidden rounded-[1.5rem] border border-slate-200 bg-white shadow-2xl">
-                <div className="grid gap-0 md:grid-cols-[1fr_180px]">
-                  <div className="bg-slate-950 p-4">
-                    <div className="mb-3 flex items-center justify-between text-white">
-                      <div>
-                        <p className="text-xs font-bold uppercase text-orange-300">Live practice board</p>
-                        <p className="text-sm font-semibold">Linked list cycle detection</p>
-                      </div>
-                      <div className="rounded-full bg-green-400/15 px-2.5 py-1 text-xs font-bold text-green-300">
-                        Live
-                      </div>
-                    </div>
-                    <AnimatedCodeBlock 
-                      code={`class Solution {
-  solve(head) {
-    let slow = head;
-    let fast = head;
-    while (fast && fast.next) {
-      slow = slow.next;
-      fast = fast.next.next;
-      if (slow === fast) return true;
-    }
-    return false;
-  }
-}`} 
-                      theme="dark" 
-                      typingSpeed={25} 
-                      showLineNumbers={true} 
-                      autoPlay={true} 
-                      title="Coding Gurukul"
-                    />
-                  </div>
-                  <div className="border-l bg-blue-50 p-4">
-                    <img src="/logo.png" alt="Coding Gurukul" className="h-12 w-12 rounded-xl bg-white p-1 shadow-sm" />
-                    <p className="mt-4 text-xs font-bold uppercase tracking-wide text-blue-700">Class flow</p>
-                    <div className="mt-3 space-y-3 text-sm font-semibold text-slate-800">
-                      <div className="rounded-xl bg-white p-3 shadow-sm">1. Explain pattern</div>
-                      <div className="rounded-xl bg-white p-3 shadow-sm">2. Dry run edge cases</div>
-                      <div className="rounded-xl bg-white p-3 shadow-sm">3. Code with timer</div>
-                      <div className="rounded-xl bg-white p-3 shadow-sm">4. Review approach</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="border-t bg-white p-3">
-                  <img
-                    src="/banner.png"
-                    alt="Coding Gurukul Banner"
-                    className="aspect-[16/6] w-full rounded-xl object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* COURSES */}
-        <section className="max-w-7xl mx-auto px-4 py-20">
-          <SectionHeader
-            label="Featured Courses"
-            title="Placement Accelerator Courses"
-            desc="Choose from Pro Batch, Foundation Batch, or the Dedicated DSA & CP Sheet. All batches are launching on 20th July."
-          />
-
-          <div className="mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-2xl border bg-slate-50 p-4 dark:bg-card">
-            <div className="flex items-center gap-3">
-              <div className="h-11 w-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
-                <ShoppingCart className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-bold">Cart</p>
-                <p className="text-sm text-muted-foreground">
-                  {cartItems.length
-                    ? `${cartItems.length} course${cartItems.length > 1 ? "s" : ""} selected`
-                    : "No courses added yet"}
-                </p>
-              </div>
-            </div>
-            {cartItems.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {cartItems.map((item) => (
-                  <Badge key={item.id} variant="secondary">
-                    {item.title}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="mt-8 grid md:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                isAdded={cartItems.some((item) => item.id === course.id)}
-                onAddToCart={addToCart}
-                onBuy={buyCourse}
-                compact
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="border-y bg-slate-950 text-white">
-          <div className="max-w-7xl mx-auto px-4 py-6 grid md:grid-cols-3 gap-6 text-center">
-            <TrustItem title="Academic Partnerships" desc="Stronger coding culture" />
-            <TrustItem title="Industry-Aligned Curriculum" desc="Skills that matter" />
-            <TrustItem title="Career-Focused Outcomes" desc="Future-ready learners" />
-          </div>
-        </section>
-
-        {/* PROGRAMS */}
-        <section className="max-w-7xl mx-auto px-4 py-20">
-          <SectionHeader
-            label="Our Programs"
-            title="Training Domains Designed for Career Growth"
-            desc="Practical, mentor-led programs that can be customized for different batches, timelines and learning goals."
-          />
-
-          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <ProgramCard
-              icon={<Code2 />}
-              title="DSA"
-              desc="Arrays, strings, recursion, trees, graphs, DP and interview patterns with dry runs and coding practice."
-            />
-            <ProgramCard
-              icon={<Trophy />}
-              title="Competitive Programming"
-              desc="Contest thinking, time complexity, speed, debugging and implementation accuracy."
-            />
-            <ProgramCard
-              icon={<Layers />}
-              title="Full Stack"
-              desc="Frontend, backend, REST APIs, databases, authentication, Git and deployment."
-            />
-            <ProgramCard
-              icon={<Rocket />}
-              title="AI/ML"
-              desc="Python, statistics, ML models, NLP, data analysis and project-based learning."
-            />
-          </div>
-        </section>
-
-        {/* STUDENT BENEFITS */}
-        <section className="bg-muted/40 py-20">
-          <div className="max-w-7xl mx-auto px-4">
-            <SectionHeader
-              label="Student Benefits"
-              title="What Students Get from Coding Gurukul"
-              desc="A complete learning experience focused on confidence, consistency and career readiness."
-            />
-
-            <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Benefit
-                title="Structured Learning Path"
-                desc="No random learning. Students follow a clear roadmap from basics to advanced topics."
-              />
-              <Benefit
-                title="Live Coding Practice"
-                desc="Every important concept is taught through dry runs, code implementation and debugging."
-              />
-              <Benefit
-                title="Interview Explanation Skills"
-                desc="Students learn how to explain brute force, optimized approach, complexity and edge cases."
-              />
-              <Benefit
-                title="Topic-Wise Practice Sheets"
-                desc="Curated problems help students revise important patterns before tests and interviews."
-              />
-              <Benefit
-                title="Mock Assessments"
-                desc="Timed tests and coding contests simulate real online assessment pressure."
-              />
-              <Benefit
-                title="Certificate & Internship Pathway"
-                desc="Eligible students receive completion certificates and top performers get internship opportunity pathways."
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* WHY US */}
-        <section className="bg-gradient-to-br from-blue-50 to-orange-50 dark:from-slate-900 dark:to-slate-950 py-20">
-          <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="font-bold text-orange-500 uppercase tracking-wider text-sm">
-                Why Coding Gurukul
-              </p>
-              <h2 className="mt-4 text-3xl md:text-5xl font-extrabold leading-tight">
-                We don't just teach coding. We build placement confidence.
-              </h2>
-              <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
-                Our training model focuses on concepts, live coding, assignments,
-                contests, mock interviews and measurable progress tracking.
-              </p>
-
-              <div className="mt-8 grid sm:grid-cols-2 gap-4">
-                <MiniPoint title="Mentor-Led Classes" />
-                <MiniPoint title="Practice Sheets" />
-                <MiniPoint title="Weekly Assessments" />
-                <MiniPoint title="Performance Reports" />
-              </div>
-            </div>
-
-            <Card className="rounded-3xl shadow-xl border-0">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-6">
-                  Our Training Methodology
-                </h3>
-
-                <div className="space-y-5">
-                  <Process
-                    step="01"
-                    title="Assess"
-                    desc="Understand student level, learning gaps and preparation stage."
-                  />
-                  <Process
-                    step="02"
-                    title="Teach"
-                    desc="Deliver concepts with live coding, dry runs and practical explanation."
-                  />
-                  <Process
-                    step="03"
-                    title="Practice"
-                    desc="Give curated problems, assignments and revision sheets."
-                  />
-                  <Process
-                    step="04"
-                    title="Evaluate"
-                    desc="Run contests, mocks, interviews and performance reports."
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        {/* CURRICULUM */}
-        <section className="max-w-7xl mx-auto px-4 py-20">
-          <SectionHeader
-            label="Curriculum Roadmap"
-            title="Placement Accelerator Learning Path"
-            desc="A structured roadmap from coding fundamentals to interview simulation."
-          />
-
-          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {curriculum.map((item, index) => (
-              <Card key={item} className="rounded-2xl hover:shadow-lg transition">
-                <CardContent className="p-6">
-                  <div className="h-10 w-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold mb-4">
-                    {index + 1}
-                  </div>
-                  <h3 className="font-bold leading-snug">{item}</h3>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* DELIVERABLES */}
-        <section className="bg-muted/40 py-20">
-          <div className="max-w-7xl mx-auto px-4">
-            <SectionHeader
-              label="Deliverables"
-              title="Professional Deliverables for Training Programs"
-              desc="A complete execution model with planning, reporting and measurable student improvement."
-            />
-
-            <div className="mt-12 grid md:grid-cols-2 gap-6">
-              <Deliverable
-                title="Before Training"
-                items={[
-                  "Batch-level diagnostic test",
-                  "Demo class for quality validation",
-                  "Customized curriculum planning",
-                  "Topic-wise timetable and mentor allocation",
-                ]}
-              />
-
-              <Deliverable
-                title="During Training"
-                items={[
-                  "Live concept sessions",
-                  "Daily coding assignments",
-                  "Doubt support and revision guidance",
-                  "Weekly contests and assessments",
-                ]}
-              />
-
-              <Deliverable
-                title="After Training"
-                items={[
-                  "Final coding assessment",
-                  "Mock interview evaluation",
-                  "Performance report",
-                  "Certificate of completion",
-                ]}
-              />
-
-              <Deliverable
-                title="Student Growth Areas"
-                items={[
-                  "Problem-solving confidence",
-                  "Code quality and debugging speed",
-                  "Interview communication",
-                  "Placement test readiness",
-                ]}
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* MENTOR NETWORK */}
-        <section className="max-w-7xl mx-auto px-4 py-20">
-          <SectionHeader
-            label="Mentor Network"
-            title="Learn from Mentors Who Have Solved, Competed and Taught at Scale"
-            desc="Our mentor network includes DSA trainers, competitive programmers, AI/ML mentors, aptitude experts and project mentors."
-          />
-
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
-            <MentorCard
-              title="DSA & CP Mentors"
-              points={[
-                "Codeforces and CodeChef rated mentors",
-                "Thousands of DSA problems solved",
-                "Interview-focused teaching style",
-                "Strong dry-run and explanation approach",
-              ]}
-            />
-
-            <MentorCard
-              title="AI/ML Mentors"
-              points={[
-                "Hands-on Python and ML training",
-                "Practical project-based learning",
-                "NLP and data analysis exposure",
-                "Beginner-friendly explanation style",
-              ]}
-            />
-
-            <MentorCard
-              title="Aptitude & Interview Mentors"
-              points={[
-                "Quantitative aptitude training",
-                "Reasoning and verbal ability practice",
-                "Mock interview guidance",
-                "Resume and communication improvement",
-              ]}
-            />
-          </div>
-        </section>
-
-        {/* PLANS */}
-        <section className="bg-slate-950 text-white py-20">
-          {/* TEAM */}
-          <TeamSection />
-          <div className="max-w-7xl mx-auto px-4">
-            <SectionHeader
-              label="Engagement Models"
-              title="Flexible Plans for Different Learning Needs"
-              desc="Choose short bootcamps, placement-focused tracks or advanced learning programs."
-            />
-
-            <div className="mt-12 grid md:grid-cols-3 gap-6">
-              <PlanCard
-                title="Foundation Track"
-                duration="2–4 Weeks"
-                desc="Best for beginners who need programming basics, DSA foundation and coding confidence."
-              />
-              <PlanCard
-                title="Placement Track"
-                duration="6–8 Weeks"
-                desc="Best for students preparing for online assessments, interviews and campus hiring."
-                highlighted
-              />
-              <PlanCard
-                title="Advanced Track"
-                duration="8–12 Weeks"
-                desc="Best for strong batches needing CP, AI/ML, full stack projects and contests."
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* PROGRESS */}
-        {(dsaCompleted > 0 || cpCompleted > 0) && (
-          <section className="max-w-5xl mx-auto px-4 py-20 w-full">
-            <Card className="rounded-3xl border-primary/20 shadow-lg">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-6">Your Progress</h3>
-
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium">DSA Problems</span>
-                      <span className="text-primary font-mono">
-                        {dsaCompleted} / {dsaQuestions.length}
-                      </span>
-                    </div>
-                    <ProgressBar
-                      completed={dsaCompleted}
-                      total={dsaQuestions.length}
-                      className="h-3"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium">CP Problems</span>
-                      <span className="text-primary font-mono">
-                        {cpCompleted} / {cpQuestions.length}
-                      </span>
-                    </div>
-                    <ProgressBar
-                      completed={cpCompleted}
-                      total={cpQuestions.length}
-                      className="h-3"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {/* TESTIMONIALS */}
-        <section className="max-w-7xl mx-auto px-4 py-20">
-          <SectionHeader
-            label="Testimonials"
-            title="Student Learning Experience"
-            desc="Feedback from learners who improved through structured practice, mentor guidance and interview-focused training."
-          />
-
-          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
-              <Card
-                key={t.name}
-                className="rounded-3xl shadow-sm hover:shadow-xl transition"
-              >
-                <CardContent className="p-7">
-                  <Trophy className="h-8 w-8 text-orange-500 mb-5" />
-                  <p className="text-muted-foreground leading-relaxed">
-                    “{t.text}”
-                  </p>
-                  <div className="mt-6">
-                    <h4 className="font-bold">{t.name}</h4>
-                    <p className="text-sm text-muted-foreground">{t.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        {/* CONTACT */}
-        <section id="contact-section" className="max-w-7xl mx-auto px-4 py-20">
-          <SectionHeader
-            label="Contact"
-            title="We're here to help — get in touch"
-            desc="Reach out for batch enquiries, partnerships, or placement support. Fill the form or contact us directly."
-          />
-
-          <div className="mt-10 grid md:grid-cols-3 gap-6 items-start">
-            <Card className="rounded-2xl col-span-1">
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold">Contact Details</h3>
-                <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-primary" />
-                  <a className="text-primary truncate" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-                </p>
-
-                <p className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-primary" />
-                  <a className="text-primary" href={`tel:${CONTACT_PHONE}`}>{CONTACT_PHONE}</a>
-                </p>
-
-                <p className="mt-3 text-sm text-muted-foreground flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-primary" />
-                  <span>Online / Remote Training • India</span>
-                </p>
-
-                <p className="mt-4 text-sm text-muted-foreground flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-primary" />
-                  <span>Mon — Sat, 10:00 — 18:00 (IST)</span>
-                </p>
-
-                <div className="mt-6 border-t pt-5">
-                  <p className="text-sm font-bold text-foreground">Follow Coding Gurukul</p>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    {socialLinks.map((link) => (
-                      <Button key={link.label} variant="outline" asChild className="justify-start">
-                        <a href={link.href} target="_blank" rel="noreferrer">
-                          {link.icon}
-                          <span className="ml-2">{link.label}</span>
-                        </a>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  <Button onClick={openContactModal} className="w-full sm:w-auto">
-                    Open Contact Form <ExternalLink className="ml-2 h-4 w-4 inline" />
-                  </Button>
-
-                  <Button variant="outline" asChild className="w-full sm:w-auto">
-                    <a href={`mailto:${CONTACT_EMAIL}`}>Email Us</a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="md:col-span-2">
-              <Card className="rounded-2xl">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-bold">Contact Form</h3>
-                  <p className="mt-3 text-sm text-muted-foreground">Click <strong>Open Contact Form</strong> to send us a message. We collect responses in a connected Google Sheet.</p>
-
-                  {showSuccess && (
-                    <div className="mt-4 rounded-md bg-green-50 border border-green-200 p-3 text-green-800">Thanks — we received your message.</div>
-                  )}
-
-                  {!formUrl && (
-                    <div className="mt-4 text-sm text-muted-foreground">No Google Form configured yet. To embed a form paste its share link into <code>src/config.ts</code>.</div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* mount contact modal so Open Contact Form works */}
-        <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} formUrl={formUrl} onSuccess={handleSuccess} />
-
-        {/* FINAL CTA */}
-        <section className="px-4 pb-20">
-          <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-r from-blue-700 to-orange-500 p-10 md:p-16 text-center text-white shadow-2xl">
-            <h2 className="text-3xl md:text-5xl font-extrabold">
-              Start Your Coding Journey with Coding Gurukul
-            </h2>
-
-            <p className="mt-5 max-w-2xl mx-auto text-white/90">
-              Learn. Code. Build. Succeed. Practice with structured DSA and CP
-              sheets designed for placement preparation.
-            </p>
-
-            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="h-12 px-7 rounded-xl"
-                asChild
-              >
-                <Link href="/dsa">Open DSA Sheet</Link>
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-12 px-7 rounded-xl bg-transparent border-white text-white hover:bg-white hover:text-blue-700"
-                asChild
-              >
-                <Link href="/cp">Open CP Sheet</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-      </div>
-    );
+import React, { useState } from "react";
+import { Link } from "wouter";
+import {
+  ArrowRight, Award, BarChart3, BookOpen, Check, CheckCircle2, Clock,
+  CalendarDays, ChevronRight, Code2, ExternalLink, GraduationCap, Headphones,
+  Layers3, Mail, MapPin, Phone, Play, Quote, Rocket, ShieldCheck,
+  MessageCircle, Sparkles, Target, Trophy, Users,
+} from "lucide-react";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import ContactModal from "@/components/ContactModal";
+import TeamSection from "@/components/TeamSection";
+import CourseCard from "@/components/CourseCard";
+import { courses, type Course } from "@/data/courses";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_FORM_URL, PURCHASE_FORM_URL } from "@/config";
+import { useCourseCart } from "@/hooks/useCourseCart";
+import { toast } from "@/hooks/use-toast";
+
+const stories = [
+  { name: "Pratham Jain", result: "1st Rank", program: "UDAAN 1.0 DSA Workshop", quote: "The mentorship made an intensive learning experience smooth, practical and deeply rewarding.", tone: "blue" },
+  { name: "Abhishek Bhadauriya", result: "Rank 3", program: "Outstanding Performer", quote: "The continuous guidance inspired me to work harder and keep improving every day.", tone: "orange" },
+  { name: "Rudrakshi Sharma", result: "Top 5", program: "Java + DSA Summer Program", quote: "The goal was never just to write better code—it was to think better. This is only the beginning.", tone: "violet" },
+  { name: "Arlap Jain", result: "Internship", program: "Java + DSA Completed", quote: "I built a stronger programming foundation and learned to approach real-world problems efficiently.", tone: "emerald" },
+  { name: "Yash Gupta", result: "Internship", program: "Java + DSA Completed", quote: "Consistent practice and mentor support improved my logical thinking and confidence.", tone: "blue" },
+  { name: "Ishant Sharma", result: "Internship", program: "Practical Training Completed", quote: "I strengthened my skills, gained practical experience and learned from talented mentors.", tone: "orange" },
+];
+
+const programCards = [
+  { icon: Code2, number: "01", title: "Data Structures & Algorithms", text: "Build interview-ready problem-solving skills through patterns, dry runs and daily coding practice.", color: "bg-blue-700" },
+  { icon: Trophy, number: "02", title: "Competitive Programming", text: "Improve speed, logic and implementation with contests, editorials and mentor-led reviews.", color: "bg-orange-500" },
+  { icon: Layers3, number: "03", title: "Full Stack Development", text: "Create portfolio-ready applications using modern frontend, backend, database and deployment tools.", color: "bg-violet-600" },
+  { icon: Rocket, number: "04", title: "AI & Machine Learning", text: "Learn Python, data analysis and practical model-building through approachable hands-on projects.", color: "bg-emerald-600" },
+];
+
+export default function Home() {
+  const [contactOpen, setContactOpen] = useState(false);
+  const cartItems = useCourseCart((state) => state.items);
+  const addCourse = useCourseCart((state) => state.addCourse);
+
+  function addToCart(course: Course) {
+    const added = addCourse(course);
+    toast({
+      title: added ? "Added to cart" : "Already in cart",
+      description: `${course.title} ${added ? "has been added." : "is already selected."}`,
+    });
   }
 
-  function SectionHeader({
-    label,
-    title,
-    desc,
-  }: {
-    label: string;
-    title: string;
-    desc: string;
-  }) {
-    return (
-      <div className="text-center max-w-3xl mx-auto">
-        <p className="text-sm font-bold text-orange-500 uppercase tracking-wider">
-          {label}
-        </p>
-        <h2 className="mt-3 text-3xl md:text-4xl font-extrabold">{title}</h2>
-        <p className="mt-4 text-muted-foreground leading-relaxed">{desc}</p>
-      </div>
-    );
+  function buyCourse(_course: Course) {
+    window.open(PURCHASE_FORM_URL, "_blank", "noopener,noreferrer");
   }
 
-  function Stat({ value, label }: { value: string; label: string }) {
-    return (
-      <div className="rounded-2xl bg-white/80 dark:bg-card border p-4 shadow-sm">
-        <div className="text-2xl font-extrabold text-blue-600">{value}</div>
-        <div className="text-xs text-muted-foreground mt-1">{label}</div>
-      </div>
-    );
-  }
+  return (
+    <div className="overflow-hidden bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
+      <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} formUrl={CONTACT_FORM_URL} />
 
-  function HeroPoint({ title, desc }: { title: string; desc: string }) {
-    return (
-      <div className="rounded-2xl border border-blue-100 bg-white p-4 shadow-sm">
-        <div className="flex items-start gap-3">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-orange-500" />
+      <aside className="relative overflow-hidden bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 text-white">
+        <div className="absolute inset-0 opacity-15 [background-image:linear-gradient(120deg,transparent_20%,white_20%,white_22%,transparent_22%,transparent_72%,white_72%,white_74%,transparent_74%)]" />
+        <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-4 text-center sm:flex-row sm:text-left md:px-6">
+          <div className="flex items-center gap-3">
+            <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/20"><Clock className="h-5 w-5" /></div>
+            <div><p className="text-xs font-black uppercase tracking-[.18em] text-orange-100">Free weekly demo session</p><p className="mt-0.5 text-lg font-black">Every Sunday · 10:00 AM to 11:00 AM</p></div>
+          </div>
+          <Button onClick={() => setContactOpen(true)} className="shrink-0 rounded-xl bg-white font-bold text-orange-600 shadow-md hover:bg-orange-50">Register for demo <ArrowRight className="ml-2 h-4 w-4" /></Button>
+        </div>
+      </aside>
+
+      <section className="relative min-h-[760px] overflow-hidden bg-[#f6f9ff] dark:bg-slate-950">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgba(37,99,235,0.16),transparent_32%),radial-gradient(circle_at_12%_80%,rgba(249,115,22,0.12),transparent_26%)]" />
+        <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(15,23,42,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,.06)_1px,transparent_1px)] [background-size:48px_48px] dark:opacity-10" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 md:px-6 lg:grid-cols-[1.05fr_.95fr] lg:py-24">
           <div>
-            <p className="font-bold text-slate-950">{title}</p>
-            <p className="mt-1 text-sm leading-relaxed text-slate-600">{desc}</p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-bold text-blue-800 shadow-sm dark:border-blue-900 dark:bg-slate-900 dark:text-blue-300">
+              <Sparkles className="h-4 w-4 text-orange-500" /> Learn. Practise. Get placement-ready.
+            </div>
+            <h1 className="mt-7 max-w-3xl text-5xl font-black leading-[1.02] tracking-[-0.045em] md:text-7xl">
+              Turn your coding potential into a <span className="relative text-blue-700">career.<span className="absolute -bottom-1 left-0 h-2 w-full rounded-full bg-orange-400/60" /></span>
+            </h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+              Mentor-led DSA, competitive programming and development programs built for students who want structure, real practice and confidence in every coding round.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button size="lg" asChild className="h-14 rounded-2xl bg-blue-700 px-7 text-base font-bold text-white shadow-lg shadow-blue-700/20 hover:bg-blue-800">
+                <Link href="/courses">Explore programs <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => setContactOpen(true)} className="h-14 rounded-2xl border-slate-300 bg-white px-7 text-base font-bold text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
+                <Play className="mr-2 h-4 w-4 fill-current" /> Talk to a mentor
+              </Button>
+            </div>
+            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-slate-600 dark:text-slate-300">
+              {["Live mentor support", "Curated practice sheets", "Mock interviews"].map((item) => <span key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500" />{item}</span>)}
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-[560px]">
+            <div className="absolute -inset-8 rounded-full bg-blue-500/15 blur-3xl" />
+            <div className="relative rounded-[2rem] border border-white/80 bg-white p-3 shadow-2xl shadow-blue-950/15 dark:border-slate-800 dark:bg-slate-900">
+              <div className="overflow-hidden rounded-[1.5rem] bg-slate-950 p-6 text-white md:p-8">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3"><img src="/logo.png" className="h-11 w-11 rounded-xl bg-white p-1" alt="" /><div><p className="text-xs font-bold uppercase tracking-widest text-orange-300">Live classroom</p><p className="font-bold">DSA Pattern Lab</p></div></div>
+                  <span className="flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300"><span className="h-2 w-2 rounded-full bg-emerald-400" /> LIVE</span>
+                </div>
+                <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 font-mono text-sm leading-7 text-slate-300">
+                  <p><span className="text-violet-300">function</span> <span className="text-blue-300">buildCareer</span>(student) &#123;</p>
+                  <p className="pl-5"><span className="text-orange-300">learn</span>(concepts);</p>
+                  <p className="pl-5"><span className="text-orange-300">practice</span>(daily);</p>
+                  <p className="pl-5"><span className="text-orange-300">improve</span>(feedback);</p>
+                  <p className="pl-5"><span className="text-violet-300">return</span> <span className="text-emerald-300">confidence</span>;</p><p>&#125;</p>
+                </div>
+                <div className="mt-6 grid grid-cols-3 gap-3">
+                  {["Learn", "Code", "Review"].map((step, i) => <div key={step} className="rounded-xl bg-white/5 p-3 text-center"><p className="text-xs text-slate-500">0{i + 1}</p><p className="mt-1 text-sm font-bold">{step}</p></div>)}
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-7 -left-5 rounded-2xl border bg-white p-4 shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <div className="flex items-center gap-3"><div className="grid h-11 w-11 place-items-center rounded-xl bg-orange-100 text-orange-600"><Trophy className="h-5 w-5" /></div><div><p className="text-xs text-slate-500">Student outcome</p><p className="font-black">Top ranks achieved</p></div></div>
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
+      </section>
 
-  function TrustItem({ title, desc }: { title: string; desc: string }) {
-    return (
-      <div>
-        <h3 className="font-bold">{title}</h3>
-        <p className="text-sm text-slate-300 mt-1">{desc}</p>
-      </div>
-    );
-  }
+      <section className="border-y border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-8 px-4 py-8 md:grid-cols-4 md:px-6">
+          {[["60K+", "Student reach"], ["50+", "Workshops"], ["150+", "Practice problems"], ["12 LPA", "Success story"]].map(([value, label]) => <div key={label} className="text-center md:border-r md:last:border-0 dark:border-slate-700"><p className="text-3xl font-black text-blue-700">{value}</p><p className="mt-1 text-sm text-slate-500">{label}</p></div>)}
+        </div>
+      </section>
 
-  function ProgramCard({
-    icon,
-    title,
-    desc,
-  }: {
-    icon: React.ReactNode;
-    title: string;
-    desc: string;
-  }) {
-    return (
-      <Card className="rounded-3xl hover:shadow-xl transition border-slate-200">
-        <CardContent className="p-7">
-          <div className="h-14 w-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mb-6">
-            {icon}
+      <Section id="programs" eyebrow="Explore our programs" title="Skills that move your career forward" description="Focused learning paths designed around the skills companies test and the confidence students need.">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {programCards.map(({ icon: Icon, ...program }) => <article key={program.title} className="group rounded-3xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"><div className="flex items-center justify-between"><div className={`grid h-12 w-12 place-items-center rounded-2xl text-white ${program.color}`}><Icon className="h-6 w-6" /></div><span className="text-sm font-black text-slate-300 dark:text-slate-700">{program.number}</span></div><h3 className="mt-7 text-xl font-black">{program.title}</h3><p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">{program.text}</p><Link href="/courses" className="mt-6 inline-flex items-center text-sm font-bold text-blue-700">Learn more <ChevronRight className="h-4 w-4" /></Link></article>)}
+        </div>
+      </Section>
+
+      <section id="about" className="bg-slate-950 py-24 text-white">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 md:px-6 lg:grid-cols-2">
+          <div className="relative min-h-[500px]">
+            <div className="absolute left-0 top-0 w-[78%] overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-700 to-blue-950 p-8 shadow-2xl">
+              <p className="text-sm font-bold uppercase tracking-[.2em] text-blue-200">Our purpose</p><p className="mt-6 text-3xl font-black leading-tight">Make quality technical education practical, personal and outcome-driven.</p><div className="mt-10 grid grid-cols-2 gap-4"><Metric icon={<Users />} value="Community" label="Learn together" /><Metric icon={<Target />} value="Clarity" label="Know what to do next" /></div>
+            </div>
+            <div className="absolute bottom-0 right-0 w-[66%] rounded-[2rem] border border-white/10 bg-white p-7 text-slate-950 shadow-2xl"><Quote className="h-8 w-8 text-orange-500" /><p className="mt-4 text-xl font-bold leading-relaxed">“The goal is not just better code. It is better thinking.”</p><p className="mt-4 text-sm font-semibold text-slate-500">— A Coding Gurukul learner</p></div>
           </div>
-          <h3 className="text-xl font-bold">{title}</h3>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-            {desc}
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  function Benefit({ title, desc }: { title: string; desc: string }) {
-    return (
-      <Card className="rounded-3xl hover:shadow-lg transition">
-        <CardContent className="p-7">
-          <CheckCircle2 className="h-8 w-8 text-blue-600 mb-5" />
-          <h3 className="text-lg font-bold">{title}</h3>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-            {desc}
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  function MiniPoint({ title }: { title: string }) {
-    return (
-      <div className="flex items-center gap-3 rounded-xl bg-white dark:bg-card p-4 shadow-sm">
-        <CheckCircle2 className="h-5 w-5 text-orange-500" />
-        <span className="font-semibold">{title}</span>
-      </div>
-    );
-  }
-
-  function Process({
-    step,
-    title,
-    desc,
-  }: {
-    step: string;
-    title: string;
-    desc: string;
-  }) {
-    return (
-      <div className="flex gap-4">
-        <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
-          {step}
+          <div><Eyebrow>About Coding Gurukul</Eyebrow><h2 className="mt-5 text-4xl font-black leading-tight tracking-tight md:text-5xl">We teach the skills between knowing and doing.</h2><p className="mt-6 text-lg leading-8 text-slate-300">Coding Gurukul is a mentor-led learning community closing the gap between classroom theory and industry expectations. Every program combines clear explanation, hands-on coding, feedback and accountability.</p><div className="mt-8 space-y-5">{[[GraduationCap, "Mentors who teach the thinking", "Understand the why, dry-run the approach and then write the code."], [BarChart3, "Progress you can measure", "Practice sheets, assessments and reviews show exactly where to improve."], [ShieldCheck, "Preparation built around careers", "Train for coding rounds, technical conversations and real project work."]].map(([Icon, title, text]) => { const C = Icon as typeof GraduationCap; return <div key={String(title)} className="flex gap-4"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/10"><C className="h-5 w-5 text-orange-400" /></div><div><h3 className="font-bold">{String(title)}</h3><p className="mt-1 text-sm leading-6 text-slate-400">{String(text)}</p></div></div>})}</div></div>
         </div>
-        <div>
-          <h4 className="font-bold">{title}</h4>
-          <p className="text-sm text-muted-foreground">{desc}</p>
+      </section>
+
+      <Section eyebrow="How learning works" title="A simple system built for progress" description="No random tutorials or disconnected practice. Every stage prepares you for the next.">
+        <div className="relative grid gap-5 md:grid-cols-4">
+          <div className="absolute left-[12%] right-[12%] top-8 hidden h-px bg-blue-200 md:block dark:bg-slate-700" />
+          {[[BookOpen, "01", "Learn", "Understand concepts with visual dry runs and live examples."], [Code2, "02", "Practise", "Solve curated questions that reinforce each pattern."], [Headphones, "03", "Get feedback", "Clear doubts, review code and learn from mistakes."], [Award, "04", "Perform", "Test yourself through contests, mocks and interviews."]].map(([Icon, step, title, text]) => { const C = Icon as typeof BookOpen; return <div key={String(step)} className="relative text-center"><div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl border-4 border-white bg-blue-700 text-white shadow-lg dark:border-slate-950"><C className="h-6 w-6" /></div><p className="mt-5 text-xs font-black tracking-widest text-orange-500">STEP {String(step)}</p><h3 className="mt-2 text-xl font-black">{String(title)}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{String(text)}</p></div>})}
         </div>
-      </div>
-    );
-  }
+      </Section>
 
-  function Deliverable({
-    title,
-    items,
-  }: {
-    title: string;
-    items: string[];
-  }) {
-    return (
-      <Card className="rounded-3xl">
-        <CardContent className="p-7">
-          <h3 className="text-xl font-bold mb-5">{title}</h3>
-          <ul className="space-y-3">
-            {items.map((item) => (
-              <li
-                key={item}
-                className="flex gap-3 text-sm text-muted-foreground"
-              >
-                <CheckCircle2 className="h-5 w-5 text-orange-500 shrink-0" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-    );
-  }
+      <section className="bg-[#f6f9ff] py-24 dark:bg-slate-900/40">
+        <div className="mx-auto max-w-7xl px-4 md:px-6"><div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between"><div><Eyebrow>Featured courses</Eyebrow><h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">Choose your next milestone</h2><p className="mt-4 max-w-2xl text-slate-600 dark:text-slate-400">Live training, dedicated practice and long-term access options for every stage.</p></div>{cartItems.length > 0 && <Badge className="w-fit bg-blue-100 px-4 py-2 text-blue-700 hover:bg-blue-100">{cartItems.length} course{cartItems.length > 1 ? "s" : ""} in cart</Badge>}</div><div className="mt-9 flex flex-col gap-4 rounded-3xl bg-blue-700 p-6 text-white shadow-xl shadow-blue-700/15 sm:flex-row sm:items-center sm:justify-between"><div className="flex items-center gap-4"><div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-white/15"><CalendarDays className="h-6 w-6" /></div><div><p className="text-sm font-bold uppercase tracking-[.16em] text-blue-200">Admissions now open</p><p className="mt-1 text-xl font-black">All batches launch on 25th July</p></div></div><Button onClick={() => setContactOpen(true)} className="rounded-xl bg-white font-bold text-blue-700 hover:bg-orange-50">Get free counselling <ArrowRight className="ml-2 h-4 w-4" /></Button></div><div className="mt-8 grid gap-6 md:grid-cols-3">{courses.map(course => <CourseCard key={course.id} course={course} isAdded={cartItems.some(item => item.id === course.id)} onAddToCart={addToCart} onBuy={buyCourse} compact />)}</div></div>
+      </section>
 
-  function MentorCard({
-    title,
-    points,
-  }: {
-    title: string;
-    points: string[];
-  }) {
-    return (
-      <Card className="rounded-3xl hover:shadow-lg transition">
-        <CardContent className="p-7">
-          <Users className="h-8 w-8 text-blue-600 mb-5" />
-          <h3 className="text-xl font-bold">{title}</h3>
-          <ul className="mt-5 space-y-3">
-            {points.map((point) => (
-              <li
-                key={point}
-                className="flex gap-3 text-sm text-muted-foreground"
-              >
-                <CheckCircle2 className="h-5 w-5 text-orange-500 shrink-0" />
-                {point}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-    );
-  }
+      <section id="student-gallery" className="py-24">
+        <div className="mx-auto max-w-7xl px-4 md:px-6"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div className="lg:sticky lg:top-28 lg:self-start"><Eyebrow>Student success gallery</Eyebrow><h2 className="mt-5 text-4xl font-black leading-tight tracking-tight md:text-5xl">Real learners.<br />Real momentum.</h2><p className="mt-5 max-w-md text-lg leading-8 text-slate-600 dark:text-slate-400">From first successful programs to top ranks and placement breakthroughs, these milestones show what focused learning can unlock.</p><div className="mt-8 rounded-3xl bg-orange-500 p-7 text-white"><p className="text-sm font-bold uppercase tracking-widest text-orange-100">Placement highlight</p><p className="mt-3 text-4xl font-black">3.5 → 12 LPA</p><p className="mt-3 leading-7 text-orange-50">A learner’s confidence grew through constant guidance, practical training and interview support.</p></div><Button asChild variant="outline" className="mt-6 rounded-xl"><a href="https://www.linkedin.com/company/codinggurukul/posts/?feedView=all" target="_blank" rel="noreferrer">See posts on LinkedIn <ExternalLink className="ml-2 h-4 w-4" /></a></Button></div><div className="grid gap-5 md:grid-cols-2">{stories.map(story => <StoryCard key={story.name} {...story} />)}</div></div></div>
+      </section>
 
-  function PlanCard({
-    title,
-    duration,
-    desc,
-    highlighted,
-  }: {
-    title: string;
-    duration: string;
-    desc: string;
-    highlighted?: boolean;
-  }) {
-    return (
-      <Card
-        className={`rounded-3xl ${
-          highlighted
-            ? "bg-white text-slate-950 scale-105 shadow-2xl"
-            : "bg-white/10 text-white border-white/10"
-        }`}
-      >
-        <CardContent className="p-8">
-          <p
-            className={
-              highlighted
-                ? "text-orange-500 font-bold"
-                : "text-orange-300 font-bold"
-            }
-          >
-            {duration}
-          </p>
-          <h3 className="mt-3 text-2xl font-bold">{title}</h3>
-          <p
-            className={`mt-4 text-sm leading-relaxed ${
-              highlighted ? "text-slate-600" : "text-slate-300"
-            }`}
-            >
-            {desc}
-          </p>
-        </CardContent>
-      </Card>
-    );
-  }
+      <section className="bg-slate-950 py-20 text-white"><TeamSection /></section>
+
+      <section id="academic-counselling" className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-800 to-slate-950 py-24 text-white"><div className="absolute -right-20 -top-32 h-96 w-96 rounded-full border-[70px] border-white/5" /><div className="absolute -bottom-28 left-10 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" /><div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 md:px-6 lg:grid-cols-[1fr_.72fr]"><div><div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-blue-100"><MessageCircle className="h-4 w-4 text-orange-300" /> Free Academic Counselling</div><h2 className="mt-6 max-w-3xl text-4xl font-black tracking-tight md:text-5xl">Not sure which program is right for you?</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">Speak one-to-one with our academic counsellor. We’ll understand your current skills, career goal and available study time, then recommend the most suitable learning path—without any pressure.</p><div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-blue-100">{["Personal skill assessment", "Course and roadmap guidance", "Placement preparation advice"].map(item => <span key={item} className="flex items-center gap-2"><Check className="h-4 w-4 text-orange-300" />{item}</span>)}</div></div><Card className="border-white/15 bg-white p-2 shadow-2xl"><CardContent className="rounded-2xl bg-white p-6 text-slate-950 md:p-8"><div className="grid h-14 w-14 place-items-center rounded-2xl bg-orange-100 text-orange-600"><GraduationCap className="h-7 w-7" /></div><h3 className="mt-5 text-2xl font-black">Book your counselling session</h3><p className="mt-2 leading-7 text-slate-600">Connect with us for batch details, course selection, fees or placement preparation support.</p><Button size="lg" onClick={() => setContactOpen(true)} className="mt-6 h-13 w-full rounded-xl bg-blue-700 font-bold text-white hover:bg-blue-800">Book free counselling <ArrowRight className="ml-2 h-5 w-5" /></Button><div className="mt-5 grid gap-3 sm:grid-cols-2"><a href={`tel:${CONTACT_PHONE}`} className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-3 text-sm font-bold hover:bg-slate-50"><Phone className="h-4 w-4 text-blue-700" /> Call us</a><a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-3 text-sm font-bold hover:bg-slate-50"><Mail className="h-4 w-4 text-blue-700" /> Email us</a></div></CardContent></Card></div></section>
+
+      <footer className="bg-slate-950 text-slate-300"><div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-[1.3fr_.7fr_.8fr] md:px-6"><div><div className="flex items-center gap-3"><img src="/logo.png" className="h-11 w-11 rounded-xl bg-white p-1" alt="Coding Gurukul" /><span className="text-xl font-black text-white">Coding Gurukul</span></div><p className="mt-5 max-w-sm leading-7 text-slate-400">Practical, mentor-led technical education for ambitious students and future developers.</p><div className="mt-6 flex gap-3"><Social href="https://www.linkedin.com/company/codinggurukul/posts/?feedView=all"><FaLinkedinIn /></Social><Social href="https://www.instagram.com/codinggurukulofficial/"><FaInstagram /></Social></div></div><div><h3 className="font-bold text-white">Explore</h3><div className="mt-5 space-y-3 text-sm"><FooterLink href="/courses">Courses</FooterLink><FooterLink href="/roadmap">Roadmap</FooterLink><FooterLink href="/dsa">DSA Sheet</FooterLink><FooterLink href="/contests">Contests</FooterLink></div></div><div><h3 className="font-bold text-white">Contact</h3><div className="mt-5 space-y-4 text-sm"><a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 hover:text-white"><Mail className="h-4 w-4 text-orange-400" />{CONTACT_EMAIL}</a><a href={`tel:${CONTACT_PHONE}`} className="flex items-center gap-3 hover:text-white"><Phone className="h-4 w-4 text-orange-400" />{CONTACT_PHONE}</a><p className="flex items-center gap-3"><MapPin className="h-4 w-4 text-orange-400" />India</p></div></div></div><div className="border-t border-white/10 px-4 py-6 text-center text-sm text-slate-500">© {new Date().getFullYear()} Coding Gurukul. Built for learners who keep going.</div></footer>
+    </div>
+  );
+}
+
+function Section({ id, eyebrow, title, description, children }: { id?: string; eyebrow: string; title: string; description: string; children: React.ReactNode }) { return <section id={id} className="py-24"><div className="mx-auto max-w-7xl px-4 md:px-6"><div className="mb-12 max-w-3xl"><Eyebrow>{eyebrow}</Eyebrow><h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">{title}</h2><p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{description}</p></div>{children}</div></section> }
+function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="flex items-center gap-2 text-sm font-black uppercase tracking-[.18em] text-blue-700"><span className="h-2 w-2 rounded-full bg-orange-500" />{children}</p> }
+function Metric({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) { return <div className="rounded-2xl bg-white/10 p-4">{React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "h-5 w-5 text-orange-300" })}<p className="mt-3 font-black">{value}</p><p className="mt-1 text-xs text-blue-200">{label}</p></div> }
+function StoryCard({ name, result, program, quote, tone }: (typeof stories)[number]) { const colors: Record<string, string> = { blue: "bg-blue-100 text-blue-700 dark:bg-blue-950", orange: "bg-orange-100 text-orange-700 dark:bg-orange-950", violet: "bg-violet-100 text-violet-700 dark:bg-violet-950", emerald: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950" }; return <article className="flex min-h-[290px] flex-col rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"><div className="flex items-start justify-between"><span className={`rounded-full px-3 py-1 text-xs font-black uppercase tracking-wide ${colors[tone]}`}>{result}</span><FaLinkedinIn className="text-blue-600" /></div><Quote className="mt-7 h-7 w-7 text-orange-400" /><p className="mt-4 flex-1 leading-7 text-slate-600 dark:text-slate-300">“{quote}”</p><div className="mt-6 border-t pt-5 dark:border-slate-700"><h3 className="font-black">{name}</h3><p className="mt-1 text-sm text-slate-500">{program}</p></div></article> }
+function Social({ href, children }: { href: string; children: React.ReactNode }) { return <a href={href} target="_blank" rel="noreferrer" className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-white transition hover:bg-blue-700">{children}</a> }
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) { return <p><Link href={href} className="transition hover:text-white">{children}</Link></p> }
