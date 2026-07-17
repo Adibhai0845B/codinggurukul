@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight, Award, BarChart3, BookOpen, Check, CheckCircle2, Clock,
   CalendarDays, ChevronRight, Code2, ExternalLink, GraduationCap, Headphones,
   Layers3, Mail, MapPin, Phone, Play, Quote, Rocket, ShieldCheck,
-  MessageCircle, Sparkles, Target, Trophy, Users,
+  MessageCircle, Sparkles, Target, Trophy, Users, X,
 } from "lucide-react";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -36,8 +36,15 @@ const programCards = [
 
 export default function Home() {
   const [contactOpen, setContactOpen] = useState(false);
+  const [demoAdOpen, setDemoAdOpen] = useState(true);
   const cartItems = useCourseCart((state) => state.items);
   const addCourse = useCourseCart((state) => state.addCourse);
+
+  useEffect(() => {
+    if (!demoAdOpen) return;
+    const closeTimer = window.setTimeout(() => setDemoAdOpen(false), 10_000);
+    return () => window.clearTimeout(closeTimer);
+  }, [demoAdOpen]);
 
   function addToCart(course: Course) {
     const added = addCourse(course);
@@ -55,12 +62,36 @@ export default function Home() {
     <div className="overflow-hidden bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} formUrl={CONTACT_FORM_URL} />
 
+      {demoAdOpen && (
+        <div className="fixed bottom-3 left-3 right-3 z-[100] sm:bottom-6 sm:left-auto sm:right-6 sm:w-[440px]" role="dialog" aria-labelledby="demo-ad-title">
+          <div className="relative w-full overflow-hidden rounded-2xl border border-white/20 bg-slate-950 shadow-2xl shadow-black/60">
+            <div className="flex items-center justify-between border-b border-white/10 px-3 py-2.5 sm:px-4">
+              <div>
+                <p className="text-[9px] font-black uppercase tracking-[.2em] text-orange-400">Featured opportunity</p>
+                <h2 id="demo-ad-title" className="mt-0.5 text-sm font-bold text-white">Free Coding Gurukul demo lecture</h2>
+              </div>
+              <button onClick={() => setDemoAdOpen(false)} className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400" aria-label="Close advertisement">
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <img src="/demo-lecture-ad.png" alt="Coding Gurukul free demo lecture featuring practical coding, real projects, expert mentors and career-focused learning" className="aspect-video w-full object-cover" />
+            <div className="flex items-center justify-between gap-3 bg-slate-950 px-3 py-3 sm:px-4">
+              <p className="text-[11px] leading-4 text-slate-400">Limited seats per session</p>
+              <Button size="sm" onClick={() => { setDemoAdOpen(false); setContactOpen(true); }} className="shrink-0 rounded-lg bg-orange-500 text-xs font-black text-white shadow-lg shadow-orange-950/30 hover:bg-orange-600">
+                Reserve your seat <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+            <div className="h-1 origin-left animate-[shrink_10s_linear_forwards] bg-orange-500" />
+          </div>
+        </div>
+      )}
+
       <aside className="relative overflow-hidden bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 text-white">
         <div className="absolute inset-0 opacity-15 [background-image:linear-gradient(120deg,transparent_20%,white_20%,white_22%,transparent_22%,transparent_72%,white_72%,white_74%,transparent_74%)]" />
         <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-4 text-center sm:flex-row sm:text-left md:px-6">
           <div className="flex items-center gap-3">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/20"><Clock className="h-5 w-5" /></div>
-            <div><p className="text-xs font-black uppercase tracking-[.18em] text-orange-100">Free weekly demo session</p><p className="mt-0.5 text-lg font-black">Every Sunday · 10:00 AM to 11:00 AM</p></div>
+            <div><p className="text-xs font-black uppercase tracking-[.18em] text-orange-100">Free demo session</p><p className="mt-0.5 text-lg font-black">Sunday · 10:00 AM to 11:00 AM</p></div>
           </div>
           <Button onClick={() => setContactOpen(true)} className="shrink-0 rounded-xl bg-white font-bold text-orange-600 shadow-md hover:bg-orange-50">Register for demo <ArrowRight className="ml-2 h-4 w-4" /></Button>
         </div>
