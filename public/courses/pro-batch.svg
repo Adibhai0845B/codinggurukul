@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1536" height="512" viewBox="0 0 1536 512" role="img" aria-labelledby="title desc">
   <title id="title">Advanced DSA and CP Pro Batch</title>
-  <desc id="desc">Coding Gurukul Pro Batch course banner for advanced DSA, competitive programming, problem solving, launch price Rs. 3499 and launch date 25th July.</desc>
+  <desc id="desc">Coding Gurukul Pro Batch course banner for advanced DSA, competitive programming, problem solving, launch price Rs. 2999 and launch date 25th July.</desc>
   <rect width="1536" height="512" rx="18" fill="#f8fbff"/>
   <path d="M0 0h250C160 80 72 102 0 110zM0 512h250C150 455 60 425 0 380z" fill="#0246a3"/>
   <path d="M0 66c92 18 163 5 262-66h54C207 92 105 124 0 103zM0 445c80-5 143 18 220 67h51C184 426 92 391 0 410z" fill="#ff6b00"/>
@@ -41,7 +41,7 @@
     <path d="M48 76 178 52" stroke="#e11d48" stroke-width="4"/>
     <rect x="18" y="96" width="190" height="32" rx="8" fill="#ff6500"/>
     <text x="113" y="119" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#fff">Launch Price</text>
-    <text x="113" y="153" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="900" fill="#c2410c">Rs. 3,499</text>
+    <text x="113" y="153" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="900" fill="#c2410c">Rs. 2,999</text>
   </g>
   <image href="/logo_transparent.png" x="1110" y="44" width="300" height="300" preserveAspectRatio="xMidYMid meet"/>
   <text x="1260" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#06113a">Code Your Future. Create Tomorrow.</text>
