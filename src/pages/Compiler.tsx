@@ -10,13 +10,47 @@ import {
 } from "lucide-react";
 import Editor from "../Editor";
 
-const STARTER_CODE = `#include <iostream>
+const CPP_STARTER = `#include <iostream>
 using namespace std;
 
 int main() {
     cout << "Hello, Coding Gurukul!" << endl;
     return 0;
 }`;
+
+const JAVA_STARTER = `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, Coding Gurukul!");
+    }
+}`;
+
+const PYTHON_STARTER = `print("Hello, Coding Gurukul!")`;
+
+const LANGUAGES = {
+  cpp: {
+    label: "C++",
+    languageId: 54,
+    editorLanguage: "cpp",
+    filename: "main.cpp",
+    starterCode: CPP_STARTER,
+  },
+  java: {
+    label: "Java",
+    languageId: 62,
+    editorLanguage: "java",
+    filename: "Main.java",
+    starterCode: JAVA_STARTER,
+  },
+  python: {
+    label: "Python",
+    languageId: 71,
+    editorLanguage: "python",
+    filename: "main.py",
+    starterCode: PYTHON_STARTER,
+  },
+} as const;
+
+type LanguageKey = keyof typeof LANGUAGES;
 
 type Judge0Response = {
   stdout?: string | null;
@@ -41,12 +75,29 @@ function getExecutionOutput(result: Judge0Response) {
 }
 
 export default function Compiler() {
-  const [code, setCode] = useState(STARTER_CODE);
+  const [language, setLanguage] = useState<LanguageKey>("cpp");
+  const [codeByLanguage, setCodeByLanguage] = useState<Record<LanguageKey, string>>({
+    cpp: CPP_STARTER,
+    java: JAVA_STARTER,
+    python: PYTHON_STARTER,
+  });
   const [stdin, setStdin] = useState("");
   const [output, setOutput] = useState("Run your code to see the output here.");
   const [isLoading, setIsLoading] = useState(false);
   const [hasRun, setHasRun] = useState(false);
   const [copied, setCopied] = useState(false);
+  const activeLanguage = LANGUAGES[language];
+  const code = codeByLanguage[language];
+
+  const setCode = (value: string) => {
+    setCodeByLanguage((current) => ({ ...current, [language]: value }));
+  };
+
+  const handleLanguageChange = (nextLanguage: LanguageKey) => {
+    setLanguage(nextLanguage);
+    setOutput("Run your code to see the output here.");
+    setHasRun(false);
+  };
 
   const handleRun = async () => {
     if (!code.trim() || isLoading) return;
@@ -66,7 +117,7 @@ export default function Compiler() {
           headers: { "Content-Type": "application/json" },
           signal: controller.signal,
           body: JSON.stringify({
-            language_id: 54,
+            language_id: activeLanguage.languageId,
             source_code: code,
             stdin,
             cpu_time_limit: 5,
@@ -95,7 +146,7 @@ export default function Compiler() {
   };
 
   const handleReset = () => {
-    setCode(STARTER_CODE);
+    setCode(activeLanguage.starterCode);
     setStdin("");
     setOutput("Run your code to see the output here.");
     setHasRun(false);
@@ -119,9 +170,9 @@ export default function Compiler() {
             <Code2 className="h-4 w-4" />
             Online IDE
           </div>
-          <h1 className="text-3xl font-black tracking-tight text-white">C++ Compiler</h1>
+          <h1 className="text-3xl font-black tracking-tight text-white">Online Compiler</h1>
           <p className="mt-2 text-sm text-slate-400">
-            Write, compile, and test your C++ code directly in the browser.
+            Write, compile, and test C++, Java, or Python directly in the browser.
           </p>
         </div>
 
@@ -155,11 +206,31 @@ export default function Compiler() {
               <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
             </div>
-            <span className="text-xs font-semibold text-slate-400">main.cpp</span>
+            <span className="text-xs font-semibold text-slate-400">{activeLanguage.filename}</span>
           </div>
-          <span className="rounded-md bg-blue-500/10 px-2 py-1 text-xs font-semibold text-blue-400">C++</span>
+          <label className="flex items-center gap-2 text-xs font-semibold text-slate-400">
+            Language
+            <select
+              value={language}
+              onChange={(event) => handleLanguageChange(event.target.value as LanguageKey)}
+              disabled={isLoading}
+              aria-label="Programming language"
+              className="rounded-md border border-slate-700 bg-slate-950 px-2.5 py-1.5 text-xs font-semibold text-blue-400 outline-none transition focus:border-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {Object.entries(LANGUAGES).map(([key, option]) => (
+                <option key={key} value={key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
-        <Editor code={code} setCode={setCode} onRun={handleRun} />
+        <Editor
+          code={code}
+          setCode={setCode}
+          onRun={handleRun}
+          language={activeLanguage.editorLanguage}
+        />
       </div>
 
       <div className="grid gap-5 lg:grid-cols-2">

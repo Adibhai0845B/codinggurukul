@@ -5,9 +5,10 @@ type CodeEditorProps = {
   code: string;
   setCode: (value: string) => void;
   onRun?: () => void;
+  language: string;
 };
 
-export default function CodeEditor({ code, setCode, onRun }: CodeEditorProps) {
+export default function CodeEditor({ code, setCode, onRun, language }: CodeEditorProps) {
   const onRunRef = useRef(onRun);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function CodeEditor({ code, setCode, onRun }: CodeEditorProps) {
     <Editor
       height="58vh"
       theme="vs-dark"
-      defaultLanguage="cpp"
+      language={language}
       value={code}
       onChange={(value) => setCode(value || "")}
       onMount={handleMount}
