@@ -1,124 +1,147 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Code2, Menu } from "lucide-react";
+import {
+  BookOpen,
+  ChevronDown,
+  Code2,
+  FileCode2,
+  Flag,
+  LogIn,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  Trophy,
+  UserRound,
+} from "lucide-react";
 import { Button } from "./ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import useAuth from "@/hooks/useAuth";
-import { useProgress } from "@/hooks/useProgress"; 
+import { useProgress } from "@/hooks/useProgress";
+
+const mainLinks = [
+  { href: "/", label: "Home" },
+  { href: "/courses", label: "Courses" },
+  { href: "/roadmap", label: "Roadmap" },
+  { href: "/contests", label: "Contests" },
+];
+
+const learningLinks = [
+  { href: "/start-100", label: "Start 150", description: "Essential coding problems", icon: BookOpen },
+  { href: "/dsa", label: "DSA Sheet", description: "Master data structures", icon: FileCode2 },
+  { href: "/cp", label: "CP Sheet", description: "Competitive programming", icon: Trophy },
+  { href: "/progress", label: "My Progress", description: "Review your activity", icon: Flag },
+];
 
 export default function Navbar() {
   const [location, setLocation] = useLocation();
+  const isLoggedIn = useAuth((state) => state.isLoggedIn);
+  const username = useAuth((state) => state.username);
+  const logout = useAuth((state) => state.logout);
+  const resetProgress = useProgress((state) => state.resetProgress);
 
-  const primaryLinks =[
-    { href: "/", label: "Home" },
-    { href: "/courses", label: "Courses" },
-    { href: "/roadmap", label: "Roadmap" },
-    { href: "/start-100", label: "Start 150" },
-    { href: "/dsa", label: "DSA Sheet" },
-    { href: "/cp", label: "CP Sheet" },
-  ];
-  const allLinks =[
-    ...primaryLinks,
-    { href: "/contests", label: "Contests" },
-    { href: "/progress", label: "Progress" },
-    { href: "/compiler", label: "Compiler" },
-  ];
+  const isActive = (href: string) => href === "/" ? location === "/" : location.startsWith(href);
+  const learningActive = learningLinks.some((link) => isActive(link.href));
 
-  const isLoggedIn = useAuth((s) => s.isLoggedIn);
-  const logout = useAuth((s) => s.logout)
-  const resetProgress = useProgress((s) => s.resetProgress);// reset the progress
+  const handleLogout = () => {
+    logout();
+    resetProgress();
+    setLocation("/");
+  };
+
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/90 text-slate-900 shadow-sm backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/90 dark:text-white">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center px-4 md:px-6">
-        <div className="hidden w-full items-center md:flex">
-          <Link href="/" className="mr-7 flex items-center space-x-3">
-            <img src="/logo.png" alt="Coding Gurukul" className="h-10 w-10 rounded-xl object-contain" />
-            <span className="text-lg font-black tracking-tight">
-              Coding Gurukul
-            </span>
-          </Link>
-          <div className="flex items-center space-x-5 text-sm font-semibold">
-            {primaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`transition-colors hover:text-blue-700 ${
-                  location === link.href ? "text-blue-700" : "text-slate-600 dark:text-slate-300"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-slate-950/85 text-white shadow-lg shadow-black/10 backdrop-blur-xl">
+      <div className="mx-auto flex h-[68px] max-w-7xl items-center gap-4 px-4 md:px-6">
+        <Link href="/" className="group flex shrink-0 items-center gap-3" aria-label="Coding Gurukul home">
+          <img src="/logo.png" alt="" className="h-10 w-10 rounded-xl object-contain ring-1 ring-white/10 transition group-hover:ring-blue-500/50" />
+          <div className="hidden sm:block">
+            <p className="text-base font-black leading-tight tracking-tight">Coding Gurukul</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-400">Learn · Code · Grow</p>
           </div>
-          <div className="ml-auto flex items-center gap-3">
-            <Button
-              asChild
-              variant="outline"
-              className={`rounded-xl border-slate-700 px-4 ${
-                location === "/compiler"
-                  ? "border-blue-500 bg-blue-500/10 text-blue-400"
-                  : "text-slate-200 hover:bg-slate-800 hover:text-white"
+        </Link>
+
+        <div className="ml-4 hidden items-center gap-1 lg:flex">
+          {mainLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                isActive(link.href) ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-800/70 hover:text-white"
               }`}
             >
-              <Link href="/compiler">
-                <Code2 className="mr-2 h-4 w-4" />
-                Compiler
-              </Link>
-            </Button>
-            <button
-              onClick={() => {
-                if (isLoggedIn) {
-                  logout();
-                  resetProgress();
-                  setLocation('/');
-                  window.location.reload();// Reloading the page
-                } else {
-                  setLocation('/login');
-                }
-              }}
-              className="px-3 text-sm font-semibold text-slate-600 hover:text-blue-700 dark:text-slate-300"
-            >
-              {isLoggedIn ? 'Logout' : 'Login'}
-            </button>
-            <Button asChild className="rounded-xl bg-blue-700 px-5 text-white hover:bg-blue-800">
-              <Link href="/courses">Explore courses <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-          </div>
-        </div>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="pr-0">
-            <Link href="/" className="flex items-center space-x-2 mb-8">
-              <img src="/logo.png" alt="Coding Gurukul" className="h-7 w-7 object-contain" />
-              <span className="font-bold">Coding Gurukul Sheet</span>
+              {link.label}
             </Link>
-            <div className="flex flex-col space-y-4">
-              {allLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-sm ${
-                    location === link.href ? "text-foreground font-semibold" : "text-foreground/60"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
-        <div className="flex flex-1 items-center justify-end space-x-2 md:hidden">
-          <Link href="/" className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Coding Gurukul" className="h-9 w-9 rounded-lg object-contain" />
-            <span className="font-black">Coding Gurukul</span>
-          </Link>
+          ))}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold outline-none transition ${learningActive ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-800/70 hover:text-white"}`}>
+                Learn <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-64 border-slate-800 bg-slate-950 p-2">
+              <DropdownMenuLabel className="text-xs uppercase tracking-wider text-slate-500">Learning resources</DropdownMenuLabel>
+              {learningLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <DropdownMenuItem key={link.href} asChild className="cursor-pointer rounded-lg p-0 focus:bg-slate-800">
+                    <Link href={link.href} className="flex w-full items-center gap-3 p-2.5">
+                      <span className="rounded-lg bg-blue-500/10 p-2 text-blue-400"><Icon className="h-4 w-4" /></span>
+                      <span><span className="block text-sm font-semibold text-slate-100">{link.label}</span><span className="block text-xs text-slate-500">{link.description}</span></span>
+                    </Link>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <div className="ml-auto hidden items-center gap-2 lg:flex">
+          <Button asChild variant="ghost" className={`rounded-xl text-sm ${location.startsWith("/make-contest") ? "bg-amber-500/10 text-amber-400" : "text-slate-300 hover:bg-slate-800 hover:text-amber-400"}`}>
+            <Link href="/make-contest"><ShieldCheck className="mr-2 h-4 w-4" />Make Contest</Link>
+          </Button>
+          <Button asChild className="rounded-xl bg-blue-600 text-white shadow-md shadow-blue-950/40 hover:bg-blue-500">
+            <Link href="/compiler"><Code2 className="mr-2 h-4 w-4" />Compiler</Link>
+          </Button>
+
+          {isLoggedIn ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="ml-1 flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-sm font-black text-blue-400 outline-none transition hover:border-blue-500" aria-label="Open user menu">
+                  {(username || "U").charAt(0).toUpperCase()}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52 border-slate-800 bg-slate-950">
+                <DropdownMenuLabel><span className="block text-xs font-normal text-slate-500">Signed in as</span><span className="truncate text-sm text-white">{username}</span></DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-slate-800" />
+                <DropdownMenuItem asChild><Link href="/progress" className="cursor-pointer"><UserRound className="mr-2 h-4 w-4" />My Progress</Link></DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-400 focus:text-red-300"><LogOut className="mr-2 h-4 w-4" />Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="ghost" className="rounded-xl text-slate-300 hover:bg-slate-800 hover:text-white"><Link href="/login"><LogIn className="mr-2 h-4 w-4" />Login</Link></Button>
+          )}
+        </div>
+
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          <Button asChild size="sm" className="rounded-lg bg-blue-600 text-white hover:bg-blue-500"><Link href="/compiler"><Code2 className="mr-1.5 h-4 w-4" />Compiler</Link></Button>
+          <Sheet>
+            <SheetTrigger asChild><Button variant="ghost" size="icon" className="text-slate-200 hover:bg-slate-800"><Menu className="h-5 w-5" /><span className="sr-only">Open navigation</span></Button></SheetTrigger>
+            <SheetContent side="right" className="w-[310px] border-slate-800 bg-slate-950 p-0 text-white">
+              <div className="border-b border-slate-800 p-5"><SheetClose asChild><Link href="/" className="flex items-center gap-3"><img src="/logo.png" alt="" className="h-10 w-10 rounded-xl object-contain" /><div><p className="font-black">Coding Gurukul</p><p className="text-xs text-blue-400">Learn · Code · Grow</p></div></Link></SheetClose></div>
+              <div className="space-y-6 overflow-y-auto p-5">
+                <div className="space-y-1"><p className="mb-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500">Navigate</p>{mainLinks.map((link) => <SheetClose asChild key={link.href}><Link href={link.href} className={`flex rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive(link.href) ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-900"}`}>{link.label}</Link></SheetClose>)}</div>
+                <div className="space-y-1"><p className="mb-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500">Learning</p>{learningLinks.map((link) => { const Icon = link.icon; return <SheetClose asChild key={link.href}><Link href={link.href} className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive(link.href) ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-900"}`}><Icon className="h-4 w-4" />{link.label}</Link></SheetClose>; })}</div>
+                <div className="space-y-2 border-t border-slate-800 pt-5"><SheetClose asChild><Button asChild variant="outline" className="w-full border-amber-500/30 text-amber-400"><Link href="/make-contest"><ShieldCheck className="mr-2 h-4 w-4" />Make Contest</Link></Button></SheetClose>{isLoggedIn ? <SheetClose asChild><Button variant="ghost" onClick={handleLogout} className="w-full text-red-400"><LogOut className="mr-2 h-4 w-4" />Logout {username}</Button></SheetClose> : <SheetClose asChild><Button asChild variant="outline" className="w-full"><Link href="/login"><LogIn className="mr-2 h-4 w-4" />Login</Link></Button></SheetClose>}</div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>

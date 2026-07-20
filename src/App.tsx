@@ -20,6 +20,10 @@ import AdminLogin from "@/pages/AdminLogin";// Admin login page
 
 import AdminDashboard from "@/pages/AdminDashboard";
 import Register from "./pages/Register";
+import ContestDetails from "@/pages/ContestDetails";
+import ContestAdminLogin from "@/pages/ContestAdminLogin";
+import MakeContest from "@/pages/MakeContest";
+import ContestAdminRoute from "@/components/ContestAdminRoute";
 
 import AdminProtectedRoute from "@/components/AdminProtectedRoute";
 
@@ -36,6 +40,8 @@ function Router() {
         <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} /> {/* Add your new Register page here */}
+        <Route path="/make-contest/login" component={ContestAdminLogin} />
+        <Route path="/make-contest" component={() => <ContestAdminRoute component={MakeContest} />} />
         
         {/* These are your Premium/Enrolled-only pages */}
         <Route path="/start-100" component={() => <ProtectedRoute component={Start100Sheet} requireEnrolled={true} />} />
@@ -45,6 +51,7 @@ function Router() {
         <Route path="/compiler" component={Compiler} />
         
         {/* These are standard protected pages (available to both registered and enrolled) */}
+        <Route path="/contests/:id" component={() => <ProtectedRoute component={ContestDetails} />} />
         <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />
         <Route path="/progress" component={() => <ProtectedRoute component={Progress} requireEnrolled={true} />} />
         

@@ -18,8 +18,13 @@ const Login = () => {
     e.preventDefault();
     setLoading(true); // Start loading jab login ho raha ho
     try {
-      if (import.meta.env.DEV && username === "student" && password === "student123") {
-        useAuth.getState().login("student", "local-dev-token", "enrolled");
+      const isLocalDemoUser = import.meta.env.DEV && (
+        (username === "student" && password === "student123") ||
+        (username === "student2_demo" && password === "password123")
+      );
+
+      if (isLocalDemoUser) {
+        useAuth.getState().login(username, `local-dev-token-${username}`, "enrolled");
         setLocation("/");
         toast({
           title: "Local Login Successful",
