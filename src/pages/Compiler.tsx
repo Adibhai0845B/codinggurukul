@@ -1,66 +1,214 @@
-import { useState } from 'react';
-import Editor from '../Editor'; // Adjust path if needed
+import { useState } from "react";
+import {
+  Check,
+  Code2,
+  Copy,
+  Loader2,
+  Play,
+  RotateCcw,
+  Terminal,
+} from "lucide-react";
+import Editor from "../Editor";
+
+const STARTER_CODE = `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, Coding Gurukul!" << endl;
+    return 0;
+}`;
+
+type Judge0Response = {
+  stdout?: string | null;
+  stderr?: string | null;
+  compile_output?: string | null;
+  message?: string | null;
+  status?: {
+    id: number;
+    description: string;
+  };
+};
+
+function getExecutionOutput(result: Judge0Response) {
+  const output = [result.compile_output, result.stderr, result.stdout, result.message]
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+
+  if (output) return output;
+  if (result.status && result.status.id !== 3) return result.status.description;
+  return "Program finished successfully with no output.";
+}
 
 export default function Compiler() {
-  const [code, setCode] = useState("// Write your code here");
-  const [output, setOutput] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Added loading state
-  const handleRun = async () => {
-    // 1. Show the user that something is happening
-    console.log("Compiling...");
-     setIsLoading(true);
-    setOutput("Compiling and running...");
-    try {
-        const response = await fetch("https://emkc.org/api/v2/piston/execute", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            language: "cpp", // this will change baad mai
-            version: "10.2.0",
-            files: [{ name : "main.cpp",content: code }],
-        }),
-        });
+  const [code, setCode] = useState(STARTER_CODE);
+  const [stdin, setStdin] = useState("");
+  const [output, setOutput] = useState("Run your code to see the output here.");
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasRun, setHasRun] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-        const result = await response.json();
-        if (result.message) {
-        setOutput(`API Error: ${result.message}`);
-        return;
+  const handleRun = async () => {
+    if (!code.trim() || isLoading) return;
+
+    setIsLoading(true);
+    setHasRun(true);
+    setOutput("Compiling and running...");
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const response = await fetch(
+        "https://ce.judge0.com/submissions?base64_encoded=false&wait=true",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: controller.signal,
+          body: JSON.stringify({
+            language_id: 54,
+            source_code: code,
+            stdin,
+            cpu_time_limit: 5,
+            wall_time_limit: 10,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`Compilation server returned ${response.status}.`);
       }
 
-      // Combine stderr (compile/runtime errors) and stdout so the user sees everything
-      const runResult = result.run;
-      const combinedOutput = runResult.output || (runResult.stderr + runResult.stdout) || "Code executed successfully with no output.";
-      
-      setOutput(combinedOutput);
-      console.log("Execution Result:", runResult);
-        
+      const result: Judge0Response = await response.json();
+      setOutput(getExecutionOutput(result));
     } catch (error) {
-      console.error("Error executing code:", error);
-      setOutput("Failed to connect to the compilation server.");
+      if (error instanceof DOMException && error.name === "AbortError") {
+        setOutput("Execution timed out. Please check your code for an infinite loop and try again.");
+      } else {
+        const message = error instanceof Error ? error.message : "Unknown error";
+        setOutput(`Failed to connect to the compilation server. ${message}`);
+      }
     } finally {
-      setIsLoading(false); // Reset loading state
+      window.clearTimeout(timeout);
+      setIsLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    setCode(STARTER_CODE);
+    setStdin("");
+    setOutput("Run your code to see the output here.");
+    setHasRun(false);
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(output);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
     }
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Coding Gurukul Compiler</h1>
-      
-      {/* Pass code and setCode as props to the Editor */}
-      <Editor code={code} setCode={setCode} />
-      
-      <button 
-        onClick={handleRun}
-        className="mt-4 bg-blue-500 text-white p-2 rounded"
-      >
-        Run Code
-      </button>
-      <div className="mt-6 p-4 bg-gray-900 text-green-400 rounded border border-gray-700">
-        <h2 className="font-bold text-white mb-2">Output:</h2>
-        <pre className="whitespace-pre-wrap">{output}</pre>
+    <section className="space-y-5 pb-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-blue-400">
+            <Code2 className="h-4 w-4" />
+            Online IDE
+          </div>
+          <h1 className="text-3xl font-black tracking-tight text-white">C++ Compiler</h1>
+          <p className="mt-2 text-sm text-slate-400">
+            Write, compile, and test your C++ code directly in the browser.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleReset}
+            disabled={isLoading}
+            className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-4 text-sm font-semibold text-slate-200 transition hover:border-slate-600 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Reset
+          </button>
+          <button
+            type="button"
+            onClick={handleRun}
+            disabled={isLoading || !code.trim()}
+            className="inline-flex h-10 min-w-32 items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-bold text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4 fill-current" />}
+            {isLoading ? "Running..." : "Run code"}
+          </button>
+        </div>
       </div>
-    </div>
+
+      <div className="overflow-hidden rounded-xl border border-slate-800 bg-[#10131a] shadow-2xl shadow-black/20">
+        <div className="flex h-11 items-center justify-between border-b border-slate-800 bg-slate-900/80 px-4">
+          <div className="flex items-center gap-3">
+            <div className="flex gap-1.5" aria-hidden="true">
+              <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+            </div>
+            <span className="text-xs font-semibold text-slate-400">main.cpp</span>
+          </div>
+          <span className="rounded-md bg-blue-500/10 px-2 py-1 text-xs font-semibold text-blue-400">C++</span>
+        </div>
+        <Editor code={code} setCode={setCode} onRun={handleRun} />
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-2">
+        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950/60">
+          <div className="flex h-11 items-center gap-2 border-b border-slate-800 px-4 text-sm font-bold text-slate-200">
+            <Terminal className="h-4 w-4 text-blue-400" />
+            Program input
+          </div>
+          <textarea
+            value={stdin}
+            onChange={(event) => setStdin(event.target.value)}
+            placeholder="Enter input values here (stdin)..."
+            spellCheck={false}
+            className="min-h-40 w-full resize-y bg-transparent p-4 font-mono text-sm leading-6 text-slate-200 outline-none placeholder:text-slate-600"
+          />
+        </div>
+
+        <div className="overflow-hidden rounded-xl border border-slate-800 bg-slate-950/60">
+          <div className="flex h-11 items-center justify-between border-b border-slate-800 px-4">
+            <div className="flex items-center gap-2 text-sm font-bold text-slate-200">
+              <Terminal className="h-4 w-4 text-emerald-400" />
+              Output
+              {hasRun && !isLoading && <span className="h-2 w-2 rounded-full bg-emerald-400" />}
+            </div>
+            <button
+              type="button"
+              onClick={handleCopy}
+              disabled={!hasRun || isLoading}
+              className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-semibold text-slate-400 transition hover:bg-slate-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? "Copied" : "Copy"}
+            </button>
+          </div>
+          <pre
+            aria-live="polite"
+            className={`min-h-40 overflow-auto whitespace-pre-wrap p-4 font-mono text-sm leading-6 ${
+              isLoading ? "text-amber-300" : hasRun ? "text-emerald-300" : "text-slate-500"
+            }`}
+          >
+            {output}
+          </pre>
+        </div>
+      </div>
+
+      <p className="text-center text-xs text-slate-500">
+        Tip: Press <kbd className="rounded border border-slate-700 bg-slate-900 px-1.5 py-0.5">Ctrl</kbd> +{" "}
+        <kbd className="rounded border border-slate-700 bg-slate-900 px-1.5 py-0.5">Enter</kbd> to run your code.
+      </p>
+    </section>
   );
 }

@@ -41,7 +41,8 @@ function Router() {
         <Route path="/start-100" component={() => <ProtectedRoute component={Start100Sheet} requireEnrolled={true} />} />
         <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} requireEnrolled={true} />} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} requireEnrolled={true} />} />
-        <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} requireEnrolled={true} />} />
+        {/* Keep the compiler available to every visitor. */}
+        <Route path="/compiler" component={Compiler} />
         
         {/* These are standard protected pages (available to both registered and enrolled) */}
         <Route path="/contests" component={() => <ProtectedRoute component={Contests} />} />

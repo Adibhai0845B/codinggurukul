@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Menu } from "lucide-react";
+import { ArrowRight, Code2, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import useAuth from "@/hooks/useAuth";
@@ -50,6 +50,20 @@ export default function Navbar() {
             ))}
           </div>
           <div className="ml-auto flex items-center gap-3">
+            <Button
+              asChild
+              variant="outline"
+              className={`rounded-xl border-slate-700 px-4 ${
+                location === "/compiler"
+                  ? "border-blue-500 bg-blue-500/10 text-blue-400"
+                  : "text-slate-200 hover:bg-slate-800 hover:text-white"
+              }`}
+            >
+              <Link href="/compiler">
+                <Code2 className="mr-2 h-4 w-4" />
+                Compiler
+              </Link>
+            </Button>
             <button
               onClick={() => {
                 if (isLoggedIn) {
