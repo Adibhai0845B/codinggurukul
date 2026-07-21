@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CalendarPlus, Plus, Trash2, Trophy } from "lucide-react";
+import { CalendarPlus, Pencil, Plus, Trash2, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,8 +20,9 @@ const emptyProblem = (): ContestProblem => ({
 });
 
 export default function ContestManager() {
-  const { contests, addContest, deleteContest } = useContests();
+  const { contests, addContest, updateContest, deleteContest } = useContests();
   const [showForm, setShowForm] = useState(false);
+  const [editingContestId, setEditingContestId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startTime, setStartTime] = useState("");
@@ -51,12 +52,29 @@ export default function ContestManager() {
     setDurationMinutes(90);
     setDifficulty("Beginner");
     setProblems([emptyProblem()]);
+    setEditingContestId(null);
     setShowForm(false);
+  };
+
+  const startEditing = (contest: (typeof contests)[number]) => {
+    setTitle(contest.title);
+    setDescription(contest.description);
+    setStartTime(contest.startTime);
+    setDurationMinutes(contest.durationMinutes);
+    setDifficulty(contest.difficulty);
+    setProblems(contest.problems.map((problem) => ({
+      ...problem,
+      testCases: problem.testCases.map((testCase) => ({ ...testCase })),
+    })));
+    setEditingContestId(contest.id);
+    setShowForm(true);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    addContest({ title, description, startTime, durationMinutes, difficulty, problems });
+    const contest = { title, description, startTime, durationMinutes, difficulty, problems };
+    if (editingContestId) updateContest(editingContestId, contest);
+    else addContest(contest);
     resetForm();
   };
 
@@ -67,13 +85,14 @@ export default function ContestManager() {
           <CardTitle className="flex items-center gap-2"><Trophy className="h-5 w-5 text-amber-400" /> Contest Management</CardTitle>
           <p className="mt-1 text-sm text-zinc-400">Create programming contests and add problem statements.</p>
         </div>
-        <Button onClick={() => setShowForm((value) => !value)} className="bg-blue-600 text-white hover:bg-blue-700">
+        <Button onClick={() => showForm ? resetForm() : setShowForm(true)} className="bg-blue-600 text-white hover:bg-blue-700">
           <CalendarPlus className="mr-2 h-4 w-4" /> {showForm ? "Cancel" : "Create Contest"}
         </Button>
       </CardHeader>
       <CardContent className="space-y-6">
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border border-blue-500/30 bg-zinc-950/50 p-5">
+            {editingContestId && <h3 className="text-lg font-bold text-blue-400">Edit Contest</h3>}
             <div className="grid gap-4 md:grid-cols-2">
               <label className="space-y-2 text-sm text-zinc-300">Contest title *
                 <Input required value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Weekly Coding Challenge" className="mt-2 bg-zinc-900" />
@@ -132,7 +151,7 @@ export default function ContestManager() {
                 </div>
               ))}
             </div>
-            <div className="flex justify-end"><Button type="submit" className="bg-emerald-600 text-white hover:bg-emerald-700">Publish Contest</Button></div>
+            <div className="flex justify-end"><Button type="submit" className="bg-emerald-600 text-white hover:bg-emerald-700">{editingContestId ? "Save Changes" : "Publish Contest"}</Button></div>
           </form>
         )}
 
@@ -140,7 +159,10 @@ export default function ContestManager() {
           <div className="space-y-3">{contests.map((contest) => (
             <div key={contest.id} className="flex items-center justify-between rounded-lg border border-zinc-800 p-4">
               <div><p className="font-semibold text-white">{contest.title}</p><p className="text-xs text-zinc-400">{new Date(contest.startTime).toLocaleString()} · {contest.durationMinutes} min · {contest.problems.length} problems</p></div>
-              <Button variant="ghost" onClick={() => { if (window.confirm("Delete this contest?")) deleteContest(contest.id); }} className="text-red-400"><Trash2 className="mr-2 h-4 w-4" /> Delete</Button>
+              <div className="flex items-center gap-1">
+                <Button variant="ghost" onClick={() => startEditing(contest)} className="text-blue-400"><Pencil className="mr-2 h-4 w-4" /> Edit</Button>
+                <Button variant="ghost" onClick={() => { if (window.confirm("Delete this contest?")) deleteContest(contest.id); }} className="text-red-400"><Trash2 className="mr-2 h-4 w-4" /> Delete</Button>
+              </div>
             </div>
           ))}</div>
         )}

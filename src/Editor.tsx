@@ -5,25 +5,20 @@ type CodeEditorProps = {
   code: string;
   setCode: (value: string) => void;
   onRun?: () => void;
-  language: string;
 };
-
-export default function CodeEditor({ code, setCode, onRun, language }: CodeEditorProps) {
+export default function CodeEditor({ code, setCode, onRun }: CodeEditorProps) {
   const onRunRef = useRef(onRun);
-
   useEffect(() => {
     onRunRef.current = onRun;
   }, [onRun]);
-
   const handleMount: OnMount = (_editor, monaco) => {
     _editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => onRunRef.current?.());
   };
-
   return (
     <Editor
       height="58vh"
       theme="vs-dark"
-      language={language}
+      defaultLanguage="cpp"
       value={code}
       onChange={(value) => setCode(value || "")}
       onMount={handleMount}

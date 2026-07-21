@@ -34,6 +34,7 @@ export type ProgrammingContest = {
 type ContestState = {
   contests: ProgrammingContest[];
   addContest: (contest: Omit<ProgrammingContest, "id" | "createdAt">) => void;
+  updateContest: (id: string, contest: Omit<ProgrammingContest, "id" | "createdAt">) => void;
   deleteContest: (id: string) => void;
 };
 
@@ -59,6 +60,25 @@ export const useContests = create<ContestState>()(
               })),
             },
           ],
+        })),
+      updateContest: (id, contest) =>
+        set((state) => ({
+          contests: state.contests.map((currentContest) =>
+            currentContest.id === id
+              ? {
+                  ...currentContest,
+                  ...contest,
+                  problems: contest.problems.map((problem) => ({
+                    ...problem,
+                    id: problem.id || crypto.randomUUID(),
+                    testCases: (problem.testCases || []).map((testCase) => ({
+                      ...testCase,
+                      id: testCase.id || crypto.randomUUID(),
+                    })),
+                  })),
+                }
+              : currentContest,
+          ),
         })),
       deleteContest: (id) =>
         set((state) => ({ contests: state.contests.filter((contest) => contest.id !== id) })),
