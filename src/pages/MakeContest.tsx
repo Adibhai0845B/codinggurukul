@@ -1,6 +1,7 @@
 import { useLocation } from "wouter";
 import { LogOut, Trophy } from "lucide-react";
 import ContestManager from "@/components/ContestManager";
+import ContestResults from "@/components/ContestResults";
 import { Button } from "@/components/ui/button";
 import { useContestAdminAuth } from "@/hooks/useContestAdminAuth";
 
@@ -20,6 +21,7 @@ export default function MakeContest() {
         <Button variant="outline" onClick={handleLogout}><LogOut className="mr-2 h-4 w-4" />Creator logout</Button>
       </div>
       <ContestManager />
+      <ContestResults />
     </div>
   );
 }

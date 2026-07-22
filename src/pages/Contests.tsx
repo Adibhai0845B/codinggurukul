@@ -6,13 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useContests } from "@/hooks/useContests";
-import { useContestSubmissions } from "@/hooks/useContestSubmissions";
-import useAuth from "@/hooks/useAuth";
 
 export default function Contests() {
   const customContests = useContests((state) => state.contests);
-  const username = useAuth((state) => state.username) || "anonymous";
-  const savedResults = useContestSubmissions((state) => state.results).filter((result) => result.username === username);
 
   const getStatus = (startTime: string, durationMinutes: number) => {
     const now = Date.now();
@@ -57,11 +53,6 @@ export default function Contests() {
           </div>
         )}
       </section>
-
-      {savedResults.length > 0 && <section className="space-y-4"><div className="flex items-center gap-2"><Trophy className="h-5 w-5 text-emerald-400" /><h2 className="text-xl font-bold">My Saved Results</h2></div><div className="grid gap-4 md:grid-cols-2">{savedResults.map((result) => {
-        const contest = customContests.find((item) => item.id === result.contestId);
-        return <Card key={result.id}><CardContent className="flex items-center justify-between p-5"><div><p className="font-bold">{contest?.title || "Contest"}</p><p className="mt-1 text-xs text-muted-foreground">{new Date(result.endedAt).toLocaleString()} · {result.solvedProblems}/{result.totalProblems} solved</p></div><Badge className="bg-emerald-600 text-base">{result.score}/{result.maximumScore}</Badge></CardContent></Card>;
-      })}</div></section>}
 
       <section className="space-y-4">
       <h2 className="text-xl font-bold">External Contest Platforms</h2>

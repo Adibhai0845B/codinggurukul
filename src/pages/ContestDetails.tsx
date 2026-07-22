@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ArrowLeft, CheckCircle2, Clock, Flag, LockKeyhole, Trophy } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Clock, Flag, LockKeyhole } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -63,12 +63,12 @@ export default function ContestDetails() {
       <Link href="/contests" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-white"><ArrowLeft className="h-4 w-4" /> All contests</Link>
       <div className="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-950/40 to-slate-950 p-6 md:p-8">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-start">
-          <div><div className="mb-3 flex items-center gap-2"><Badge>{contest.difficulty}</Badge><Badge variant="outline">Your score: {savedResult?.score ?? score}/{maximumScore}</Badge></div><h1 className="text-3xl font-black">{contest.title}</h1><p className="mt-3 max-w-3xl text-muted-foreground">{contest.description}</p>{!isUpcoming && !attemptEnded && <Button onClick={handleEndContest} variant="destructive" className="mt-5"><Flag className="mr-2 h-4 w-4" />End Contest & Save Result</Button>}</div>
+          <div><div className="mb-3 flex items-center gap-2"><Badge>{contest.difficulty}</Badge></div><h1 className="text-3xl font-black">{contest.title}</h1><p className="mt-3 max-w-3xl text-muted-foreground">{contest.description}</p>{!isUpcoming && !attemptEnded && <Button onClick={handleEndContest} variant="destructive" className="mt-5"><Flag className="mr-2 h-4 w-4" />End Contest & Submit Result</Button>}</div>
           <div className="min-w-52 rounded-xl border border-slate-700 bg-slate-950/70 p-4 text-center"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">{isUpcoming ? "Starts in" : isEnded ? "Contest ended" : "Time remaining"}</p>{!isEnded && <p className="mt-2 font-mono text-2xl font-bold text-blue-400">{String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}</p>}<p className="mt-2 text-xs text-slate-500"><Clock className="mr-1 inline h-3 w-3" />{contest.durationMinutes} minutes</p></div>
         </div>
       </div>
 
-      {savedResult && <Card className="border-emerald-500/30 bg-emerald-500/5"><CardContent className="flex flex-col items-center py-8 text-center"><Trophy className="mb-3 h-10 w-10 text-amber-400" /><h2 className="text-xl font-bold">Contest Result Saved</h2><p className="mt-2 text-3xl font-black text-emerald-400">{savedResult.score}/{savedResult.maximumScore}</p><p className="mt-2 text-sm text-muted-foreground">Solved {savedResult.solvedProblems} of {savedResult.totalProblems} problems · Ended {new Date(savedResult.endedAt).toLocaleString()}</p></CardContent></Card>}
+      {savedResult && <Card className="border-emerald-500/30 bg-emerald-500/5"><CardContent className="py-8 text-center"><h2 className="text-xl font-bold">Contest submitted</h2><p className="mt-2 text-sm text-muted-foreground">Your result has been sent to the contest creator.</p></CardContent></Card>}
 
       {isUpcoming ? (
         <Card><CardContent className="flex flex-col items-center py-14 text-center"><LockKeyhole className="mb-4 h-10 w-10 text-amber-400" /><h2 className="text-xl font-bold">Problems are locked</h2><p className="mt-2 text-muted-foreground">They will become available when the contest begins.</p></CardContent></Card>
