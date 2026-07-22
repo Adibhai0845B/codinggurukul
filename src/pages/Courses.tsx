@@ -54,15 +54,16 @@ export default function Courses() {
               Placement courses made for coding rounds, OAs and interviews.
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-              Choose the right accelerator: foundation for basics, pro batch
-              for advanced DSA and CP, or the dedicated sheet for focused
-              practice. All batches are launching on 25th July.
+              Choose the right accelerator: the 10-day starter bootcamp,
+              foundation for basics, pro batch for advanced DSA and CP, or the
+              dedicated sheet for focused practice. All batches are launching
+              on 25th July.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Button className="h-12 px-6" onClick={() => buyCourse(courses[0])}>
                 <CreditCard className="mr-2 h-4 w-4" />
-                Buy Pro Batch
+                Buy Bootcamp Batch
               </Button>
               <Button variant="outline" className="h-12 px-6" asChild>
                 <a href="#course-list">Explore Courses</a>
@@ -70,7 +71,7 @@ export default function Courses() {
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-3">
-              <HeroStat value="3" label="Programs" />
+              <HeroStat value="4" label="Programs" />
               <HeroStat value="Rs. 299" label="Starting" />
               <HeroStat value="25th July" label="Launch Date" />
             </div>
@@ -102,7 +103,7 @@ export default function Courses() {
               Choose Your Track
             </p>
             <h2 className="mt-2 text-3xl font-extrabold text-slate-950 md:text-4xl dark:text-white">
-              Three clear options for placement preparation
+              Four clear options for placement preparation
             </h2>
             <p className="mt-3 max-w-2xl text-muted-foreground">
               Each course card shows the full banner, exact launch price and

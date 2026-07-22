@@ -15,6 +15,28 @@ export type Course = {
 
 export const courses: Course[] = [
   {
+    id: "bootcamp-batch",
+    title: "Bootcamp Batch",
+    subtitle: "10-Day DSA + Placement Certification Internship Program",
+    desc: "A focused certification internship course to help you begin DSA with clarity, practise the right way and build a confident next-step roadmap.",
+    price: "Rs. 499",
+    originalPrice: "Rs. 799",
+    amountPaise: 49900,
+    duration: "10 Days",
+    launchDate: "25th July",
+    image: "/courses/bootcamp-batch.png",
+    tag: "New Launch",
+    features: [
+      "Certification internship course",
+      "DSA roadmap",
+      "Problem-solving approach",
+      "Arrays and strings",
+      "Two pointers and hashing",
+      "Recursion basics",
+      "Mini contest and career guidance",
+    ],
+  },
+  {
     id: "pro-batch",
     title: "Pro Batch",
     subtitle: "Advanced DSA + CP Track",

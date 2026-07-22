@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
 
-type CodeEditorProps = {
+type CodeEditorProps={
   code: string;
-  setCode: (value: string) => void;
+  setCode: (value:string)=>void;
   onRun?: () => void;
 };
 export default function CodeEditor({ code, setCode, onRun }: CodeEditorProps) {
