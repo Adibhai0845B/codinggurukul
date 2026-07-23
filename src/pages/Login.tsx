@@ -32,6 +32,11 @@ const Login = () => {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
+  const redirectParam = new URLSearchParams(window.location.search).get("redirect");
+  const postLoginPath = redirectParam?.startsWith("/") && !redirectParam.startsWith("//")
+    ? redirectParam
+    : "/";
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -43,7 +48,7 @@ const Login = () => {
 
       if (isLocalDemoUser) {
         useAuth.getState().login(username, `local-dev-token-${username}`, "enrolled");
-        setLocation("/");
+        setLocation(postLoginPath);
         toast({
           title: "Local Login Successful",
           description: "Welcome to localhost testing!",
@@ -65,7 +70,7 @@ const Login = () => {
 
       useAuth.getState().login(data.username, data.token, data.role);
       await useProgress.getState().fetchProgress();
-      setLocation("/");
+      setLocation(postLoginPath);
       toast({ title: "Login Successful", description: "Welcome back!" });
     } catch (error: any) {
       setLoading(false);

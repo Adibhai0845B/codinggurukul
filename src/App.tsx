@@ -48,7 +48,7 @@ function Router() {
         <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} requireEnrolled={true} />} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} requireEnrolled={true} />} />
         {/* The compiler is available only after login. */}
-        <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} />} />
+        <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} returnTo="/compiler" />} />
         
         {/* These are standard protected pages (available to both registered and enrolled) */}
         <Route path="/contests/:id" component={() => <ProtectedRoute component={ContestDetails} />} />

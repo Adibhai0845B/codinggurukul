@@ -5,16 +5,17 @@ import { useLocation } from "wouter";
 interface ProtectedRouteProps {
   component: React.ComponentType<any>;
   requireEnrolled?: boolean; // New prop to lock premium pages
+  returnTo?: string;
 }
 
-export default function ProtectedRoute({ component: Component, requireEnrolled = false }: ProtectedRouteProps) {
+export default function ProtectedRoute({ component: Component, requireEnrolled = false, returnTo }: ProtectedRouteProps) {
   const isLoggedIn = useAuth((s) => s.isLoggedIn);
   const userRole = useAuth((s) => s.userRole); // Assuming you store role in your auth hook
   const [, setLocation] = useLocation();
 
   useEffect(() => {
     if (!isLoggedIn) {
-      setLocation("/login");
+      setLocation(returnTo ? `/login?redirect=${encodeURIComponent(returnTo)}` : "/login");
       return;
     }
 
@@ -22,7 +23,7 @@ export default function ProtectedRoute({ component: Component, requireEnrolled =
     if (requireEnrolled && userRole !== 'enrolled') {
       setLocation("/"); // Kick them back to home
     }
-  }, [isLoggedIn, userRole, requireEnrolled, setLocation]);
+  }, [isLoggedIn, userRole, requireEnrolled, returnTo, setLocation]);
 
   if (!isLoggedIn) return null;
   if (requireEnrolled && userRole !== 'enrolled') return null;
