@@ -13,6 +13,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/toaster"; // Adjust path as needed
 import RoadmapPage from "@/pages/RoadmapPage";
 import LiveClasses from "@/pages/LiveClasses";
+import LearningHub from "@/pages/LearningHub";
 
 
 import Compiler from "@/pages/Compiler"; // compiler ke liye
@@ -40,6 +41,7 @@ function Router() {
         <Route path="/courses" component={Courses} />
         <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
         <Route path="/live-classes" component={() => <ProtectedRoute component={LiveClasses} returnTo="/live-classes" />} />
+        <Route path="/learn" component={() => <ProtectedRoute component={LearningHub} requireEnrolled={true} />} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} /> {/* Add your new Register page here */}
         <Route path="/make-contest/login" component={ContestAdminLogin} />

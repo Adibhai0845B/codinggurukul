@@ -9,6 +9,7 @@ import {
   LogOut,
   Menu,
   Radio,
+  Sparkles,
   ShieldCheck,
   Trophy,
   UserRound,
@@ -34,6 +35,7 @@ const mainLinks = [
 ];
 
 const learningLinks = [
+  { href: "/learn", label: "My Learning Hub", description: "Your daily plan and revision", icon: Sparkles },
   { href: "/live-classes", label: "Live Classes", description: "Join your Google Meet class", icon: Radio },
   { href: "/start-100", label: "Start 150", description: "Essential coding problems", icon: BookOpen },
   { href: "/dsa", label: "DSA Sheet", description: "Master data structures", icon: FileCode2 },
