@@ -52,9 +52,8 @@ export default function Navbar() {
   const logout = useAuth((state) => state.logout);
   const resetProgress = useProgress((state) => state.resetProgress);
 
-  const visibleLearningLinks = learningLinks.filter((link) => link.href !== "/live-classes" || isLoggedIn);
   const isActive = (href: string) => href === "/" ? location === "/" : location.startsWith(href);
-  const learningActive = visibleLearningLinks.some((link) => isActive(link.href));
+  const learningActive = learningLinks.some((link) => isActive(link.href));
 
   const handleLogout = () => {
     logout();
@@ -94,7 +93,7 @@ export default function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-64 border-slate-800 bg-slate-950 p-2">
               <DropdownMenuLabel className="text-xs uppercase tracking-wider text-slate-500">Learning resources</DropdownMenuLabel>
-              {visibleLearningLinks.map((link) => {
+              {learningLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <DropdownMenuItem key={link.href} asChild className="cursor-pointer rounded-lg p-0 focus:bg-slate-800">
@@ -110,11 +109,9 @@ export default function Navbar() {
         </div>
 
         <div className="ml-auto hidden items-center gap-2 lg:flex">
-          {isLoggedIn && (
-            <Button asChild variant="ghost" className={`rounded-xl text-sm ${location.startsWith("/live-classes") ? "bg-red-500/10 text-red-400" : "text-slate-300 hover:bg-slate-800 hover:text-red-400"}`}>
-              <Link href="/live-classes"><Radio className="mr-2 h-4 w-4" />Live Classes</Link>
-            </Button>
-          )}
+          <Button asChild variant="ghost" className={`rounded-xl text-sm ${location.startsWith("/live-classes") ? "bg-red-500/10 text-red-400" : "text-slate-300 hover:bg-slate-800 hover:text-red-400"}`}>
+            <Link href="/live-classes"><Radio className="mr-2 h-4 w-4" />Live Classes</Link>
+          </Button>
           <Button asChild variant="ghost" className={`rounded-xl text-sm ${location.startsWith("/make-contest") ? "bg-amber-500/10 text-amber-400" : "text-slate-300 hover:bg-slate-800 hover:text-amber-400"}`}>
             <Link href="/make-contest"><ShieldCheck className="mr-2 h-4 w-4" />Make Contest</Link>
           </Button>
@@ -149,7 +146,7 @@ export default function Navbar() {
               <div className="border-b border-slate-800 p-5"><SheetClose asChild><Link href="/" className="flex items-center gap-3"><img src="/logo.png" alt="" className="h-10 w-10 rounded-xl object-contain" /><div><p className="font-black">Coding Gurukul</p><p className="text-xs text-blue-400">Learn · Code · Grow</p></div></Link></SheetClose></div>
               <div className="space-y-6 overflow-y-auto p-5">
                 <div className="space-y-1"><p className="mb-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500">Navigate</p>{mainLinks.map((link) => <SheetClose asChild key={link.href}><Link href={link.href} className={`flex rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive(link.href) ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-900"}`}>{link.label}</Link></SheetClose>)}</div>
-                <div className="space-y-1"><p className="mb-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500">Learning</p>{visibleLearningLinks.map((link) => { const Icon = link.icon; return <SheetClose asChild key={link.href}><Link href={link.href} className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive(link.href) ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-900"}`}><Icon className="h-4 w-4" />{link.label}</Link></SheetClose>; })}</div>
+                <div className="space-y-1"><p className="mb-2 px-3 text-xs font-bold uppercase tracking-wider text-slate-500">Learning</p>{learningLinks.map((link) => { const Icon = link.icon; return <SheetClose asChild key={link.href}><Link href={link.href} className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold ${isActive(link.href) ? "bg-blue-500/10 text-blue-400" : "text-slate-300 hover:bg-slate-900"}`}><Icon className="h-4 w-4" />{link.label}</Link></SheetClose>; })}</div>
                 <div className="space-y-2 border-t border-slate-800 pt-5"><SheetClose asChild><Button asChild variant="outline" className="w-full border-amber-500/30 text-amber-400"><Link href="/make-contest"><ShieldCheck className="mr-2 h-4 w-4" />Make Contest</Link></Button></SheetClose>{isLoggedIn ? <SheetClose asChild><Button variant="ghost" onClick={handleLogout} className="w-full text-red-400"><LogOut className="mr-2 h-4 w-4" />Logout {username}</Button></SheetClose> : <SheetClose asChild><Button asChild variant="outline" className="w-full"><Link href="/login"><LogIn className="mr-2 h-4 w-4" />Login</Link></Button></SheetClose>}</div>
               </div>
             </SheetContent>
