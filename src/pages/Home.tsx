@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight, Award, BarChart3, BookOpen, Check, CheckCircle2, Clock,
@@ -34,10 +34,25 @@ const programCards = [
   { icon: Rocket, number: "04", title: "AI & Machine Learning", text: "Learn Python, data analysis and practical model-building through approachable hands-on projects.", color: "bg-emerald-600" },
 ];
 
+const heroPhotos = [
+  { src: "/home-community.jpg", alt: "Coding Gurukul mentors and students together after a campus learning event", position: "object-center" },
+  { src: "/home-classroom.jpg", alt: "A mentor guiding Coding Gurukul students during a live computer lab", position: "object-center" },
+  { src: "/home-achievement.jpg", alt: "Coding Gurukul representatives receiving an award in a packed auditorium", position: "object-center" },
+];
+
 export default function Home() {
   const [contactOpen, setContactOpen] = useState(false);
+  const [activeHeroPhoto, setActiveHeroPhoto] = useState(0);
   const cartItems = useCourseCart((state) => state.items);
   const addCourse = useCourseCart((state) => state.addCourse);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHeroPhoto((current) => (current + 1) % heroPhotos.length);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, []);
 
   function addToCart(course: Course) {
     const added = addCourse(course);
@@ -66,7 +81,49 @@ export default function Home() {
         </div>
       </aside>
 
-      <section className="relative min-h-[760px] overflow-hidden bg-[#f6f9ff] dark:bg-slate-950">
+      <section className="relative isolate min-h-[calc(100svh-132px)] overflow-hidden bg-slate-950 text-white">
+        {heroPhotos.map((photo, index) => (
+          <img
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${photo.position} ${index === activeHeroPhoto ? "opacity-100" : "opacity-0"}`}
+            fetchPriority={index === 0 ? "high" : "auto"}
+          />
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/25 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-slate-950/10" />
+        <div className="relative mx-auto flex min-h-[calc(100svh-132px)] max-w-7xl items-end px-4 pb-12 pt-24 md:px-6 md:pb-16">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/35 px-4 py-2 text-sm font-bold text-white shadow-lg backdrop-blur-md">
+              <span className="h-2 w-2 rounded-full bg-orange-400" /> Real classrooms. Real practice.
+            </div>
+            <h1 className="mt-5 text-4xl font-black leading-[1.05] tracking-[-0.04em] drop-shadow-lg sm:text-5xl md:text-6xl">
+              Where students learn by <span className="text-orange-400">doing.</span>
+            </h1>
+            <p className="mt-4 max-w-xl text-base font-medium leading-7 text-slate-100 drop-shadow md:text-lg">
+              Live mentorship, focused coding practice and a community that grows together.
+            </p>
+            <a href="#main-intro" className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-white transition hover:text-orange-300">
+              Discover Coding Gurukul <ArrowRight className="h-4 w-4" />
+            </a>
+            <div className="mt-7 flex items-center gap-2" aria-label="Homepage photo gallery">
+              {heroPhotos.map((photo, index) => (
+                <button
+                  key={photo.src}
+                  type="button"
+                  onClick={() => setActiveHeroPhoto(index)}
+                  aria-label={`Show photo ${index + 1}`}
+                  aria-current={index === activeHeroPhoto}
+                  className={`h-1.5 rounded-full transition-all ${index === activeHeroPhoto ? "w-9 bg-orange-400" : "w-5 bg-white/50 hover:bg-white"}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="main-intro" className="relative min-h-[760px] scroll-mt-20 overflow-hidden bg-[#f6f9ff] dark:bg-slate-950">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgba(37,99,235,0.16),transparent_32%),radial-gradient(circle_at_12%_80%,rgba(249,115,22,0.12),transparent_26%)]" />
         <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(15,23,42,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,.06)_1px,transparent_1px)] [background-size:48px_48px] dark:opacity-10" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 md:px-6 lg:grid-cols-[1.05fr_.95fr] lg:py-24">
@@ -132,17 +189,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <section id="about" className="bg-slate-950 py-24 text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 md:px-6 lg:grid-cols-2">
-          <div className="relative min-h-[500px]">
-            <div className="absolute left-0 top-0 w-[78%] overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-blue-700 to-blue-950 p-8 shadow-2xl">
-              <p className="text-sm font-bold uppercase tracking-[.2em] text-blue-200">Our purpose</p><p className="mt-6 text-3xl font-black leading-tight">Make quality technical education practical, personal and outcome-driven.</p><div className="mt-10 grid grid-cols-2 gap-4"><Metric icon={<Users />} value="Community" label="Learn together" /><Metric icon={<Target />} value="Clarity" label="Know what to do next" /></div>
-            </div>
-            <div className="absolute bottom-0 right-0 w-[66%] rounded-[2rem] border border-white/10 bg-white p-7 text-slate-950 shadow-2xl"><Quote className="h-8 w-8 text-orange-500" /><p className="mt-4 text-xl font-bold leading-relaxed">“The goal is not just better code. It is better thinking.”</p><p className="mt-4 text-sm font-semibold text-slate-500">— A Coding Gurukul learner</p></div>
-          </div>
-          <div><Eyebrow>About Coding Gurukul</Eyebrow><h2 className="mt-5 text-4xl font-black leading-tight tracking-tight md:text-5xl">We teach the skills between knowing and doing.</h2><p className="mt-6 text-lg leading-8 text-slate-300">Coding Gurukul is a mentor-led learning community closing the gap between classroom theory and industry expectations. Every program combines clear explanation, hands-on coding, feedback and accountability.</p><div className="mt-8 space-y-5">{[[GraduationCap, "Mentors who teach the thinking", "Understand the why, dry-run the approach and then write the code."], [BarChart3, "Progress you can measure", "Practice sheets, assessments and reviews show exactly where to improve."], [ShieldCheck, "Preparation built around careers", "Train for coding rounds, technical conversations and real project work."]].map(([Icon, title, text]) => { const C = Icon as typeof GraduationCap; return <div key={String(title)} className="flex gap-4"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/10"><C className="h-5 w-5 text-orange-400" /></div><div><h3 className="font-bold">{String(title)}</h3><p className="mt-1 text-sm leading-6 text-slate-400">{String(text)}</p></div></div>})}</div></div>
-        </div>
-      </section>
+      <section className="bg-slate-950 py-20 text-white"><div className="mx-auto grid max-w-7xl items-center gap-10 px-4 md:px-6 lg:grid-cols-[1.1fr_.9fr]"><div><Eyebrow>About Coding Gurukul</Eyebrow><h2 className="mt-5 text-4xl font-black leading-tight tracking-tight md:text-5xl">More than classes—a community built around progress.</h2><p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">See the people, classrooms and purpose behind our mentor-led learning experience.</p><Button asChild className="mt-7 rounded-xl bg-blue-700 font-bold text-white hover:bg-blue-600"><Link href="/about">Discover our story <ArrowRight className="ml-2 h-4 w-4" /></Link></Button></div><img src="/about-community.jpg" alt="Coding Gurukul community" className="aspect-[16/10] w-full rounded-3xl object-cover shadow-2xl" /></div></section>
 
       <Section eyebrow="How learning works" title="A simple system built for progress" description="No random tutorials or disconnected practice. Every stage prepares you for the next.">
         <div className="relative grid gap-5 md:grid-cols-4">

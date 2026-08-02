@@ -30,6 +30,7 @@ import { useProgress } from "@/hooks/useProgress";
 
 const mainLinks = [
   { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
   { href: "/courses", label: "Courses" },
   { href: "/roadmap", label: "Roadmap" },
   { href: "/contests", label: "Contests" },

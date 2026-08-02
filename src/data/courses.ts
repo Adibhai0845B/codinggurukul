@@ -12,7 +12,6 @@ export type Course = {
   tag: string;
   features: string[];
 };
-
 export const courses: Course[] = [
   {
     id: "bootcamp-batch",
@@ -48,7 +47,7 @@ export const courses: Course[] = [
     launchDate: "25th July",
     image: "/courses/pro-batch.svg",
     tag: "New Launch",
-    features: [
+    features:[
       "Advanced DSA patterns",
       "Competitive programming up to rated problems",
       "Daily problem-solving drills",

@@ -15,6 +15,7 @@ import RoadmapPage from "@/pages/RoadmapPage";
 import LiveClasses from "@/pages/LiveClasses";
 import LearningHub from "@/pages/LearningHub";
 import PlacementReadiness from "@/pages/PlacementReadiness";
+import About from "@/pages/About";
 
 
 import Compiler from "@/pages/Compiler"; // compiler ke liye
@@ -39,6 +40,7 @@ function Router() {
           component={() => <AdminProtectedRoute component={AdminDashboard} />} 
         />
         <Route path="/" component={Home} />
+        <Route path="/about" component={About} />
         <Route path="/courses" component={Courses} />
         <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
         <Route path="/live-classes" component={() => <ProtectedRoute component={LiveClasses} returnTo="/live-classes" />} />
