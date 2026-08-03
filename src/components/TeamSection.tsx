@@ -20,7 +20,7 @@ const members: Member[] = [
   { id: 11, name: "Shivam", role: "DSA & CP Mentor", avatar: "shivamt.png" },
   { id: 12, name: "Piyush", role: "DSA Mentor", avatar: "piyush.png" },
   { id: 13, name: "Harsh Lakhra", role: "DSA Mentor", avatar: "harsh-lakhra.png" },
-  { id: 14, name: "Aryan Tiwari", role: "DSA Mentor" },
+  { id: 14, name: "Aryan Tiwari", role: "DSA Mentor", avatar: "aryan-tiwari.png" },
 ];
 
 export default function TeamSection() {
