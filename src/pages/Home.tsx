@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "wouter";
 import {
-  ArrowRight, Award, BarChart3, BookOpen, Check, CheckCircle2, Clock,
+  ArrowRight, Award, BarChart3, BookOpen, Check, Clock,
   CalendarDays, ChevronRight, Code2, ExternalLink, GraduationCap, Headphones,
-  Layers3, Mail, MapPin, Phone, Play, Quote, Rocket, ShieldCheck,
-  MessageCircle, Sparkles, Target, Trophy, Users,
+  Layers3, Mail, MapPin, Phone, Quote, Rocket, ShieldCheck,
+  MessageCircle, Target, Trophy, Users,
 } from "lucide-react";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -123,55 +123,43 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="main-intro" className="relative min-h-[760px] scroll-mt-20 overflow-hidden bg-[#f6f9ff] dark:bg-slate-950">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_35%,rgba(37,99,235,0.16),transparent_32%),radial-gradient(circle_at_12%_80%,rgba(249,115,22,0.12),transparent_26%)]" />
-        <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(15,23,42,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,.06)_1px,transparent_1px)] [background-size:48px_48px] dark:opacity-10" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 md:px-6 lg:grid-cols-[1.05fr_.95fr] lg:py-24">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-2 text-sm font-bold text-blue-800 shadow-sm dark:border-blue-900 dark:bg-slate-900 dark:text-blue-300">
-              <Sparkles className="h-4 w-4 text-orange-500" /> Learn. Practise. Get placement-ready.
-            </div>
-            <h1 className="mt-7 max-w-3xl text-5xl font-black leading-[1.02] tracking-[-0.045em] md:text-7xl">
-              Turn your coding potential into a <span className="relative text-blue-700">career.<span className="absolute -bottom-1 left-0 h-2 w-full rounded-full bg-orange-400/60" /></span>
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-              Mentor-led DSA, competitive programming and development programs built for students who want structure, real practice and confidence in every coding round.
+      <section id="main-intro" className="scroll-mt-20 border-b border-slate-200 bg-white dark:border-white/10 dark:bg-slate-950">
+        <div className="mx-auto grid max-w-7xl px-4 py-20 md:px-6 md:py-28 lg:grid-cols-[1.12fr_.88fr] lg:gap-20">
+          <div className="lg:pr-8">
+            <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[.22em] text-blue-700 dark:text-blue-400">
+              <span className="h-px w-9 bg-orange-500" /> Coding Gurukul
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" asChild className="h-14 rounded-2xl bg-blue-700 px-7 text-base font-bold text-white shadow-lg shadow-blue-700/20 hover:bg-blue-800">
-                <Link href="/courses">Explore programs <ArrowRight className="ml-2 h-5 w-5" /></Link>
+            <h2 className="mt-7 max-w-3xl text-4xl font-black leading-[1.06] tracking-[-0.04em] text-slate-950 sm:text-5xl md:text-6xl dark:text-white">
+              Learn the craft.<br />Earn the confidence.
+            </h2>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+              Structured DSA, competitive programming and development programs taught live by mentors who stay involved—from your first dry run to the interview room.
+            </p>
+            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Button size="lg" asChild className="h-14 rounded-lg bg-blue-700 px-6 text-base font-bold text-white hover:bg-blue-800">
+                <Link href="/courses">View all programs <ArrowRight className="ml-2 h-5 w-5" /></Link>
               </Button>
-              <Button size="lg" variant="outline" onClick={() => setContactOpen(true)} className="h-14 rounded-2xl border-slate-300 bg-white px-7 text-base font-bold text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white">
-                <Play className="mr-2 h-4 w-4 fill-current" /> Talk to a mentor
-              </Button>
-            </div>
-            <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold text-slate-600 dark:text-slate-300">
-              {["Live mentor support", "Curated practice sheets", "Mock interviews"].map((item) => <span key={item} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-emerald-500" />{item}</span>)}
+              <button onClick={() => setContactOpen(true)} className="inline-flex h-14 items-center justify-center gap-2 px-2 text-sm font-bold text-slate-700 transition hover:text-blue-700 dark:text-slate-200 dark:hover:text-blue-400">
+                Speak with a mentor <ArrowRight className="h-4 w-4" />
+              </button>
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[560px]">
-            <div className="absolute -inset-8 rounded-full bg-blue-500/15 blur-3xl" />
-            <div className="relative rounded-[2rem] border border-white/80 bg-white p-3 shadow-2xl shadow-blue-950/15 dark:border-slate-800 dark:bg-slate-900">
-              <div className="overflow-hidden rounded-[1.5rem] bg-slate-950 p-6 text-white md:p-8">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3"><img src="/logo.png" className="h-11 w-11 rounded-xl bg-white p-1" alt="" /><div><p className="text-xs font-bold uppercase tracking-widest text-orange-300">Live classroom</p><p className="font-bold">DSA Pattern Lab</p></div></div>
-                  <span className="flex items-center gap-2 rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-300"><span className="h-2 w-2 rounded-full bg-emerald-400" /> LIVE</span>
-                </div>
-                <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 font-mono text-sm leading-7 text-slate-300">
-                  <p><span className="text-violet-300">function</span> <span className="text-blue-300">buildCareer</span>(student) &#123;</p>
-                  <p className="pl-5"><span className="text-orange-300">learn</span>(concepts);</p>
-                  <p className="pl-5"><span className="text-orange-300">practice</span>(daily);</p>
-                  <p className="pl-5"><span className="text-orange-300">improve</span>(feedback);</p>
-                  <p className="pl-5"><span className="text-violet-300">return</span> <span className="text-emerald-300">confidence</span>;</p><p>&#125;</p>
-                </div>
-                <div className="mt-6 grid grid-cols-3 gap-3">
-                  {["Learn", "Code", "Review"].map((step, i) => <div key={step} className="rounded-xl bg-white/5 p-3 text-center"><p className="text-xs text-slate-500">0{i + 1}</p><p className="mt-1 text-sm font-bold">{step}</p></div>)}
-                </div>
+          <div className="mt-16 border-t border-slate-300 lg:mt-0 dark:border-white/20">
+            <p className="py-5 text-xs font-bold uppercase tracking-[.2em] text-slate-500 dark:text-slate-400">What the work looks like</p>
+            {[
+              ["01", "Understand", "Live explanations and visual dry runs"],
+              ["02", "Apply", "Curated problems and timed contests"],
+              ["03", "Improve", "Code reviews, feedback and mock interviews"],
+            ].map(([number, title, text]) => (
+              <div key={number} className="grid grid-cols-[3rem_1fr] gap-3 border-t border-slate-200 py-6 dark:border-white/10 sm:grid-cols-[3rem_8rem_1fr]">
+                <span className="font-mono text-xs text-orange-600 dark:text-orange-400">{number}</span>
+                <h3 className="text-base font-bold text-slate-950 dark:text-white">{title}</h3>
+                <p className="col-start-2 text-sm leading-6 text-slate-500 dark:text-slate-400 sm:col-start-auto">{text}</p>
               </div>
-            </div>
-            <div className="absolute -bottom-7 -left-5 rounded-2xl border bg-white p-4 shadow-xl dark:border-slate-700 dark:bg-slate-900">
-              <div className="flex items-center gap-3"><div className="grid h-11 w-11 place-items-center rounded-xl bg-orange-100 text-orange-600"><Trophy className="h-5 w-5" /></div><div><p className="text-xs text-slate-500">Student outcome</p><p className="font-black">Top ranks achieved</p></div></div>
+            ))}
+            <div className="border-t border-slate-300 py-6 dark:border-white/20">
+              <p className="max-w-md text-xl font-semibold leading-8 text-slate-800 dark:text-slate-200">The goal is simple: leave every session better at solving problems on your own.</p>
             </div>
           </div>
         </div>
