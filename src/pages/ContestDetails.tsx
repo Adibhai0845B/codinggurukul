@@ -10,8 +10,9 @@ import { useContestSubmissions } from "@/hooks/useContestSubmissions";
 import useAuth from "@/hooks/useAuth";
 
 export default function ContestDetails() {
-  const [, params] = useRoute("/contests/:id");
-  const contest = useContests((state) => state.contests.find((item) => item.id === params?.id));
+  const [, params] = useRoute<{ id: string }>("/contests/:id");
+  const contestId = params ? params.id : undefined;
+  const contest = useContests((state) => state.contests.find((item) => item.id === contestId));
   const [, forceTick] = useState(0);
   const [activeProblemId, setActiveProblemId] = useState<string | null>(null);
   const username = useAuth((state) => state.username) || "anonymous";

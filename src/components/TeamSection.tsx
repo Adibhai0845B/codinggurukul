@@ -10,7 +10,7 @@ const members: Member[] = [
   { id: 1, name: "Manisha Gupta", role: "Managing Director", avatar: "manisha.png" },
   { id: 2, name: "Shalika", role: "Founder", avatar: "Shalika.png" },
   { id: 3, name: "Aditya Krishna Gupta", role: "Advisor", avatar: "aditya.png" },
-  { id: 4, name: "Shiv Shanker Gupt", role: "CMO", avatar: "shivam.png" },
+  { id: 4, name: "Shiv Shanker", role: "CMO", avatar: "shivam.png" },
   { id: 5, name: "Arunima", role: "HR Manager", avatar: "anu.png" },
   { id: 6, name: "Apoorva", role: "Company Advisor", avatar: "apoorva.png" },
   { id: 7, name: "Sarika", role: "CSO", avatar: "sarika.png" },

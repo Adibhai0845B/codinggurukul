@@ -44,7 +44,7 @@ export default function Courses() {
     <div className="min-h-screen bg-white dark:bg-background">
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-blue-50 via-white to-orange-50 py-12 dark:from-slate-950 dark:via-background dark:to-slate-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(10,71,163,0.12),transparent_30%),radial-gradient(circle_at_88%_70%,rgba(255,101,0,0.14),transparent_32%)]" />
-        <div className="relative mx-auto grid max-w-7xl gap-8 px-4 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.86fr_1.14fr] lg:px-8">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-blue-700 shadow-sm">
               <Sparkles className="h-4 w-4 text-orange-500" />
@@ -70,7 +70,7 @@ export default function Courses() {
               </Button>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-3">
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <HeroStat value="4" label="Programs" />
               <HeroStat value="Rs. 299" label="Starting" />
               <HeroStat value="25th July" label="Launch Date" />
@@ -88,7 +88,7 @@ export default function Courses() {
       </section>
 
       <section className="border-b bg-slate-950 text-white">
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 py-5 md:grid-cols-4">
+        <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-5 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
           <TrustPoint icon={<CalendarDays />} title="Launching 25th July" />
           <TrustPoint icon={<Award />} title="Certificate Included" />
           <TrustPoint icon={<ShieldCheck />} title="Interview Focused" />
@@ -96,7 +96,7 @@ export default function Courses() {
         </div>
       </section>
 
-      <section id="course-list" className="mx-auto max-w-7xl px-4 py-12">
+      <section id="course-list" className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <div className="mb-8 grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
             <p className="text-sm font-bold uppercase tracking-wider text-orange-500">
@@ -158,7 +158,7 @@ export default function Courses() {
 
 function HeroStat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="rounded-xl border bg-white/80 p-4 shadow-sm dark:bg-card">
+    <div className="h-full rounded-xl border bg-white/80 p-4 shadow-sm dark:bg-card">
       <p className="text-xl font-extrabold text-blue-700">{value}</p>
       <p className="mt-1 text-xs font-semibold text-muted-foreground">
         {label}
@@ -175,7 +175,7 @@ function TrustPoint({
   title: string;
 }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex h-full items-center gap-3 rounded-xl px-2 py-1">
       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-orange-300">
         {icon}
       </div>

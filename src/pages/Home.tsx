@@ -72,12 +72,12 @@ export default function Home() {
 
       <aside className="relative overflow-hidden bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 text-white">
         <div className="absolute inset-0 opacity-15 [background-image:linear-gradient(120deg,transparent_20%,white_20%,white_22%,transparent_22%,transparent_72%,white_72%,white_74%,transparent_74%)]" />
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-4 text-center sm:flex-row sm:text-left md:px-6">
-          <div className="flex items-center gap-3">
+        <div className="relative mx-auto flex w-full max-w-7xl flex-col items-stretch justify-between gap-4 px-4 py-4 text-left sm:flex-row sm:items-center md:px-6">
+          <div className="flex min-w-0 items-center gap-3">
             <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/20"><Clock className="h-5 w-5" /></div>
             <div><p className="text-xs font-black uppercase tracking-[.18em] text-orange-100">Free demo session</p><p className="mt-0.5 text-lg font-black">Sunday · 10:00 AM to 11:00 AM</p></div>
           </div>
-          <Button onClick={() => setContactOpen(true)} className="shrink-0 rounded-xl bg-white font-bold text-orange-600 shadow-md hover:bg-orange-50">Register for demo <ArrowRight className="ml-2 h-4 w-4" /></Button>
+          <Button onClick={() => setContactOpen(true)} className="w-full shrink-0 rounded-xl bg-white font-bold text-orange-600 shadow-md hover:bg-orange-50 sm:w-auto">Register for demo <ArrowRight className="ml-2 h-4 w-4" /></Button>
         </div>
       </aside>
 
@@ -93,7 +93,7 @@ export default function Home() {
         ))}
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/25 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-slate-950/10" />
-        <div className="relative mx-auto flex min-h-[calc(100svh-132px)] max-w-7xl items-end px-4 pb-12 pt-24 md:px-6 md:pb-16">
+        <div className="relative mx-auto flex min-h-[calc(100svh-132px)] w-full max-w-7xl items-end px-4 pb-12 pt-24 md:px-6 md:pb-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/35 px-4 py-2 text-sm font-bold text-white shadow-lg backdrop-blur-md">
               <span className="h-2 w-2 rounded-full bg-orange-400" /> Real classrooms. Real practice.
@@ -124,7 +124,7 @@ export default function Home() {
       </section>
 
       <section id="main-intro" className="scroll-mt-20 border-b border-slate-200 bg-white dark:border-white/10 dark:bg-slate-950">
-        <div className="mx-auto grid max-w-7xl px-4 py-20 md:px-6 md:py-28 lg:grid-cols-[1.12fr_.88fr] lg:gap-20">
+        <div className="mx-auto grid w-full max-w-7xl items-start gap-12 px-4 py-20 md:px-6 md:py-28 lg:grid-cols-[1.12fr_.88fr] lg:gap-20">
           <div className="lg:pr-8">
             <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[.22em] text-blue-700 dark:text-blue-400">
               <span className="h-px w-9 bg-orange-500" /> Coding Gurukul
@@ -145,7 +145,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-16 border-t border-slate-300 lg:mt-0 dark:border-white/20">
+          <div className="border-t border-slate-300 dark:border-white/20">
             <p className="py-5 text-xs font-bold uppercase tracking-[.2em] text-slate-500 dark:text-slate-400">What the work looks like</p>
             {[
               ["01", "Understand", "Live explanations and visual dry runs"],
@@ -166,14 +166,14 @@ export default function Home() {
       </section>
 
       <section className="border-y border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-y-8 px-4 py-8 md:grid-cols-4 md:px-6">
-          {[["60K+", "Student reach"], ["50+", "Workshops"], ["150+", "Practice problems"], ["12 LPA", "Success story"]].map(([value, label]) => <div key={label} className="text-center md:border-r md:last:border-0 dark:border-slate-700"><p className="text-3xl font-black text-blue-700">{value}</p><p className="mt-1 text-sm text-slate-500">{label}</p></div>)}
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-y-8 px-4 py-8 md:grid-cols-4 md:px-6">
+          {[["60K+", "Student reach"], ["50+", "Workshops"], ["150+", "Practice problems"], ["12 LPA", "Success story"]].map(([value, label], index) => <div key={label} className={`px-3 text-center dark:border-slate-700 ${index % 2 === 0 ? "border-r" : ""} md:border-r md:last:border-0`}><p className="text-3xl font-black text-blue-700">{value}</p><p className="mt-1 text-sm text-slate-500">{label}</p></div>)}
         </div>
       </section>
 
       <Section id="programs" eyebrow="Explore our programs" title="Skills that move your career forward" description="Focused learning paths designed around the skills companies test and the confidence students need.">
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {programCards.map(({ icon: Icon, ...program }) => <article key={program.title} className="group rounded-3xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"><div className="flex items-center justify-between"><div className={`grid h-12 w-12 place-items-center rounded-2xl text-white ${program.color}`}><Icon className="h-6 w-6" /></div><span className="text-sm font-black text-slate-300 dark:text-slate-700">{program.number}</span></div><h3 className="mt-7 text-xl font-black">{program.title}</h3><p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">{program.text}</p><Link href="/courses" className="mt-6 inline-flex items-center text-sm font-bold text-blue-700">Learn more <ChevronRight className="h-4 w-4" /></Link></article>)}
+          {programCards.map(({ icon: Icon, ...program }) => <article key={program.title} className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"><div className="flex items-center justify-between"><div className={`grid h-12 w-12 place-items-center rounded-2xl text-white ${program.color}`}><Icon className="h-6 w-6" /></div><span className="text-sm font-black text-slate-300 dark:text-slate-700">{program.number}</span></div><h3 className="mt-7 text-xl font-black">{program.title}</h3><p className="mt-3 flex-1 leading-7 text-slate-600 dark:text-slate-400">{program.text}</p><Link href="/courses" className="mt-6 inline-flex items-center text-sm font-bold text-blue-700">Learn more <ChevronRight className="h-4 w-4" /></Link></article>)}
         </div>
       </Section>
 
@@ -203,7 +203,20 @@ export default function Home() {
   );
 }
 
-function Section({ id, eyebrow, title, description, children }: { id?: string; eyebrow: string; title: string; description: string; children: React.ReactNode }) { return <section id={id} className="py-24"><div className="mx-auto max-w-7xl px-4 md:px-6"><div className="mb-12 max-w-3xl"><Eyebrow>{eyebrow}</Eyebrow><h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">{title}</h2><p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{description}</p></div>{children}</div></section> }
+function Section({ id, eyebrow, title, description, children }: { id?: string; eyebrow: string; title: string; description: string; children: React.ReactNode }) {
+  return (
+    <section id={id} className="py-20 md:py-24">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-3xl md:mb-12">
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">{title}</h2>
+          <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-400">{description}</p>
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
 function Eyebrow({ children }: { children: React.ReactNode }) { return <p className="flex items-center gap-2 text-sm font-black uppercase tracking-[.18em] text-blue-700"><span className="h-2 w-2 rounded-full bg-orange-500" />{children}</p> }
 function Metric({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) { return <div className="rounded-2xl bg-white/10 p-4">{React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: "h-5 w-5 text-orange-300" })}<p className="mt-3 font-black">{value}</p><p className="mt-1 text-xs text-blue-200">{label}</p></div> }
 function StoryCard({ name, result, program, quote, tone }: (typeof stories)[number]) { const colors: Record<string, string> = { blue: "bg-blue-100 text-blue-700 dark:bg-blue-950", orange: "bg-orange-100 text-orange-700 dark:bg-orange-950", violet: "bg-violet-100 text-violet-700 dark:bg-violet-950", emerald: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950" }; return <article className="flex min-h-[290px] flex-col rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"><div className="flex items-start justify-between"><span className={`rounded-full px-3 py-1 text-xs font-black uppercase tracking-wide ${colors[tone]}`}>{result}</span><FaLinkedinIn className="text-blue-600" /></div><Quote className="mt-7 h-7 w-7 text-orange-400" /><p className="mt-4 flex-1 leading-7 text-slate-600 dark:text-slate-300">“{quote}”</p><div className="mt-6 border-t pt-5 dark:border-slate-700"><h3 className="font-black">{name}</h3><p className="mt-1 text-sm text-slate-500">{program}</p></div></article> }
