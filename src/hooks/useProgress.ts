@@ -2,9 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { dsaQuestions } from "@/data/dsaQuestions";
 import { useAuth } from "./useAuth";
-
-// Added the render URL for the backend API(Sir GPT pro dilwa do pls :))
-const API_URL = "https://coding-gurukul-backend.onrender.com"; 
+import { API_URL } from "@/config";
 
 interface ProgressState {
   completedIds: string[];

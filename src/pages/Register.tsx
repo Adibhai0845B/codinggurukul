@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 
 // Importing the Loader2 icon from lucide-react for the loading spinner
 import { Loader2 } from "lucide-react";
+import { API_URL } from "@/config";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ export default function Register() {
   e.preventDefault();
   setIsSubmitting(true);
   try {
-    const res = await fetch("https://coding-gurukul-backend.onrender.com/api/auth/register", {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, username, password })

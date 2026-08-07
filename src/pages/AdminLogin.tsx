@@ -4,6 +4,7 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { API_URL } from "@/config";
 
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function AdminLogin() {
 
     try {
       // Make sure this URL matches your backend port (adjust if necessary)
-      const response = await fetch("https://coding-gurukul-backend.onrender.com/api/admin/auth/login", {
+      const response = await fetch(`${API_URL}/api/admin/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

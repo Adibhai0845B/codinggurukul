@@ -9,9 +9,15 @@ export const PURCHASE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeHXD
 export const CONTACT_EMAIL = "info@codinggurukul.online";
 export const CONTACT_PHONE = "9217120919";
 
+// Set VITE_API_URL in Vercel to the URL assigned to your Render web service.
+export const API_URL = (
+  import.meta.env.VITE_API_URL || "https://coding-gurukul-backend-eoco.onrender.com"
+).replace(/\/$/, "");
+
 export default {
   CONTACT_FORM_URL,
   PURCHASE_FORM_URL,
   CONTACT_EMAIL,
   CONTACT_PHONE,
+  API_URL,
 };

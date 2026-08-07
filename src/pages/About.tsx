@@ -2,6 +2,7 @@ import { ArrowRight, BookOpen, Code2, GraduationCap, HeartHandshake, Sparkles } 
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import TeamSection from "@/components/TeamSection";
+import LearningSphere from "@/components/LearningSphere";
 
 const values = [
   { icon: GraduationCap, title: "Mentorship that feels personal", text: "Students learn with people who explain the thinking, review the work and stay invested in their progress." },
@@ -21,20 +22,22 @@ const moments = [
 export default function About() {
   return (
     <main className="overflow-hidden bg-white text-slate-950 dark:bg-slate-950 dark:text-white">
-      <section className="relative isolate min-h-[620px] overflow-hidden bg-[#041225] text-white md:min-h-[680px]">
-        <img src="/about-community.jpg" alt="Coding Gurukul learning community" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#041225]/95 via-[#041225]/75 to-[#041225]/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#041225]/70 via-transparent to-transparent" />
-        <div className="relative mx-auto flex min-h-[620px] w-full max-w-7xl items-center px-4 py-24 sm:px-6 md:min-h-[680px] lg:px-8">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-bold backdrop-blur"><Sparkles className="h-4 w-4 text-sky-300" /> Our story</div>
-            <h1 className="mt-7 text-5xl font-black leading-[1.02] tracking-[-.045em] md:text-7xl">Learning becomes powerful when it becomes <span className="text-sky-300">real.</span></h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">Coding Gurukul is a mentor-led learning community built to close the distance between classroom theory and the confidence needed to perform.</p>
+      <section className="relative isolate min-h-[680px] overflow-hidden bg-[#020817] text-white">
+        <img src="/about-community.jpg" alt="Coding Gurukul learning community" className="absolute inset-0 h-full w-full object-cover opacity-15" fetchPriority="high" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_50%,rgba(37,99,235,.26),transparent_30%),linear-gradient(90deg,#020817_12%,rgba(2,8,23,.95)_52%,rgba(2,8,23,.72))]" />
+        <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(96,165,250,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(96,165,250,.08)_1px,transparent_1px)] [background-size:64px_64px]" />
+        <div className="relative mx-auto grid min-h-[680px] w-full max-w-7xl items-center gap-6 px-4 py-16 sm:px-6 lg:grid-cols-[1.04fr_.96fr] lg:px-8">
+          <div className="relative z-10 max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-300/20 bg-blue-400/10 px-4 py-2 text-xs font-bold uppercase tracking-[.16em] text-blue-100 backdrop-blur"><Sparkles className="h-4 w-4 text-orange-300" /> The people behind the progress</div>
+            <h1 className="mt-7 text-5xl font-black leading-[.98] tracking-[-.055em] sm:text-6xl md:text-7xl">Learning becomes powerful when it becomes <span className="bg-gradient-to-r from-sky-300 to-orange-300 bg-clip-text text-transparent">real.</span></h1>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl">Coding Gurukul is a mentor-led learning community built to close the distance between classroom theory and the confidence needed to perform.</p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row"><Button asChild size="lg" className="h-14 rounded-xl bg-orange-500 px-7 font-black text-white hover:bg-orange-400"><Link href="/courses">Explore our programs <ArrowRight className="ml-2 h-5 w-5" /></Link></Button><a href="#our-purpose" className="inline-flex h-14 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-7 text-sm font-bold backdrop-blur transition hover:bg-white/10">Why we exist <ArrowRight className="h-4 w-4" /></a></div>
           </div>
+          <div className="relative hidden min-h-[540px] lg:block"><LearningSphere /></div>
         </div>
       </section>
 
-      <section className="relative py-20 md:py-28">
+      <section id="our-purpose" className="relative scroll-mt-20 py-20 md:py-28">
         <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-blue-100 blur-3xl dark:bg-blue-950/40" />
         <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:gap-20 lg:px-8">
           <div>
@@ -51,11 +54,10 @@ export default function About() {
           </div>
         </div>
       </section>
-
       <section className="bg-sky-50 py-20 dark:bg-slate-900/50 md:py-24">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[.2em] text-blue-700">What makes us different</p><h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">Built around student transformation.</h2></div>
-          <div className="mt-12 grid items-stretch gap-6 md:grid-cols-3">{values.map(({ icon: Icon, title, text }) => <article key={title} className="h-full rounded-3xl border border-blue-100 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-950"><div className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-700 text-white"><Icon className="h-7 w-7" /></div><h3 className="mt-6 text-xl font-black">{title}</h3><p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">{text}</p></article>)}</div>
+          <div className="mt-12 grid items-stretch gap-6 md:grid-cols-3">{values.map(({ icon: Icon, title, text }, index) => <article key={title} className="group relative h-full overflow-hidden rounded-3xl border border-blue-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-950"><span className="absolute right-6 top-5 text-5xl font-black text-blue-50 transition group-hover:text-orange-50 dark:text-slate-900">0{index + 1}</span><div className="relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-lg shadow-blue-700/20"><Icon className="h-7 w-7" /></div><h3 className="relative mt-6 text-xl font-black">{title}</h3><p className="relative mt-3 leading-7 text-slate-600 dark:text-slate-400">{text}</p><div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-blue-600 to-orange-400 transition-transform duration-300 group-hover:scale-x-100" /></article>)}</div>
         </div>
       </section>
 

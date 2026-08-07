@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserPlus } from "lucide-react"; // Import the icon
+import { API_URL } from "@/config";
 
 interface User {
   _id: string;
@@ -45,8 +46,8 @@ export default function AdminDashboard() {
         const headers = { Authorization: `Bearer ${adminToken}` };
         
         const [usersRes, statsRes] = await Promise.all([
-          fetch("https://coding-gurukul-backend.onrender.com/api/admin/users", { headers }),
-          fetch("https://coding-gurukul-backend.onrender.com/api/admin/stats", { headers })
+          fetch(`${API_URL}/api/admin/users`, { headers }),
+          fetch(`${API_URL}/api/admin/stats`, { headers })
         ]);
 
         if (usersRes.ok && statsRes.ok) {
@@ -72,7 +73,7 @@ export default function AdminDashboard() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://coding-gurukul-backend.onrender.com/api/admin/users", {
+      const res = await fetch(`${API_URL}/api/admin/users`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -103,14 +104,14 @@ export default function AdminDashboard() {
   };
   const handleUpgrade = async (username: string) => {
   try {
-    const res = await fetch(`https://coding-gurukul-backend.onrender.com/api/admin/upgrade-user/${username}`, {
+    const res = await fetch(`${API_URL}/api/admin/upgrade-user/${username}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${adminToken}` }
     });
     
     if (res.ok) {
       // Refresh the user list after upgrade
-      const updatedUsers = await fetch("https://coding-gurukul-backend.onrender.com/api/admin/users", { 
+      const updatedUsers = await fetch(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${adminToken}` } 
       }).then(r => r.json());
       setUsers(updatedUsers);
@@ -123,7 +124,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      const res = await fetch(`https://coding-gurukul-backend.onrender.com/api/admin/users/${userId}`, {
+      const res = await fetch(`${API_URL}/api/admin/users/${userId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${adminToken}` }
       });
