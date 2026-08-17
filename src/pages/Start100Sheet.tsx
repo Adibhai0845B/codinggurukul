@@ -197,16 +197,17 @@ export default function Start100Sheet() {
   const activePlatforms = platforms.filter((item) => questionsByPlatform[item].length > 0);
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+    <div className="space-y-9 animate-in fade-in duration-500">
+      <div className="flex flex-col gap-7 border-b border-white/10 pb-8 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">Start 150 Sheet</h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="cg-page-kicker">Build your foundation</p>
+          <h1 className="cg-page-title">Start 150</h1>
+          <p className="cg-page-copy">
             150 beginner problems from Codeforces 800, CodeChef starter level, LeetCode Easy, and GeeksforGeeks basics.
           </p>
         </div>
-        <div className="w-full md:w-64 bg-card p-4 rounded-xl border border-border">
-          <div className="text-sm font-medium mb-2">Overall Progress</div>
+        <div className="w-full border-l-2 border-orange-500 pl-5 md:w-64">
+          <div className="mb-2 flex justify-between text-xs font-bold uppercase tracking-wider text-slate-500"><span>Progress</span><span>{completedCount}/{start100Questions.length}</span></div>
           <ProgressBar completed={completedCount} total={start100Questions.length} />
         </div>
       </div>

@@ -7,10 +7,12 @@ export type Course = {
   originalPrice?: string;
   amountPaise: number;
   duration: string;
-  launchDate: string;
   image: string;
   tag: string;
   features: string[];
+  level: string;
+  format: string;
+  mentor?: { name: string; role: string; image: string };
 };
 export const courses: Course[] = [
   {
@@ -22,8 +24,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 799",
     amountPaise: 29900,
     duration: "10 Days",
-    launchDate: "25th July",
-    image: "/courses/bootcamp-batch.png",
+    image: "/courses/bootcamp-batch-v2.jpg",
     tag: "New Launch",
     features: [
       "Certification internship course",
@@ -34,6 +35,9 @@ export const courses: Course[] = [
       "Recursion basics",
       "Mini contest and career guidance",
     ],
+    level: "Beginner",
+    format: "Live online classes",
+    mentor: { name: "Harsh Lakhra", role: "DSA Mentor", image: "/team/harsh-lakhra.png" },
   },
   {
     id: "pro-batch",
@@ -44,8 +48,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 15,000",
     amountPaise: 299900,
     duration: "45 Days",
-    launchDate: "25th July",
-    image: "/courses/pro-batch.svg",
+    image: "/courses/pro-batch-v2.jpg",
     tag: "New Launch",
     features:[
       "Advanced DSA patterns",
@@ -58,6 +61,9 @@ export const courses: Course[] = [
       "Interview-level explanation practice",
       "Certificate of completion",
     ],
+    level: "Intermediate to advanced",
+    format: "Live classes, contests and reviews",
+    mentor: { name: "Shivam", role: "DSA and Competitive Programming Mentor", image: "/team/shivamt.png" },
   },
   {
     id: "foundation-batch",
@@ -68,8 +74,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 10,000",
     amountPaise: 239900,
     duration: "2 Months",
-    launchDate: "25th July",
-    image: "/courses/foundation-batch.svg",
+    image: "/courses/foundation-batch-v2.jpg",
     tag: "New Launch",
     features: [
       "Complete roadmap",
@@ -81,6 +86,9 @@ export const courses: Course[] = [
       "Interview preparation",
       "Certificate of completion",
     ],
+    level: "Beginner",
+    format: "Live online classes",
+    mentor: { name: "Aryan Tiwari", role: "DSA Mentor", image: "/team/aryan-tiwari.png" },
   },
   {
     id: "dsa-cp-sheet",
@@ -90,8 +98,7 @@ export const courses: Course[] = [
     price: "Rs. 299",
     amountPaise: 29900,
     duration: "Lifetime Access",
-    launchDate: "25th July",
-    image: "/courses/dsa-cp-sheet.svg",
+    image: "/courses/dsa-cp-sheet-v2.jpg",
     tag: "Affordable Access",
     features: [
       "Topic-wise DSA questions",
@@ -101,5 +108,7 @@ export const courses: Course[] = [
       "OA and interview focus",
       "Solutions and explanations",
     ],
+    level: "All levels",
+    format: "Self-paced practice",
   },
 ];

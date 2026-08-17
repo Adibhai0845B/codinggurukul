@@ -1,15 +1,12 @@
 import { ArrowRight, BookOpen, Code2, GraduationCap, HeartHandshake, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import TeamSection from "@/components/TeamSection";
 import LearningSphere from "@/components/LearningSphere";
-
 const values = [
   { icon: GraduationCap, title: "Mentorship that feels personal", text: "Students learn with people who explain the thinking, review the work and stay invested in their progress." },
   { icon: Code2, title: "Practice that builds confidence", text: "Every concept moves into structured problem-solving, live labs and feedback that turns knowledge into ability." },
   { icon: HeartHandshake, title: "A community that grows together", text: "Workshops, orientations and campus programs create a learning culture where students support and challenge one another." },
 ];
-
 const moments = [
   { src: "/about-lab-session.jpg", alt: "Students solving coding problems in a Coding Gurukul computer lab", className: "md:col-span-2 md:row-span-2" },
   { src: "/about-welcome.png", alt: "Coding Gurukul team welcoming a guest at the airport", className: "md:row-span-2" },
@@ -60,16 +57,11 @@ export default function About() {
           <div className="mt-12 grid items-stretch gap-6 md:grid-cols-3">{values.map(({ icon: Icon, title, text }, index) => <article key={title} className="group relative h-full overflow-hidden rounded-3xl border border-blue-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl dark:border-slate-800 dark:bg-slate-950"><span className="absolute right-6 top-5 text-5xl font-black text-blue-50 transition group-hover:text-orange-50 dark:text-slate-900">0{index + 1}</span><div className="relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-lg shadow-blue-700/20"><Icon className="h-7 w-7" /></div><h3 className="relative mt-6 text-xl font-black">{title}</h3><p className="relative mt-3 leading-7 text-slate-600 dark:text-slate-400">{text}</p><div className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-blue-600 to-orange-400 transition-transform duration-300 group-hover:scale-x-100" /></article>)}</div>
         </div>
       </section>
-
       <section className="py-20 md:py-24">
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between"><div><p className="text-sm font-black uppercase tracking-[.2em] text-blue-700">Life at Coding Gurukul</p><h2 className="mt-4 text-4xl font-black tracking-tight md:text-5xl">The moments behind the mission.</h2></div><p className="max-w-md leading-7 text-slate-600 dark:text-slate-400">Live labs, packed orientations, campus workshops and the people who make every milestone meaningful.</p></div>
           <div className="mt-12 grid gap-4 md:auto-rows-[260px] md:grid-cols-3">{moments.map(photo => <figure key={photo.src} className={`group aspect-[4/3] overflow-hidden rounded-3xl bg-slate-200 md:aspect-auto ${photo.className}`}><img src={photo.src} alt={photo.alt} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></figure>)}</div>
         </div>
-      </section>
-
-      <section className="bg-[#041225] text-white">
-        <TeamSection />
       </section>
       <section className="border-t border-white/10 bg-[#041225] py-16 text-white"><div className="mx-auto flex w-full max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 md:flex-row md:items-center lg:px-8"><div><p className="text-sm font-black uppercase tracking-[.2em] text-sky-300">Your next chapter</p><h2 className="mt-3 max-w-2xl text-4xl font-black tracking-tight">Learn with structure. Practise with purpose. Grow with mentors.</h2></div><Button asChild size="lg" className="h-14 w-full rounded-2xl bg-blue-700 px-7 font-bold text-white hover:bg-blue-600 sm:w-auto"><Link href="/courses">Explore programs <ArrowRight className="ml-2 h-5 w-5" /></Link></Button></div></section>
     </main>

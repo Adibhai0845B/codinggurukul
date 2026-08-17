@@ -4,38 +4,16 @@ import {
   CreditCard,
   CalendarDays,
   ShieldCheck,
-  ShoppingCart,
   Sparkles,
 } from "lucide-react";
 
 import CourseCard from "@/components/CourseCard";
-import { Badge } from "@/components/ui/badge";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
-import { useCourseCart } from "@/hooks/useCourseCart";
 import { courses, type Course } from "@/data/courses";
 import { PURCHASE_FORM_URL } from "@/config";
 
 export default function Courses() {
-  const cartItems = useCourseCart((state) => state.items);
-  const addCourse = useCourseCart((state) => state.addCourse);
-
-  function addToCart(course: Course) {
-    if (addCourse(course)) {
-      toast({
-        title: "Added to cart",
-        description: `${course.title} has been added.`,
-      });
-      return;
-    }
-
-    toast({
-      title: "Already in cart",
-      description: `${course.title} is already added.`,
-    });
-  }
-
   function buyCourse(_course: Course) {
     window.open(PURCHASE_FORM_URL, "_blank", "noopener,noreferrer");
   }
@@ -56,8 +34,7 @@ export default function Courses() {
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
               Choose the right accelerator: the 10-day starter bootcamp,
               foundation for basics, pro batch for advanced DSA and CP, or the
-              dedicated sheet for focused practice. All batches are launching
-              on 25th July.
+              dedicated sheet for focused practice. Enrollment is currently open.
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -73,15 +50,15 @@ export default function Courses() {
             <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
               <HeroStat value="4" label="Programs" />
               <HeroStat value="Rs. 299" label="Starting" />
-              <HeroStat value="25th July" label="Launch Date" />
+              <HeroStat value="Live" label="Mentor-led" />
             </div>
           </div>
 
-          <div className="relative rounded-2xl border bg-white p-3 shadow-2xl">
+          <div className="relative aspect-video overflow-hidden rounded-xl border bg-white shadow-xl">
             <img
               src={courses[0].image}
               alt={`${courses[0].title} banner`}
-              className="aspect-[3/1] w-full object-contain"
+              className="h-full w-full object-cover object-center"
             />
           </div>
         </div>
@@ -89,15 +66,15 @@ export default function Courses() {
 
       <section className="border-b bg-slate-950 text-white">
         <div className="mx-auto grid w-full max-w-7xl gap-4 px-4 py-5 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-          <TrustPoint icon={<CalendarDays />} title="Launching 25th July" />
+          <TrustPoint icon={<CalendarDays />} title="Enrollment Open" />
           <TrustPoint icon={<Award />} title="Certificate Included" />
           <TrustPoint icon={<ShieldCheck />} title="Interview Focused" />
           <TrustPoint icon={<CheckCircle2 />} title="Form Registration" />
         </div>
       </section>
 
-      <section id="course-list" className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <div className="mb-8 grid gap-5 lg:grid-cols-[1fr_360px] lg:items-end">
+      <section id="course-list" className="cg-enter mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <div className="mb-8 max-w-3xl">
           <div>
             <p className="text-sm font-bold uppercase tracking-wider text-orange-500">
               Choose Your Track
@@ -111,46 +88,15 @@ export default function Courses() {
             </p>
           </div>
 
-          <Card className="rounded-2xl border-blue-100 bg-blue-50/70">
-            <CardContent className="flex flex-col gap-4 p-5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-blue-700">
-                <ShoppingCart className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-bold">Cart</p>
-                <p className="text-sm text-muted-foreground">
-                  {cartItems.length
-                    ? `${cartItems.length} course${cartItems.length > 1 ? "s" : ""} selected`
-                    : "No courses added yet"}
-                </p>
-              </div>
-            </div>
-
-            {cartItems.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {cartItems.map((item) => (
-                  <Badge key={item.id} variant="secondary">
-                    {item.title}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
         </div>
 
-        <div className="grid gap-8">
-          {courses.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              isAdded={cartItems.some((item) => item.id === course.id)}
-              onAddToCart={addToCart}
-              onBuy={buyCourse}
-            />
-          ))}
-        </div>
+        <Carousel opts={{ align: "start", loop: false }} className="mt-10">
+          <CarouselContent className="-ml-5 items-stretch">
+            {courses.map((course) => <CarouselItem key={course.id} className="h-auto pl-5 md:basis-1/2 lg:basis-1/3"><CourseCard course={course} compact /></CarouselItem>)}
+          </CarouselContent>
+          <CarouselPrevious className="-top-14 left-auto right-11 h-9 w-9 rounded-md" />
+          <CarouselNext className="-top-14 right-0 h-9 w-9 rounded-md" />
+        </Carousel>
       </section>
     </div>
   );

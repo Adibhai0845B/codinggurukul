@@ -73,9 +73,10 @@ export default function Progress() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
-      <div>
-        <h1 className="text-3xl font-extrabold tracking-tight">Progress Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Analytics and insights on your preparation journey.</p>
+      <div className="border-b border-white/10 pb-8">
+        <p className="cg-page-kicker">Your performance</p>
+        <h1 className="cg-page-title">Progress report</h1>
+        <p className="cg-page-copy">Clear signals on what you have mastered and where your next effort should go.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

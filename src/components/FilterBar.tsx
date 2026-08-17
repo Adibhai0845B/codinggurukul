@@ -33,18 +33,18 @@ export default function FilterBar({
   hideTopic = false
 }: FilterBarProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 mb-6" data-testid="filter-bar">
+    <div className="mb-6 flex flex-col gap-3 border-y bg-white/60 py-4 dark:border-white/10 dark:bg-white/[.015] sm:flex-row" data-testid="filter-bar">
       <div className="flex-1">
         <Input 
           placeholder="Search questions..." 
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full"
+          className="h-11 w-full bg-white focus-visible:ring-blue-500 dark:border-white/10 dark:bg-[#080d18]"
           data-testid="input-search"
         />
       </div>
       
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 [&_button]:h-11 [&_button]:bg-white dark:[&_button]:border-white/10 dark:[&_button]:bg-[#080d18]">
         <Select value={status} onValueChange={setStatus}>
           <SelectTrigger className="w-[140px]" data-testid="select-status">
             <SelectValue placeholder="Status" />

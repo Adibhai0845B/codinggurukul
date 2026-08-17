@@ -36,7 +36,7 @@ const Login = () => {
   const redirectParam = new URLSearchParams(window.location.search).get("redirect");
   const postLoginPath = redirectParam?.startsWith("/") && !redirectParam.startsWith("//")
     ? redirectParam
-    : "/";
+    : "/dashboard";
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

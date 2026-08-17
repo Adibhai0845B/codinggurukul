@@ -55,14 +55,15 @@ export default function CPSheet() {
   const activeRatings = ratings.filter(r => questionsByRating[r].length > 0);
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+    <div className="space-y-9 animate-in fade-in duration-500">
+      <div className="flex flex-col gap-7 border-b border-white/10 pb-8 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">CP Practice Sheet</h1>
-          <p className="text-muted-foreground mt-1">Conquer Codeforces with rating-wise progression.</p>
+          <p className="cg-page-kicker">Competitive programming</p>
+          <h1 className="cg-page-title">Rating-wise practice</h1>
+          <p className="cg-page-copy">Build speed and contest confidence through a deliberate Codeforces progression.</p>
         </div>
-        <div className="w-full md:w-64 bg-card p-4 rounded-xl border border-border">
-          <div className="text-sm font-medium mb-2">Overall Progress</div>
+        <div className="w-full border-l-2 border-orange-500 pl-5 md:w-64">
+          <div className="mb-2 flex justify-between text-xs font-bold uppercase tracking-wider text-slate-500"><span>Progress</span><span>{cpCompleted}/{cpQuestions.length}</span></div>
           <ProgressBar completed={cpCompleted} total={cpQuestions.length} />
         </div>
       </div>

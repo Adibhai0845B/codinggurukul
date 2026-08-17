@@ -20,15 +20,16 @@ export default function Contests() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+    <div className="space-y-10 animate-in fade-in duration-500">
+        <div className="flex flex-col justify-between gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-end">
           <div>
-        <h1 className="text-3xl font-extrabold tracking-tight">Programming Contests</h1>
-        <p className="text-muted-foreground mt-1 max-w-2xl">
+        <p className="cg-page-kicker">Compete and improve</p>
+        <h1 className="cg-page-title">Programming contests</h1>
+        <p className="cg-page-copy">
           Join Coding Gurukul challenges, solve programming problems, and test your skills.
         </p>
           </div>
-          <Button asChild variant="outline"><Link href="/make-contest"><Trophy className="mr-2 h-4 w-4 text-amber-400" />Make Contest</Link></Button>
+          <Button asChild className="rounded-lg bg-blue-600 font-bold hover:bg-blue-500"><Link href="/make-contest"><Trophy className="mr-2 h-4 w-4" />Create contest</Link></Button>
         </div>
 
       <section className="space-y-4">

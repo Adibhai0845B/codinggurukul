@@ -2,6 +2,7 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import Layout from "@/components/Layout";
 import Home from "@/pages/Home";
 import Courses from "@/pages/Courses";
+import CourseDetails from "@/pages/CourseDetails";
 import DSASheet from "@/pages/DSASheet";
 import CPSheet from "@/pages/CPSheet";
 import Start100Sheet from "@/pages/Start100Sheet";
@@ -16,6 +17,7 @@ import LiveClasses from "@/pages/LiveClasses";
 import LearningHub from "@/pages/LearningHub";
 import PlacementReadiness from "@/pages/PlacementReadiness";
 import About from "@/pages/About";
+import Dashboard from "@/pages/Dashboard";
 
 
 import Compiler from "@/pages/Compiler"; // compiler ke liye
@@ -41,7 +43,9 @@ function Router() {
         />
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
+        <Route path="/courses/:id" component={CourseDetails} />
         <Route path="/courses" component={Courses} />
+        <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} returnTo="/dashboard" />} />
         <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
         <Route path="/live-classes" component={() => <ProtectedRoute component={LiveClasses} returnTo="/live-classes" />} />
         <Route path="/learn" component={() => <ProtectedRoute component={LearningHub} requireEnrolled={true} />} />
