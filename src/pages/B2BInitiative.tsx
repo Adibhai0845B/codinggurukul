@@ -118,6 +118,14 @@ export default function B2BInitiative() {
           <div className="grid sm:grid-cols-3">{[[Award, "Top mentors", "Learn from experienced mentors and competitive programmers from across India."], [Code2, "Real problem solving", "Students solve company-relevant coding problems, not only classroom examples."], [BriefcaseBusiness, "Industry connections", "Our company network helps trained cohorts discover relevant hiring opportunities."]].map(([Icon, title, copy], index) => { const QualityIcon = Icon as typeof Award; return <div key={String(title)} className={`p-7 ${index ? "border-t border-white/10 sm:border-l sm:border-t-0" : ""}`}><QualityIcon className="h-5 w-5 text-blue-300" /><h4 className="mt-5 font-black">{String(title)}</h4><p className="mt-3 text-sm leading-6 text-slate-400">{String(copy)}</p></div>; })}</div>
         </div>
         <p className="mt-5 text-center text-xs leading-5 text-slate-500">Placement assistance means opportunity support and employer coordination; final hiring decisions remain with participating companies.</p>
+
+        <div className="mt-16 grid items-center gap-8 border-t border-slate-300 pt-12 dark:border-white/10 lg:grid-cols-[.75fr_1.25fr]">
+          <div><p className="text-xs font-black uppercase tracking-[.18em] text-orange-500">Leadership behind the initiative</p><h3 className="mt-4 text-3xl font-black leading-tight">Institutional relationships with personal ownership.</h3><p className="mt-4 leading-7 text-slate-600 dark:text-slate-400">College partnerships are guided directly by Coding Gurukul leadership—from understanding campus requirements to aligning delivery and outcomes.</p></div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <article className="flex items-center gap-4 rounded-xl border bg-white p-4 dark:border-white/10 dark:bg-[#101824]"><img src="/team/Shalika.png" alt="Shalika, Founder of Coding Gurukul" className="h-20 w-20 shrink-0 rounded-lg object-cover object-top" /><div><h4 className="font-black">Shalika</h4><p className="mt-1 text-sm font-semibold text-blue-700 dark:text-blue-400">Founder</p><p className="mt-2 text-xs leading-5 text-slate-500">Institutional vision and partnership direction</p></div></article>
+            <article className="flex items-center gap-4 rounded-xl border bg-white p-4 dark:border-white/10 dark:bg-[#101824]"><img src="/team/aditya.png" alt="Aditya Krishna Gupta, Advisor at Coding Gurukul" className="h-20 w-20 shrink-0 rounded-lg object-cover object-top" /><div><h4 className="font-black">Aditya Krishna Gupta</h4><p className="mt-1 text-sm font-semibold text-blue-700 dark:text-blue-400">Advisor</p><p className="mt-2 text-xs leading-5 text-slate-500">Technology and industry alignment</p></div></article>
+          </div>
+        </div>
       </div>
     </section>
 
