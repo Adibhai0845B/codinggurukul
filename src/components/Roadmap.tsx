@@ -102,7 +102,7 @@ export const Roadmap = () => {
   }, [setLocation]);
 
   return (
-    <div className="h-full w-full relative">
+    <div className="relative h-full min-h-[620px] w-full sm:min-h-[680px]">
       <ReactFlow 
         nodes={nodes} 
         edges={edges} 

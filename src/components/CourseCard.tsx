@@ -2,7 +2,6 @@ import {
   ArrowRight,
   Check,
   Clock3,
-  Sparkles,
 } from "lucide-react";
 
 import type { Course } from "@/data/courses";
@@ -26,42 +25,37 @@ export default function CourseCard({
       className="group relative flex h-full flex-col overflow-hidden rounded-lg border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
     >
       {isPopular && (
-        <div className="absolute right-5 top-5 z-20 rounded-full bg-orange-500 px-3 py-1.5 text-[11px] font-black uppercase tracking-wider text-white shadow-lg">
-          Most popular
+        <div className="absolute right-4 top-4 z-20 rounded-md bg-orange-500 px-2.5 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-white">
+          Best for beginners
         </div>
       )}
 
-      <div className="relative aspect-video w-full shrink-0 overflow-hidden bg-slate-100 dark:bg-slate-950">
-        <div className="absolute inset-0 opacity-50 [background-image:radial-gradient(circle_at_20%_20%,rgba(37,99,235,.12),transparent_28%),radial-gradient(circle_at_80%_80%,rgba(249,115,22,.12),transparent_28%)]" />
+      <div className="relative aspect-[3/1] w-full shrink-0 overflow-hidden border-b border-slate-100 bg-[#f8fbff] dark:border-slate-800">
         <img
           src={course.image}
           alt={`${course.title} banner`}
-          className="relative h-full w-full object-cover object-center transition duration-500 group-hover:scale-[1.015]"
+          className="h-full w-full object-contain object-center"
         />
-        <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/90 px-3 py-1.5 text-xs font-black text-slate-800 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/90 dark:text-white">
-          <Sparkles className="h-3.5 w-3.5 text-orange-500" />
-          {course.tag}
-        </div>
       </div>
 
       <div className={`flex flex-1 flex-col ${compact ? "p-6" : "p-7"}`}>
         <div className="flex flex-wrap items-center gap-2 text-xs font-bold">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1.5 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
             <Clock3 className="h-3.5 w-3.5" /> {course.duration}
           </span>
         </div>
 
-        <p className="mt-6 text-xs font-black uppercase tracking-[.16em] text-blue-700 dark:text-blue-400">
+        <p className="mt-5 text-xs font-black uppercase tracking-[.14em] text-blue-700 dark:text-blue-400">
           {course.subtitle}
         </p>
         <h3 className={`${compact ? "text-2xl" : "text-3xl"} mt-2 font-black leading-tight tracking-tight text-slate-950 dark:text-white`}>
           {course.title}
         </h3>
-        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
-          {course.desc}
-        </p>
+        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">{course.idealFor}</p>
 
-        <div className={`mt-6 grid gap-3 ${compact ? "" : "sm:grid-cols-2"}`}>
+        <div className="mt-5 border-y py-4"><p className="text-[10px] font-bold uppercase tracking-[.14em] text-slate-400">Expected outcome</p><p className="mt-2 text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">{course.outcome}</p></div>
+
+        <div className={`mt-5 grid gap-3 ${compact ? "" : "sm:grid-cols-2"}`}>
           {visibleFeatures.map((feature) => (
             <div key={feature} className="flex items-start gap-2.5 text-sm font-medium text-slate-700 dark:text-slate-300">
               <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">

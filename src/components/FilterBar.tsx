@@ -33,7 +33,7 @@ export default function FilterBar({
   hideTopic = false
 }: FilterBarProps) {
   return (
-    <div className="mb-6 flex flex-col gap-3 border-y bg-white/60 py-4 dark:border-white/10 dark:bg-white/[.015] sm:flex-row" data-testid="filter-bar">
+    <div className="mb-6 flex flex-col gap-3 border-y bg-white/60 py-4 dark:border-white/10 dark:bg-white/[.015] lg:flex-row" data-testid="filter-bar">
       <div className="flex-1">
         <Input 
           placeholder="Search questions..." 
@@ -44,9 +44,9 @@ export default function FilterBar({
         />
       </div>
       
-      <div className="flex flex-wrap gap-2 [&_button]:h-11 [&_button]:bg-white dark:[&_button]:border-white/10 dark:[&_button]:bg-[#080d18]">
+      <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap [&_button]:h-11 [&_button]:w-full [&_button]:bg-white dark:[&_button]:border-white/10 dark:[&_button]:bg-[#080d18] sm:[&_button]:w-auto">
         <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger className="w-[140px]" data-testid="select-status">
+          <SelectTrigger className="w-full sm:w-[140px]" data-testid="select-status">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
           <SelectContent>
@@ -58,7 +58,7 @@ export default function FilterBar({
         </Select>
 
         <Select value={difficulty} onValueChange={setDifficulty}>
-          <SelectTrigger className="w-[140px]" data-testid="select-difficulty">
+          <SelectTrigger className="w-full sm:w-[140px]" data-testid="select-difficulty">
             <SelectValue placeholder="Difficulty" />
           </SelectTrigger>
           <SelectContent>
@@ -70,7 +70,7 @@ export default function FilterBar({
         </Select>
 
         <Select value={company} onValueChange={setCompany}>
-          <SelectTrigger className="w-[140px]" data-testid="select-company">
+          <SelectTrigger className="w-full sm:w-[140px]" data-testid="select-company">
             <SelectValue placeholder="Company" />
           </SelectTrigger>
           <SelectContent>
@@ -83,7 +83,7 @@ export default function FilterBar({
 
         {!hideTopic && topics && setTopic && (
           <Select value={topic || "All"} onValueChange={setTopic}>
-            <SelectTrigger className="w-[180px]" data-testid="select-topic">
+            <SelectTrigger className="w-full sm:w-[180px]" data-testid="select-topic">
               <SelectValue placeholder="Topic" />
             </SelectTrigger>
             <SelectContent>

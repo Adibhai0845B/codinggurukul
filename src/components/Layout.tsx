@@ -1,16 +1,15 @@
 import { ReactNode, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, BarChart3, BookOpen, BriefcaseBusiness, LayoutDashboard, Mail, MapPin, Phone } from "lucide-react";
 import Navbar from "./Navbar";
 import StudentSidebar from "./StudentSidebar";
 import { useTheme } from "@/hooks/useTheme";
-import ThemeToggle from "./ThemeToggle";
 import { CONTACT_EMAIL, CONTACT_PHONE } from "@/config";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const isHome = location === "/";
-  const isFullWidthPage = isHome || location === "/about";
+  const isFullWidthPage = isHome || location === "/about" || location === "/b2b";
   const portalPaths = ["/dashboard", "/learn", "/live-classes", "/placement-readiness", "/roadmap", "/start-100", "/dsa", "/cp", "/contests", "/progress", "/compiler"];
   const isPortal = portalPaths.some((path) => location === path || location.startsWith(`${path}/`));
   const isAuthOrAdmin = ["/login", "/register", "/admin", "/make-contest/login"].some((path) => location === path || location.startsWith(`${path}/`));
@@ -24,10 +23,10 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-[100dvh] flex-col bg-background text-foreground selection:bg-blue-600/40">
       <Navbar />
-      {!isHome && <div className="flex items-center justify-between border-b border-white/10 bg-[#060b14] px-4 py-2 lg:hidden"><span className="text-xs font-semibold text-slate-500">Appearance</span><div className="w-32"><ThemeToggle showLabel /></div></div>}
       {!isHome && !isPortal && !isAuthOrAdmin && <div className="border-b bg-white/80 dark:border-white/10 dark:bg-[#0d1119]/90"><div className="mx-auto flex h-11 w-full max-w-7xl items-center gap-2 px-4 text-xs sm:px-6 lg:px-8"><Link href="/" className="font-semibold text-slate-500 transition hover:text-blue-600">Home</Link><span className="text-slate-300 dark:text-slate-700">/</span><span className="font-semibold text-slate-700 dark:text-slate-300">{pageLabel}</span></div></div>}
-      {isPortal ? <div className="mx-auto flex w-full max-w-[1600px] flex-1"><StudentSidebar /><main className="cg-portal min-w-0 flex-1 px-4 py-8 sm:px-6 md:py-10 lg:px-10 xl:px-12">{children}</main></div> : <main className={`${isFullWidthPage ? "w-full" : "relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"} ${isHome ? "" : "cg-public-page"} ${isAuthOrAdmin ? "py-8 md:py-12" : isFullWidthPage ? "" : "py-10 md:py-14"} flex-1`}>{children}</main>}
-      <footer className="mt-auto border-t border-white/10 bg-[#060a12] text-slate-300">
+      {isPortal ? <div className="mx-auto flex w-full max-w-[1600px] flex-1"><StudentSidebar /><main className="cg-portal min-w-0 flex-1 px-4 pb-24 pt-8 sm:px-6 md:py-10 lg:px-10 xl:px-12">{children}</main></div> : <main className={`${isFullWidthPage ? "w-full" : "relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8"} ${isHome ? "" : "cg-public-page"} ${isAuthOrAdmin ? "py-8 md:py-12" : isFullWidthPage ? "" : "py-10 md:py-14"} flex-1`}>{children}</main>}
+      {isPortal && <MobilePortalNav location={location} />}
+      {!isPortal && <footer className="mt-auto border-t border-white/10 bg-[#060a12] text-slate-300">
         <div className="mx-auto w-full max-w-7xl px-4 pb-8 pt-14 sm:px-6 md:pt-16 lg:px-8">
           <div className="grid gap-12 border-b border-white/10 pb-12 lg:grid-cols-[1.35fr_.65fr_.65fr_1fr] lg:gap-10">
             <div className="max-w-sm">
@@ -58,7 +57,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <p>Structured learning · Deliberate practice · Career confidence</p>
           </div>
         </div>
-      </footer>
+      </footer>}
     </div>
   );
 }
@@ -71,9 +70,14 @@ function getPageLabel(path: string) {
   if (path.startsWith("/courses/")) return "Program details";
   if (path.startsWith("/contests/")) return "Contest details";
   const labels: Record<string, string> = {
-    "/about": "About us", "/courses": "Programs", "/roadmap": "Learning roadmap",
+    "/about": "About us", "/b2b": "B2B Initiative", "/courses": "Programs", "/roadmap": "Learning roadmap",
     "/live-classes": "Live classes", "/placement-readiness": "Placement readiness",
     "/compiler": "Online compiler", "/contests": "Contests", "/progress": "Progress",
   };
   return labels[path] || "Coding Gurukul";
+}
+
+function MobilePortalNav({ location }: { location: string }) {
+  const items = [["Overview", "/dashboard", LayoutDashboard], ["Learn", "/learn", BookOpen], ["Classes", "/live-classes", BookOpen], ["Career", "/placement-readiness", BriefcaseBusiness], ["Progress", "/progress", BarChart3]] as const;
+  return <nav className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-white/10 bg-[#070c15]/95 px-1 pb-[max(.35rem,env(safe-area-inset-bottom))] pt-1.5 backdrop-blur-xl lg:hidden" aria-label="Student portal navigation">{items.map(([label, href, Icon]) => { const active = location === href; return <Link key={href} href={href} className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-md text-[10px] font-semibold transition ${active ? "bg-blue-600/15 text-blue-300" : "text-slate-500"}`}><Icon className="h-4 w-4" /><span>{label}</span></Link>; })}</nav>;
 }

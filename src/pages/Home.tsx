@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import {
-  ArrowRight, BookOpen, BriefcaseBusiness, ChevronRight, Code2,
-  ExternalLink, Flame, GraduationCap, PlayCircle, Presentation,
-  Radio, Target, Trophy,
+  ArrowRight, BarChart3, BookOpen, BriefcaseBusiness, Building2, ChevronRight, Code2,
+  ExternalLink, Flame, GraduationCap, Layers3, PlayCircle, Presentation,
+  Radio, Target, Trophy, Users,
 } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
+import CodingNetwork from "@/components/CodingNetwork";
 import CourseCard from "@/components/CourseCard";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -95,11 +96,43 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-white py-20 dark:bg-[#111318] md:py-28">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.05fr_.95fr] lg:gap-20 lg:px-8">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[.2em] text-orange-500">Why Coding Gurukul exists</p>
+            <h2 className="mt-6 max-w-3xl text-4xl font-black leading-[1.08] tracking-[-.04em] md:text-5xl">Talent is already on campus. It needs the right environment to become capability.</h2>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400">We help colleges turn learning intent into visible progress through mentor-led instruction, deliberate coding practice and assessment that tells faculty what students need next.</p>
+            <div className="mt-10 grid grid-cols-2 border-y dark:border-white/10 sm:grid-cols-3">
+              {[["Concepts", "taught with context"], ["Practice", "built into every module"], ["Progress", "made measurable"]].map(([value, label], index) => <div key={value} className={`py-5 pr-4 ${index ? "border-l pl-4 dark:border-white/10" : ""} ${index === 2 ? "col-span-2 border-t sm:col-span-1 sm:border-t-0" : ""}`}><p className="font-extrabold text-blue-700 dark:text-blue-400">{value}</p><p className="mt-1 text-xs leading-5 text-slate-500">{label}</p></div>)}
+            </div>
+          </div>
+          <figure className="relative"><img src="/about-mentor-class.jpg" alt="Coding Gurukul mentor teaching students in a campus classroom" className="aspect-[4/3] w-full rounded-lg object-cover" /><figcaption className="absolute bottom-4 left-4 right-4 border border-white/20 bg-slate-950/80 p-4 text-sm font-semibold text-white backdrop-blur-md sm:left-auto sm:max-w-xs">Real mentors. Live classrooms. Practice that continues after the session.</figcaption></figure>
+        </div>
+      </section>
+
       <section id="programs" className="bg-white py-16 dark:bg-[#141414] md:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-16">
             <div><p className="text-sm font-semibold text-blue-600">Institutional training programs</p><h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-[-.025em] md:text-4xl">Built around your students and placement goals.</h2><p className="mt-5 leading-7 text-slate-600 dark:text-slate-400">We work with departments and placement cells to define the right modules, difficulty, delivery schedule and assessment plan.</p><Button onClick={() => setContactOpen(true)} variant="outline" className="mt-7">Discuss your requirement</Button></div>
             <div className="grid gap-4 sm:grid-cols-2">{programs.map(({ icon: Icon, title, copy }) => <article key={title} className="min-h-[190px] rounded-lg border p-6 dark:border-white/10"><Icon className="h-5 w-5 text-blue-600" /><h3 className="mt-5 text-lg font-bold leading-6">{title}</h3><p className="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400">{copy}</p></article>)}</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative isolate overflow-hidden bg-[#07111f] py-20 text-white md:py-24">
+        <CodingNetwork />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#07111f] via-[#07111f]/95 to-[#07111f]/55" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[.7fr_1.3fr] lg:gap-16"><div><p className="text-xs font-extrabold uppercase tracking-[.2em] text-orange-400">Campus delivery model</p><h2 className="mt-5 text-3xl font-black leading-tight tracking-[-.03em] md:text-4xl">One connected training cycle.</h2><p className="mt-5 leading-7 text-slate-400">Not a collection of isolated workshops. Every stage creates the information and momentum required for the next.</p></div><div className="grid border-t border-white/15 sm:grid-cols-2">{[[Users, "01", "Understand", "Map the cohort's starting level, available time and placement targets."], [Layers3, "02", "Structure", "Build the right sequence of concepts, labs, practice and checkpoints."], [Code2, "03", "Deliver", "Run mentor-led sessions with guided implementation and independent work."], [BarChart3, "04", "Measure", "Use assessments and progress evidence to plan reinforcement and outcomes."]].map(([Icon, number, title, copy], index) => { const StepIcon = Icon as typeof Users; return <article key={String(number)} className={`border-b border-white/15 py-7 sm:p-7 ${index % 2 ? "sm:border-l" : ""}`}><div className="flex items-center justify-between"><StepIcon className="h-5 w-5 text-blue-400" /><span className="font-mono text-xs text-orange-400">{String(number)}</span></div><h3 className="mt-6 text-lg font-bold">{String(title)}</h3><p className="mt-3 text-sm leading-6 text-slate-400">{String(copy)}</p></article>; })}</div></div>
+        </div>
+      </section>
+
+      <section className="bg-[#eef3f9] py-20 dark:bg-[#0d0f13] md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl"><p className="text-xs font-extrabold uppercase tracking-[.2em] text-blue-700 dark:text-blue-400">Two journeys, one learning ecosystem</p><h2 className="mt-5 text-4xl font-black leading-tight tracking-[-.035em] md:text-5xl">Built for institutions. Useful every day for students.</h2></div>
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            <article className="group relative min-h-[420px] overflow-hidden rounded-lg bg-slate-950"><img src="/about-orientation.jpg" alt="College orientation and institutional training" className="absolute inset-0 h-full w-full object-cover opacity-55 transition duration-700 group-hover:scale-[1.025]" /><div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/55 to-transparent" /><div className="relative flex min-h-[420px] flex-col justify-end p-7 text-white md:p-9"><Building2 className="h-6 w-6 text-orange-400" /><p className="mt-5 text-xs font-bold uppercase tracking-[.16em] text-orange-300">For colleges</p><h3 className="mt-3 text-3xl font-black">Create a placement-ready campus program.</h3><p className="mt-4 max-w-lg leading-7 text-slate-300">Cohort planning, faculty alignment, mentor delivery, coding labs, assessments and progress reporting.</p><button onClick={() => setContactOpen(true)} className="mt-6 inline-flex w-fit items-center gap-2 text-sm font-bold text-white">Discuss a partnership <ArrowRight className="h-4 w-4 text-orange-400" /></button></div></article>
+            <article className="flex min-h-[420px] flex-col border bg-white p-7 dark:border-white/10 dark:bg-[#15171c] md:p-9"><GraduationCap className="h-6 w-6 text-blue-600" /><p className="mt-5 text-xs font-bold uppercase tracking-[.16em] text-blue-700 dark:text-blue-400">For students</p><h3 className="mt-3 max-w-lg text-3xl font-black leading-tight">Practise, measure progress and prepare with direction.</h3><p className="mt-4 max-w-lg leading-7 text-slate-600 dark:text-slate-400">Use structured sheets, live classes, contests, the compiler and placement tools from one focused workspace.</p><div className="mt-auto grid grid-cols-2 gap-px bg-slate-200 dark:bg-white/10">{[[BookOpen, "Learning paths"], [Code2, "Coding practice"], [Radio, "Live classes"], [BriefcaseBusiness, "Career readiness"]].map(([Icon, label]) => { const ItemIcon = Icon as typeof BookOpen; return <div key={String(label)} className="flex items-center gap-2 bg-white p-3 text-xs font-semibold dark:bg-[#15171c]"><ItemIcon className="h-4 w-4 text-blue-600" />{String(label)}</div>; })}</div><Button asChild className="mt-6 w-fit bg-blue-700 font-bold hover:bg-blue-800"><Link href={isLoggedIn ? "/dashboard" : "/courses"}>{isLoggedIn ? "Open your workspace" : "Explore student programs"}<ArrowRight className="ml-2 h-4 w-4" /></Link></Button></article>
           </div>
         </div>
       </section>

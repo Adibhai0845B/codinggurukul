@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Code2, GraduationCap, HeartHandshake, Sparkles } from "lucide-react";
+import { ArrowRight, Code2, GraduationCap, HeartHandshake, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import LearningSphere from "@/components/LearningSphere";
@@ -9,7 +9,6 @@ const values = [
 ];
 const moments = [
   { src: "/about-lab-session.jpg", alt: "Students solving coding problems in a Coding Gurukul computer lab", className: "md:col-span-2 md:row-span-2" },
-  { src: "/about-welcome.png", alt: "Coding Gurukul team welcoming a guest at the airport", className: "md:row-span-2" },
   { src: "/about-community.jpg", alt: "Coding Gurukul student community after a campus event", className: "md:col-span-2" },
   { src: "/about-mentor-class.jpg", alt: "Mentor leading a live classroom session", className: "" },
   { src: "/about-practice-lab.jpg", alt: "Students focused on practical coding exercises", className: "" },
@@ -36,18 +35,14 @@ export default function About() {
 
       <section id="our-purpose" className="relative scroll-mt-20 py-20 md:py-28">
         <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-blue-100 blur-3xl dark:bg-blue-950/40" />
-        <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:gap-20 lg:px-8">
-          <div>
+        <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl">
             <p className="text-sm font-black uppercase tracking-[.2em] text-blue-700">Why we exist</p>
             <h2 className="mt-5 text-4xl font-black leading-tight tracking-tight md:text-5xl">We teach the skills between knowing and doing.</h2>
             <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-300">Our programs combine clear explanations, daily coding, mentor feedback and accountability. The result is not just stronger code—it is clearer thinking, better habits and the courage to take on difficult problems.</p>
-            <div className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-9 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
               {[['60K+', 'Students reached'], ['50+', 'Workshops'], ['150+', 'Problems']].map(([value, label]) => <div key={label} className="rounded-2xl bg-[#061a35] p-5 text-white"><p className="text-2xl font-black text-sky-300">{value}</p><p className="mt-1 text-xs text-slate-400">{label}</p></div>)}
             </div>
-          </div>
-          <div className="relative pb-10 pl-5 md:pl-10">
-            <img src="/about-welcome.png" alt="A warm Coding Gurukul welcome" className="relative z-10 aspect-[4/5] w-full max-w-lg rounded-[2rem] object-cover shadow-2xl" />
-            <div className="absolute bottom-0 right-0 z-20 max-w-xs rounded-3xl bg-blue-700 p-6 text-white shadow-xl"><BookOpen className="h-6 w-6 text-sky-200" /><p className="mt-3 text-xl font-black">Education with a human connection.</p></div>
           </div>
         </div>
       </section>

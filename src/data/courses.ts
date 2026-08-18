@@ -12,6 +12,9 @@ export type Course = {
   features: string[];
   level: string;
   format: string;
+  idealFor: string;
+  outcome: string;
+  prerequisites: string;
   mentor?: { name: string; role: string; image: string };
 };
 export const courses: Course[] = [
@@ -24,7 +27,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 799",
     amountPaise: 29900,
     duration: "10 Days",
-    image: "/courses/bootcamp-batch-v2.jpg",
+    image: "/courses/bootcamp-batch.png",
     tag: "New Launch",
     features: [
       "Certification internship course",
@@ -37,6 +40,9 @@ export const courses: Course[] = [
     ],
     level: "Beginner",
     format: "Live online classes",
+    idealFor: "Students starting DSA or restarting placement preparation",
+    outcome: "A clear DSA foundation and a practical next-step study plan",
+    prerequisites: "Basic familiarity with any programming language",
     mentor: { name: "Harsh Lakhra", role: "DSA Mentor", image: "/team/harsh-lakhra.png" },
   },
   {
@@ -48,7 +54,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 15,000",
     amountPaise: 299900,
     duration: "45 Days",
-    image: "/courses/pro-batch-v2.jpg",
+    image: "/courses/pro-batch.svg",
     tag: "New Launch",
     features:[
       "Advanced DSA patterns",
@@ -63,6 +69,9 @@ export const courses: Course[] = [
     ],
     level: "Intermediate to advanced",
     format: "Live classes, contests and reviews",
+    idealFor: "Students comfortable with programming basics who want stronger coding-round performance",
+    outcome: "Advanced problem-solving ability, contest discipline and interview-ready explanations",
+    prerequisites: "Programming fundamentals and familiarity with basic DSA",
     mentor: { name: "Shivam", role: "DSA and Competitive Programming Mentor", image: "/team/shivamt.png" },
   },
   {
@@ -74,7 +83,7 @@ export const courses: Course[] = [
     originalPrice: "Rs. 10,000",
     amountPaise: 239900,
     duration: "2 Months",
-    image: "/courses/foundation-batch-v2.jpg",
+    image: "/courses/foundation-batch.svg",
     tag: "New Launch",
     features: [
       "Complete roadmap",
@@ -88,6 +97,9 @@ export const courses: Course[] = [
     ],
     level: "Beginner",
     format: "Live online classes",
+    idealFor: "Beginners who need a structured path from programming fundamentals to placement DSA",
+    outcome: "Strong fundamentals, consistent practice habits and placement-focused preparation",
+    prerequisites: "No prior DSA experience required",
     mentor: { name: "Aryan Tiwari", role: "DSA Mentor", image: "/team/aryan-tiwari.png" },
   },
   {
@@ -98,7 +110,7 @@ export const courses: Course[] = [
     price: "Rs. 299",
     amountPaise: 29900,
     duration: "Lifetime Access",
-    image: "/courses/dsa-cp-sheet-v2.jpg",
+    image: "/courses/dsa-cp-sheet.svg",
     tag: "Affordable Access",
     features: [
       "Topic-wise DSA questions",
@@ -110,5 +122,8 @@ export const courses: Course[] = [
     ],
     level: "All levels",
     format: "Self-paced practice",
+    idealFor: "Independent learners preparing for online assessments and technical interviews",
+    outcome: "A focused, repeatable practice system for DSA and competitive programming",
+    prerequisites: "Ability to write basic programs in any language",
   },
 ];

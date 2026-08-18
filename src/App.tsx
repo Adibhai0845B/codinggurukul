@@ -18,6 +18,7 @@ import LearningHub from "@/pages/LearningHub";
 import PlacementReadiness from "@/pages/PlacementReadiness";
 import About from "@/pages/About";
 import Dashboard from "@/pages/Dashboard";
+import B2BInitiative from "@/pages/B2BInitiative";
 
 
 import Compiler from "@/pages/Compiler"; // compiler ke liye
@@ -43,10 +44,11 @@ function Router() {
         />
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
+        <Route path="/b2b" component={B2BInitiative} />
         <Route path="/courses/:id" component={CourseDetails} />
         <Route path="/courses" component={Courses} />
         <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} returnTo="/dashboard" />} />
-        <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} requireEnrolled={true} />} />
+        <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} returnTo="/roadmap" />} />
         <Route path="/live-classes" component={() => <ProtectedRoute component={LiveClasses} returnTo="/live-classes" />} />
         <Route path="/learn" component={() => <ProtectedRoute component={LearningHub} requireEnrolled={true} />} />
         <Route path="/placement-readiness" component={() => <ProtectedRoute component={PlacementReadiness} requireEnrolled={true} />} />

@@ -1,5 +1,7 @@
 import { useMemo } from "react";
+import { Link } from "wouter";
 import {
+  CalendarPlus,
   CalendarDays,
   CheckCircle2,
   Clock3,
@@ -70,9 +72,14 @@ export default function LiveClasses() {
               Join instructor-led classes, code along in real time and ask questions directly on Google Meet.
             </p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 backdrop-blur">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Signed in as</p>
-            <p className="mt-1 flex items-center gap-2 font-bold"><UserRound className="h-4 w-4 text-blue-300" />{username}</p>
+          <div className="space-y-3">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 backdrop-blur">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">Signed in as</p>
+              <p className="mt-1 flex items-center gap-2 font-bold"><UserRound className="h-4 w-4 text-blue-300" />{username}</p>
+            </div>
+            <Button asChild className="h-11 w-full rounded-xl bg-white font-bold text-slate-950 hover:bg-blue-50">
+              <Link href="/make-contest#live-class"><CalendarPlus className="mr-2 h-4 w-4" />Schedule a live class</Link>
+            </Button>
           </div>
         </div>
       </section>
