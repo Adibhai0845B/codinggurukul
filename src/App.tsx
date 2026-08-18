@@ -59,7 +59,8 @@ function Router() {
         
         {/* These are your Premium/Enrolled-only pages */}
         <Route path="/start-100" component={() => <ProtectedRoute component={Start100Sheet} requireEnrolled={true} />} />
-        <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} requireEnrolled={true} />} />
+        <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} returnTo="/dsa" />} />
+        <Route path="/company-specific" component={() => <ProtectedRoute component={() => <DSASheet companySpecific />} requireEnrolled={true} />} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} requireEnrolled={true} />} />
         {/* The compiler is available only after login. */}
         <Route path="/compiler" component={() => <ProtectedRoute component={Compiler} returnTo="/compiler" />} />

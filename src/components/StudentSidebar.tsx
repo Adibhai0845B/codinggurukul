@@ -23,6 +23,7 @@ const groups = [
     links: [
       { href: "/start-100", label: "Start 150", icon: FileCode2 },
       { href: "/dsa", label: "DSA sheet", icon: Code2 },
+      { href: "/company-specific", label: "Company Specific Sheet", icon: BriefcaseBusiness },
       { href: "/cp", label: "CP sheet", icon: Trophy },
       { href: "/contests", label: "Contests", icon: Trophy },
       { href: "/compiler", label: "Compiler", icon: Code2 },

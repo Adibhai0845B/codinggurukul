@@ -15,6 +15,7 @@ interface FilterBarProps {
   companies: string[];
   topics?: string[];
   hideTopic?: boolean;
+  hideCompany?: boolean;
 }
 
 export default function FilterBar({
@@ -30,7 +31,8 @@ export default function FilterBar({
   setTopic,
   companies,
   topics,
-  hideTopic = false
+  hideTopic = false,
+  hideCompany = false
 }: FilterBarProps) {
   return (
     <div className="mb-6 flex flex-col gap-3 border-y bg-white/60 py-4 dark:border-white/10 dark:bg-white/[.015] lg:flex-row" data-testid="filter-bar">
@@ -69,7 +71,7 @@ export default function FilterBar({
           </SelectContent>
         </Select>
 
-        <Select value={company} onValueChange={setCompany}>
+        {!hideCompany && <Select value={company} onValueChange={setCompany}>
           <SelectTrigger className="w-full sm:w-[140px]" data-testid="select-company">
             <SelectValue placeholder="Company" />
           </SelectTrigger>
@@ -79,7 +81,7 @@ export default function FilterBar({
               <SelectItem key={c} value={c}>{c}</SelectItem>
             ))}
           </SelectContent>
-        </Select>
+        </Select>}
 
         {!hideTopic && topics && setTopic && (
           <Select value={topic || "All"} onValueChange={setTopic}>

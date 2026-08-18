@@ -15,7 +15,7 @@ const publicLinks = [
   { href: "/about", label: "About" },
 ];
 
-const portalRoots = ["/dashboard", "/learn", "/live-classes", "/placement-readiness", "/roadmap", "/start-100", "/dsa", "/cp", "/contests", "/progress", "/compiler"];
+const portalRoots = ["/dashboard", "/learn", "/live-classes", "/placement-readiness", "/roadmap", "/start-100", "/dsa", "/company-specific", "/cp", "/contests", "/progress", "/compiler"];
 
 export default function Navbar() {
   const [dashboardTransition, setDashboardTransition] = useState(false);

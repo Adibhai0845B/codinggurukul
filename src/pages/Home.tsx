@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import {
-  ArrowRight, BarChart3, BookOpen, BriefcaseBusiness, Building2, ChevronRight, Code2,
+  ArrowLeft, ArrowRight, BarChart3, BookOpen, BriefcaseBusiness, Building2, ChevronRight, Code2,
   ExternalLink, Flame, GraduationCap, Layers3, PlayCircle, Presentation,
-  Radio, Target, Trophy, Users,
+  Radio, Target, Trophy, Users, X,
 } from "lucide-react";
 import ContactModal from "@/components/ContactModal";
 import CodingNetwork from "@/components/CodingNetwork";
@@ -20,10 +20,17 @@ import useAuth from "@/hooks/useAuth";
 import { useProgress } from "@/hooks/useProgress";
 
 const heroPhotos = [
-  { src: "/home-community.jpg", alt: "Coding Gurukul mentors and students at a college learning event" },
-  { src: "/home-classroom.jpg", alt: "Mentor-led coding training in a college computer lab" },
-  { src: "/home-achievement.jpg", alt: "Coding Gurukul students celebrating an achievement" },
+  { src: "/home-community.jpg", alt: "Coding Gurukul mentors and students at a college learning event", label: "Student community" },
+  { src: "/home-classroom.jpg", alt: "Mentor-led coding training in a college computer lab", label: "Classroom training" },
+  { src: "/home-achievement.jpg", alt: "Coding Gurukul students celebrating an achievement", label: "Student achievement" },
+  { src: "/campus-lab-session.png", alt: "Mentor-led coding class in a campus computer lab", label: "Live coding lab" },
+  { src: "/campus-practice-lab.png", alt: "Students practising at desktop computers in a campus lab", label: "Student practice" },
+  { src: "/campus-auditorium-session.png", alt: "Coding Gurukul speaker addressing students in an auditorium", label: "Campus interaction" },
+  { src: "/about-orientation.jpg", alt: "Coding Gurukul orientation session with college students", label: "College orientation" },
+  { src: "/about-practice-lab.jpg", alt: "Students working through coding exercises in a campus lab", label: "Guided practice" },
 ];
+
+const trainingPhotos = heroPhotos.slice(3, 6);
 
 const programs = [
   { icon: Code2, title: "DSA and problem solving", copy: "Programming foundations, interview patterns, guided practice and regular assessments." },
@@ -34,6 +41,8 @@ const programs = [
 
 export default function Home() {
   const [activePhoto, setActivePhoto] = useState(0);
+  const [activeTrainingPhoto, setActiveTrainingPhoto] = useState(0);
+  const [laptopOpen, setLaptopOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const completedIds = useProgress((state) => state.completedIds);
   const isLoggedIn = useAuth((state) => state.isLoggedIn);
@@ -53,6 +62,19 @@ export default function Home() {
     <div className="overflow-hidden bg-[#f7f8fa] text-slate-950 dark:bg-[#0f0f0f] dark:text-white">
       <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} formUrl={CONTACT_FORM_URL} />
 
+      {laptopOpen && <div className="fixed inset-0 z-[100] grid place-items-center bg-[#020712]/90 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-label="Coding Gurukul campus gallery">
+        <button type="button" onClick={() => setLaptopOpen(false)} className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/20" aria-label="Close campus gallery"><X className="h-5 w-5" /></button>
+        <div className="w-full max-w-5xl">
+          <div className="overflow-hidden rounded-2xl border border-white/15 bg-black shadow-2xl"><img src={trainingPhotos[activeTrainingPhoto].src} alt={trainingPhotos[activeTrainingPhoto].alt} className="h-[62vh] w-full object-contain" /></div>
+          <div className="mt-5 flex items-center justify-between gap-4 text-white">
+            <button type="button" onClick={() => setActiveTrainingPhoto(current => (current - 1 + trainingPhotos.length) % trainingPhotos.length)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20" aria-label="Previous photo"><ArrowLeft className="h-5 w-5" /></button>
+            <div className="flex min-w-0 items-center gap-3 overflow-x-auto">{trainingPhotos.map((photo, index) => <button type="button" key={photo.src} onClick={() => setActiveTrainingPhoto(index)} className={`relative h-16 w-24 shrink-0 overflow-hidden rounded-lg border-2 transition ${index === activeTrainingPhoto ? "border-orange-400" : "border-transparent opacity-60 hover:opacity-100"}`} aria-label={`Show ${photo.label}`}><img src={photo.src} alt="" className="h-full w-full object-cover" /></button>)}</div>
+            <button type="button" onClick={() => setActiveTrainingPhoto(current => (current + 1) % trainingPhotos.length)} className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/20 bg-white/10 hover:bg-white/20" aria-label="Next photo"><ArrowRight className="h-5 w-5" /></button>
+          </div>
+          <p className="mt-4 text-center text-sm font-medium text-orange-200">{trainingPhotos[activeTrainingPhoto].label} · Photo {activeTrainingPhoto + 1} of {trainingPhotos.length}</p>
+        </div>
+      </div>}
+
       <section className="relative isolate min-h-[calc(100svh-76px)] overflow-hidden bg-slate-950 text-white">
         {heroPhotos.map((photo, index) => (
           <img
@@ -63,25 +85,25 @@ export default function Home() {
             className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${index === activePhoto ? "opacity-100" : "opacity-0"}`}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050b16]/95 via-[#050b16]/70 to-[#050b16]/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050b16]/85 via-transparent to-[#050b16]/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050b16]/95 via-[#050b16]/78 to-[#050b16]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050b16]/85 via-transparent to-[#050b16]/30" />
         <div className="relative mx-auto flex min-h-[calc(100svh-76px)] w-full max-w-7xl items-end px-4 pb-10 pt-20 sm:px-6 sm:pb-14 lg:items-center lg:px-8 lg:py-16">
           <div className="w-full max-w-[760px]">
-            <div className="flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[.16em] text-orange-300 sm:text-xs">
-              <span className="h-px w-8 bg-orange-400" /> College training and placement partnerships
+            <div className="flex items-center gap-3 text-sm font-medium text-orange-300">
+              <span className="h-px w-7 bg-orange-400" /> Technical training for colleges
             </div>
-            <h1 className="mt-5 text-[2.6rem] font-black leading-[1.04] tracking-[-.045em] sm:text-5xl md:text-6xl lg:text-[4.25rem]">
-              Turn campus potential into <span className="text-orange-400">industry-ready talent.</span>
+            <h1 className="mt-5 max-w-2xl font-sans text-[2.5rem] font-semibold leading-[1.08] tracking-[-.025em] sm:text-5xl lg:text-[3.75rem]">
+              Coding training that happens <span className="text-orange-400">on your campus.</span>
             </h1>
-            <p className="mt-5 max-w-[650px] text-base font-medium leading-7 text-slate-200 sm:mt-6 sm:text-lg sm:leading-8">
-              Structured technical training, coding practice, assessments and placement preparation—delivered on campus and online by experienced mentors.
+            <p className="mt-5 max-w-[620px] text-base font-normal leading-7 text-slate-300 sm:mt-6 sm:text-lg sm:leading-8">
+              We teach DSA, competitive programming and placement preparation to college batches. Students learn with a mentor, practise in the lab and continue online between classes.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
-              <Button onClick={() => setContactOpen(true)} className="h-12 rounded-md bg-orange-500 px-6 font-bold text-white shadow-lg shadow-black/20 hover:bg-orange-600">Partner with us <ArrowRight className="ml-2 h-4 w-4" /></Button>
-              <Button asChild variant="outline" className="h-12 border-white/30 bg-white/10 px-6 font-bold text-white backdrop-blur-sm hover:bg-white hover:text-slate-950"><a href="#programs">Explore training programs</a></Button>
+              <Button onClick={() => setContactOpen(true)} className="h-12 rounded-md bg-orange-500 px-6 font-semibold text-white shadow-lg shadow-black/20 hover:bg-orange-600">Plan training for your college <ArrowRight className="ml-2 h-4 w-4" /></Button>
+              <Button asChild variant="outline" className="h-12 border-white/30 bg-white/10 px-6 font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-slate-950"><a href="#programs">See the programs</a></Button>
             </div>
             <div className="mt-8 flex items-center justify-between border-t border-white/20 pt-5 sm:mt-10">
-              <div className="flex items-center gap-4 text-xs font-semibold text-slate-300"><span><strong className="text-white">60K+</strong> learners</span><span className="h-4 w-px bg-white/20" /><span><strong className="text-white">50+</strong> workshops</span></div>
+              <div className="flex items-center gap-4 text-xs font-medium text-slate-400"><span><strong className="font-semibold text-white">60,000+</strong> students trained</span><span className="h-4 w-px bg-white/20" /><span><strong className="font-semibold text-white">50+</strong> college workshops</span></div>
               <div className="flex items-center gap-2" aria-label="Homepage image carousel">
                 {heroPhotos.map((photo, index) => <button key={photo.src} type="button" onClick={() => setActivePhoto(index)} aria-label={`Show image ${index + 1}`} className={`h-1.5 rounded-full transition-all ${index === activePhoto ? "w-9 bg-orange-400" : "w-4 bg-white/40 hover:bg-white"}`} />)}
               </div>
@@ -93,6 +115,23 @@ export default function Home() {
       <section className="bg-[#0b2f6b] text-white">
         <div className="mx-auto grid max-w-7xl grid-cols-2 lg:grid-cols-4">
           {[["60K+", "Students reached"], ["50+", "Campus workshops"], ["Mentor-led", "Live classroom delivery"], ["Placement-first", "Career outcome focus"]].map(([value, label]) => <div key={label} className="border-white/10 px-4 py-6 text-center odd:border-r lg:border-r lg:last:border-0"><p className="text-xl font-extrabold leading-tight">{value}</p><p className="mt-2 text-xs leading-5 text-blue-200">{label}</p></div>)}
+        </div>
+      </section>
+
+      <section className="overflow-hidden bg-[#07111f] py-16 text-white md:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[.72fr_1.28fr] lg:gap-14 lg:px-8">
+          <div className="max-w-md">
+            <p className="text-sm font-medium text-orange-300">Inside our classrooms</p>
+            <h2 className="mt-4 font-sans text-3xl font-semibold leading-tight tracking-[-.02em] md:text-4xl">See how the training looks.</h2>
+            <p className="mt-5 leading-7 text-slate-400">Open the laptop to view recent coding labs, student practice sessions and campus interactions.</p>
+            <button type="button" onClick={() => setLaptopOpen(true)} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-orange-300 hover:text-orange-200">View training photos <ArrowRight className="h-4 w-4" /></button>
+          </div>
+          <div className="relative min-h-[340px] sm:min-h-[430px]">
+            <button type="button" onClick={() => setLaptopOpen(true)} className="cg-home-laptop" aria-label="Open training photo gallery">
+              <span className="cg-home-laptop__screen"><img src={trainingPhotos[activeTrainingPhoto].src} alt={trainingPhotos[activeTrainingPhoto].alt} /><span className="cg-home-laptop__shine" /><span className="cg-home-laptop__badge">Explore our training <ArrowRight className="h-3.5 w-3.5" /></span></span>
+              <span className="cg-home-laptop__base"><span /></span>
+            </button>
+          </div>
         </div>
       </section>
 

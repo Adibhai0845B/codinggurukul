@@ -98,6 +98,16 @@ export default function B2BInitiative() {
       </div>
     </section>
 
+    <section className="border-b bg-white dark:border-white/10 dark:bg-[#0b111c]">
+      <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-7 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+        <div><p className="text-sm font-bold text-slate-900 dark:text-white">Registered and quality certified</p><p className="mt-1 text-sm text-slate-500">Institutional training delivered through documented business and quality processes.</p></div>
+        <div className="flex flex-wrap gap-3">
+          <div className="flex items-center gap-3 rounded-lg border bg-slate-50 px-4 py-3 dark:border-white/10 dark:bg-white/5"><span className="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1"><img src="/msme-logo.png" alt="MSME registered enterprise logo" className="h-full w-full object-contain" /></span><div><p className="text-sm font-black">MSME</p><p className="text-xs text-slate-500">Registered enterprise</p></div></div>
+          <div className="flex items-center gap-3 rounded-lg border bg-slate-50 px-4 py-3 dark:border-white/10 dark:bg-white/5"><span className="grid h-12 w-16 shrink-0 place-items-center overflow-hidden rounded-md bg-white p-1"><img src="/iso-logo.png" alt="ISO certification logo" className="h-full w-full object-contain" /></span><div><p className="text-sm font-black">ISO 9001</p><p className="text-xs text-slate-500">Quality management certified</p></div></div>
+        </div>
+      </div>
+    </section>
+
     <section id="partnership-programs" className="scroll-mt-20 bg-[#eaf1fa] py-20 dark:bg-[#09101b] md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl"><p className="text-xs font-black uppercase tracking-[.18em] text-blue-700 dark:text-blue-400">Current institutional programs</p><h2 className="mt-5 text-4xl font-black leading-tight tracking-[-.04em] md:text-5xl">Choose the partnership model that matches your campus goal.</h2><p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-400">Start with focused training, add practical internship experience, or work with us across training and placement assistance.</p></div>
@@ -121,8 +131,9 @@ export default function B2BInitiative() {
 
         <div className="mt-16 grid items-center gap-8 border-t border-slate-300 pt-12 dark:border-white/10 lg:grid-cols-[.75fr_1.25fr]">
           <div><p className="text-xs font-black uppercase tracking-[.18em] text-orange-500">Leadership behind the initiative</p><h3 className="mt-4 text-3xl font-black leading-tight">Institutional relationships with personal ownership.</h3><p className="mt-4 leading-7 text-slate-600 dark:text-slate-400">College partnerships are guided directly by Coding Gurukul leadership—from understanding campus requirements to aligning delivery and outcomes.</p></div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <article className="flex items-center gap-4 rounded-xl border bg-white p-4 dark:border-white/10 dark:bg-[#101824]"><img src="/team/shalika-formal.png" alt="Shalika, Founder of Coding Gurukul" className="h-20 w-20 shrink-0 rounded-lg object-cover object-top" /><div><h4 className="font-black">Shalika</h4><p className="mt-1 text-sm font-semibold text-blue-700 dark:text-blue-400">Founder</p><p className="mt-2 text-xs leading-5 text-slate-500">Institutional vision and partnership direction</p></div></article>
+            <article className="flex items-center gap-4 rounded-xl border bg-white p-4 dark:border-white/10 dark:bg-[#101824]"><img src="/team/arunima-gupta-formal.png" alt="Arunima Gupta, Head of Operations at Coding Gurukul" className="h-20 w-20 shrink-0 rounded-lg object-cover object-top" /><div><h4 className="font-black">Arunima Gupta</h4><p className="mt-1 text-sm font-semibold text-blue-700 dark:text-blue-400">Head of Operations</p><p className="mt-2 text-xs leading-5 text-slate-500">Program coordination and operational delivery</p></div></article>
             <article className="flex items-center gap-4 rounded-xl border bg-white p-4 dark:border-white/10 dark:bg-[#101824]"><img src="/team/aditya-formal.png" alt="Aditya Krishna Gupta, Advisor at Coding Gurukul" className="h-20 w-20 shrink-0 rounded-lg object-cover object-top" /><div><h4 className="font-black">Aditya Krishna Gupta</h4><p className="mt-1 text-sm font-semibold text-blue-700 dark:text-blue-400">Advisor</p><p className="mt-2 text-xs leading-5 text-slate-500">Technology and industry alignment</p></div></article>
           </div>
         </div>

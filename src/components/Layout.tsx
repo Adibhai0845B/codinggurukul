@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const isHome = location === "/";
   const isFullWidthPage = isHome || location === "/about" || location === "/b2b";
-  const portalPaths = ["/dashboard", "/learn", "/live-classes", "/placement-readiness", "/roadmap", "/start-100", "/dsa", "/cp", "/contests", "/progress", "/compiler"];
+  const portalPaths = ["/dashboard", "/learn", "/live-classes", "/placement-readiness", "/roadmap", "/start-100", "/dsa", "/company-specific", "/cp", "/contests", "/progress", "/compiler"];
   const isPortal = portalPaths.some((path) => location === path || location.startsWith(`${path}/`));
   const isAuthOrAdmin = ["/login", "/register", "/admin", "/make-contest/login"].some((path) => location === path || location.startsWith(`${path}/`));
   const pageLabel = getPageLabel(location);
@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             </div>
 
             <FooterGroup title="Platform" links={[["Courses", "/courses"], ["Dashboard", "/dashboard"], ["Live classes", "/live-classes"], ["Online compiler", "/compiler"]]} />
-            <FooterGroup title="Practice" links={[["Start 150", "/start-100"], ["DSA sheet", "/dsa"], ["CP sheet", "/cp"], ["Contests", "/contests"]]} />
+            <FooterGroup title="Practice" links={[["Start 150", "/start-100"], ["DSA sheet", "/dsa"], ["Company specific sheet", "/company-specific"], ["CP sheet", "/cp"], ["Contests", "/contests"]]} />
 
             <div>
               <p className="text-xs font-extrabold uppercase tracking-[.16em] text-white">College partnerships</p>

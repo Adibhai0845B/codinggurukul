@@ -9,9 +9,10 @@ import NoteModal from "./NoteModal";
 import { cn } from "@/lib/utils";
 interface QuestionRowProps {
   question: DSAQuestion;
+  showCompanies?: boolean;
 }
 
-export default function QuestionRow({ question }: QuestionRowProps) {
+export default function QuestionRow({ question, showCompanies = true }: QuestionRowProps) {
   const { completedIds, bookmarkedIds, toggleComplete, toggleBookmark, notes } = useProgress();
   const isCompleted = completedIds.includes(question.id);
   const isBookmarked = bookmarkedIds.includes(question.id);
@@ -47,7 +48,7 @@ export default function QuestionRow({ question }: QuestionRowProps) {
                 {question.difficulty}
               </Badge>
             </div>
-            {question.companies.length > 0 && (
+            {showCompanies && question.companies.length > 0 && (
               <div className="flex flex-wrap gap-1 mt-1">
                 {question.companies.map((c) => (
                   <span key={c} className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary text-secondary-foreground border border-border/50">

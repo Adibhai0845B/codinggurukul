@@ -10,9 +10,10 @@ interface TopicAccordionProps {
   topic: string;
   questions: DSAQuestion[];
   value: string;
+  showCompanies?: boolean;
 }
 
-export default function TopicAccordion({ topic, questions, value }: TopicAccordionProps) {
+export default function TopicAccordion({ topic, questions, value, showCompanies = true }: TopicAccordionProps) {
   const { completedIds } = useProgress();
   
   const completedCount = useMemo(() => {
@@ -39,7 +40,7 @@ export default function TopicAccordion({ topic, questions, value }: TopicAccordi
       <AccordionContent className="pt-0 pb-0 bg-background/50">
         <div className="flex flex-col divide-y divide-border/30">
           {questions.map((q) => (
-            <QuestionRow key={q.id} question={q} />
+            <QuestionRow key={q.id} question={q} showCompanies={showCompanies} />
           ))}
         </div>
       </AccordionContent>
