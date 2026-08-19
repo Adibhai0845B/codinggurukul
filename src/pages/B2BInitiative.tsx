@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowRight, Award, BarChart3, BriefcaseBusiness, Building2, CheckCircle2, Clock3, Code2, GraduationCap, Handshake, Phone, Presentation, Users } from "lucide-react";
-import ContactModal from "@/components/ContactModal";
+import B2BInquiryModal from "@/components/B2BInquiryModal";
 import { Button } from "@/components/ui/button";
-import { CONTACT_FORM_URL, CONTACT_PHONE } from "@/config";
+import { CONTACT_PHONE } from "@/config";
 
 const campusPhotos = [
   { src: "/home-classroom.jpg", alt: "Mentor-led coding class in a college lab" },
@@ -55,7 +55,7 @@ export default function B2BInitiative() {
   const [contactOpen, setContactOpen] = useState(false);
 
   return <div className="overflow-hidden bg-[#f4f7fb] text-slate-950 dark:bg-[#070c15] dark:text-white">
-    <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} formUrl={CONTACT_FORM_URL} />
+    <B2BInquiryModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
 
     <section className="relative isolate min-h-[calc(100svh-72px)] overflow-hidden bg-[#06142b] text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_40%,rgba(37,99,235,.25),transparent_30%),radial-gradient(circle_at_20%_10%,rgba(249,115,22,.12),transparent_28%)]" />

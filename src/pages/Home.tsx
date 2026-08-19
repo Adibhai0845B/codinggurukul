@@ -99,8 +99,8 @@ export default function Home() {
               We teach DSA, competitive programming and placement preparation to college batches. Students learn with a mentor, practise in the lab and continue online between classes.
             </p>
             <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
-              <Button onClick={() => setContactOpen(true)} className="h-12 rounded-md bg-orange-500 px-6 font-semibold text-white shadow-lg shadow-black/20 hover:bg-orange-600">Plan training for your college <ArrowRight className="ml-2 h-4 w-4" /></Button>
-              <Button asChild variant="outline" className="h-12 border-white/30 bg-white/10 px-6 font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-slate-950"><a href="#programs">See the programs</a></Button>
+              <Button asChild className="h-12 rounded-md bg-orange-500 px-6 font-semibold text-white shadow-lg shadow-black/20 hover:bg-orange-600"><Link href="/b2b">Plan training for your college <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+              <Button asChild variant="outline" className="h-12 border-white/30 bg-white/10 px-6 font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-slate-950"><Link href="/b2b#partnership-programs">See the programs</Link></Button>
             </div>
             <div className="mt-8 flex items-center justify-between border-t border-white/20 pt-5 sm:mt-10">
               <div className="flex items-center gap-4 text-xs font-medium text-slate-400"><span><strong className="font-semibold text-white">60,000+</strong> students trained</span><span className="h-4 w-px bg-white/20" /><span><strong className="font-semibold text-white">50+</strong> college workshops</span></div>
