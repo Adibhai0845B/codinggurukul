@@ -15,6 +15,7 @@ const problemUrl = (question: DSAQuestion) => question.leetcodeLink || question.
 
 export default function Dashboard() {
   const username = useAuth((state) => state.username) || "Coder";
+  const isLoggedIn = useAuth((state) => state.isLoggedIn);
   const { completedIds, toggleComplete } = useProgress();
   const { dailyGoal, activeDays, recordActivity } = useLearningHub();
   const { checklistIds, confidence, interviewAnswers } = usePlacementReadiness();
@@ -63,7 +64,7 @@ export default function Dashboard() {
   return <div className="student-dashboard pb-16 animate-in fade-in duration-500">
     <header className="border-b border-border pb-8 pt-2">
       <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-        <div><p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[.18em] text-blue-400"><span className="h-px w-8 bg-orange-500" />Student workspace</p><h1 className="mt-4 text-4xl font-black tracking-[-.04em] text-white md:text-5xl">Good to see you, <span className="text-blue-400">{username}.</span></h1><p className="mt-4 max-w-xl text-base leading-7 text-slate-400">One focused task at a time. Today’s queue starts with the topic that needs the most attention.</p></div>
+        <div><p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[.18em] text-blue-400"><span className="h-px w-8 bg-orange-500" />Overview</p><h1 className="mt-4 text-4xl font-black tracking-[-.04em] text-white md:text-5xl">Good to see you, <span className="text-blue-400">{username}.</span></h1><p className="mt-4 max-w-xl text-base leading-7 text-slate-400">One focused task at a time. Today’s queue starts with the topic that needs the most attention.</p>{!isLoggedIn && <p className="mt-3 text-sm text-slate-500">Your progress is saved on this device. Sign in anytime to sync it to your account.</p>}</div>
         <div className="grid grid-cols-3 border-y border-white/10 lg:w-[430px]">{[[stats.solved, "Problems solved"], [calculateStreak(activeDays), "Day streak"], [readinessScore + "%", "Placement score"]].map(([value, label], index) => <div key={String(label)} className={`py-5 ${index ? "border-l border-white/10 pl-5" : ""}`}><p className="text-3xl font-black text-white">{value}</p><p className="mt-1 text-xs text-slate-500">{label}</p></div>)}</div>
       </div>
     </header>

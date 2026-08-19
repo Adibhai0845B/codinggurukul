@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { dsaQuestions } from "@/data/dsaQuestions";
 import { useAuth } from "./useAuth";
 import { API_URL } from "@/config";
 
@@ -81,16 +80,6 @@ export const useProgress = create<ProgressState>()(
         }
       },
       toggleComplete: async (id) => {
-        const isDsa = dsaQuestions.some((q) => q.id === id);
-        const { isLoggedIn } = useAuth.getState();
-
-        if (isDsa && !isLoggedIn) {
-          if (typeof window !== "undefined") {
-            window.alert("Please login to Coding Gurukul to track your progress.");
-          }
-          return;
-        }
-
         set((state) => {
           const newCompletedIds = state.completedIds.includes(id)
             ? state.completedIds.filter((i) => i !== id)

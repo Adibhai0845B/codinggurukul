@@ -14,7 +14,7 @@ const groups = [
     label: "Workspace",
     links: [
       { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-      { href: "/learn", label: "Learning plan", icon: BookOpen },
+      { href: "/learn", label: "My learning hub", icon: BookOpen },
       { href: "/live-classes", label: "Live classes", icon: Radio },
     ],
   },

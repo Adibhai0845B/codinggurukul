@@ -78,6 +78,6 @@ function getPageLabel(path: string) {
 }
 
 function MobilePortalNav({ location }: { location: string }) {
-  const items = [["Overview", "/dashboard", LayoutDashboard], ["Learn", "/learn", BookOpen], ["Classes", "/live-classes", BookOpen], ["Career", "/placement-readiness", BriefcaseBusiness], ["Progress", "/progress", BarChart3]] as const;
+  const items = [["Overview", "/dashboard", LayoutDashboard], ["My Hub", "/learn", BookOpen], ["Classes", "/live-classes", BookOpen], ["Career", "/placement-readiness", BriefcaseBusiness], ["Progress", "/progress", BarChart3]] as const;
   return <nav className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-white/10 bg-[#070c15]/95 px-1 pb-[max(.35rem,env(safe-area-inset-bottom))] pt-1.5 backdrop-blur-xl lg:hidden" aria-label="Student portal navigation">{items.map(([label, href, Icon]) => { const active = location === href; return <Link key={href} href={href} className={`flex min-h-12 flex-col items-center justify-center gap-1 rounded-md text-[10px] font-semibold transition ${active ? "bg-blue-600/15 text-blue-300" : "text-slate-500"}`}><Icon className="h-4 w-4" /><span>{label}</span></Link>; })}</nav>;
 }

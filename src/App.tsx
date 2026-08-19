@@ -47,19 +47,20 @@ function Router() {
         <Route path="/b2b" component={B2BInitiative} />
         <Route path="/courses/:id" component={CourseDetails} />
         <Route path="/courses" component={Courses} />
-        <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} returnTo="/dashboard" />} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/roadmap" component={() => <ProtectedRoute component={RoadmapPage} returnTo="/roadmap" />} />
         <Route path="/live-classes" component={() => <ProtectedRoute component={LiveClasses} returnTo="/live-classes" />} />
-        <Route path="/learn" component={() => <ProtectedRoute component={LearningHub} requireEnrolled={true} />} />
+        <Route path="/learn" component={LearningHub} />
         <Route path="/placement-readiness" component={() => <ProtectedRoute component={PlacementReadiness} requireEnrolled={true} />} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} /> {/* Add your new Register page here */}
         <Route path="/make-contest/login" component={ContestAdminLogin} />
         <Route path="/make-contest" component={() => <ContestAdminRoute component={MakeContest} />} />
         
-        {/* These are your Premium/Enrolled-only pages */}
-        <Route path="/start-100" component={() => <ProtectedRoute component={Start100Sheet} requireEnrolled={true} />} />
-        <Route path="/dsa" component={() => <ProtectedRoute component={DSASheet} returnTo="/dsa" />} />
+        {/* Free practice sheets */}
+        <Route path="/start-100" component={Start100Sheet} />
+        <Route path="/dsa" component={DSASheet} />
+        {/* Premium/Enrolled-only sheets */}
         <Route path="/company-specific" component={() => <ProtectedRoute component={() => <DSASheet companySpecific />} requireEnrolled={true} />} />
         <Route path="/cp" component={() => <ProtectedRoute component={CPSheet} requireEnrolled={true} />} />
         {/* The compiler is available only after login. */}

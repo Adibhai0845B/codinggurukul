@@ -8,6 +8,7 @@ import { dsaQuestions, type DSAQuestion } from "@/data/dsaQuestions";
 import { cpQuestions } from "@/data/cpQuestions";
 import { start100Questions } from "@/data/start100Questions";
 import { useProgress } from "@/hooks/useProgress";
+import useAuth from "@/hooks/useAuth";
 import { calculateStreak, localDateKey, useLearningHub } from "@/hooks/useLearningHub";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,6 +28,7 @@ function questionLink(question: DSAQuestion) {
 }
 
 export default function LearningHub() {
+  const isLoggedIn = useAuth((state) => state.isLoggedIn);
   const { completedIds, bookmarkedIds, toggleComplete, toggleBookmark } = useProgress();
   const { dailyGoal, activeDays, revisedIds, setDailyGoal, recordActivity, toggleRevised } = useLearningHub();
   const [company, setCompany] = useState("Amazon");
@@ -92,7 +94,7 @@ export default function LearningHub() {
       <section className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 p-7 text-white md:p-10">
         <div className="absolute -right-16 -top-20 h-64 w-64 rounded-full bg-blue-500/15 blur-3xl" />
         <div className="relative flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <div><Badge className="bg-orange-500 text-white hover:bg-orange-500"><Sparkles className="mr-1.5 h-3.5 w-3.5" />Your learning hub</Badge><h1 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">What will you master today?</h1><p className="mt-3 max-w-2xl text-slate-300">A focused plan built from your existing progress. Everything here works in your browser.</p></div>
+          <div><Badge className="bg-orange-500 text-white hover:bg-orange-500"><Sparkles className="mr-1.5 h-3.5 w-3.5" />My learning hub</Badge><h1 className="mt-5 text-4xl font-black tracking-tight md:text-5xl">What will you master today?</h1><p className="mt-3 max-w-2xl text-slate-300">A focused plan built from your existing progress. Everything here works in your browser.</p>{!isLoggedIn && <p className="mt-2 text-sm text-slate-400">No login needed — your activity is saved on this device.</p>}</div>
           <div className="grid grid-cols-3 gap-3">
             <HeroStat icon={<Flame />} value={streak} label="day streak" />
             <HeroStat icon={<CheckCircle2 />} value={totalCompleted} label="solved" />

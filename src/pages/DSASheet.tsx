@@ -6,7 +6,6 @@ import TopicAccordion from "@/components/TopicAccordion";
 import { Accordion } from "@/components/ui/accordion";
 import ProgressBar from "@/components/ProgressBar";
 import useAuth from "@/hooks/useAuth";
-import { useLocation } from "wouter";
 
 // Dictionary to map roadmap node short IDs to dataset topic names
 const TOPIC_MAPPING: Record<string, string> = {
@@ -31,7 +30,6 @@ const TOPIC_MAPPING: Record<string, string> = {
 export default function DSASheet({ companySpecific = false }: { companySpecific?: boolean }) {
   const { completedIds, bookmarkedIds, fetchProgress } = useProgress();
   const isLoggedIn = useAuth((s) => s.isLoggedIn);
-  const [location, setLocation] = useLocation();
 
   // Unified filter states
   const [search, setSearch] = useState("");
@@ -40,14 +38,12 @@ export default function DSASheet({ companySpecific = false }: { companySpecific?
   const [status, setStatus] = useState("All");
   const [topicFilter, setTopicFilter] = useState("All");
 
-  // Authentication Effect
+  // Signed-in students sync server progress; guests use browser-saved progress.
   useEffect(() => {
     if (isLoggedIn) {
-      fetchProgress(); 
-    } else if (location !== "/login") {
-      setLocation("/login");
+      fetchProgress();
     }
-  }, [isLoggedIn, location, setLocation, fetchProgress]);
+  }, [isLoggedIn, fetchProgress]);
 
   // URL Parameter Syncing Effect
   useEffect(() => {
